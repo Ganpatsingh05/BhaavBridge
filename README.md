@@ -14,7 +14,7 @@ BhaavBridge is a role-based agricultural marketplace that helps farmers publish 
 | Application type | Group web application |
 | Team size | 4 |
 | Submission target | 16 November 2026 |
-| Project tracker | [BhaavBridge – Development & Phase Tracker](https://github.com/users/Ganpatsingh05/projects/8) |
+| Project tracker | [BhaavBridge – Development & Phase Tracker](https://github.com/users/Ganpatsingh05/projects/8/views/3) |
 
 ## Technology stack
 
