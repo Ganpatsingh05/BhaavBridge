@@ -25,7 +25,7 @@ A phase can be marked Done only after:
 A failed test keeps the phase open. Do not mark a phase Done merely because the code has been written.
 
 ## Phase 0 — Project Foundation
-**Target:** 2 November 2026  
+**Target:** 3 November 2026  
 **Lead:** Ganpat; all members verify local setup.
 
 ### Tasks
@@ -48,7 +48,7 @@ A failed test keeps the phase open. Do not mark a phase Done merely because the 
 All members can reproduce the development setup; project scope and stack approval are documented; starter solution builds.
 
 ## Phase 1 — Database and Architecture
-**Target:** 3–4 November 2026  
+**Target:** 4 November 2026  
 **Lead:** Ganpat; all members review their entity requirements.
 
 ### Tasks
@@ -264,3 +264,22 @@ No new features on submission day. Submit the tested source, required database m
 - A task may be completed independently, but the next dependent phase must not be approved until its gate passes.
 - Team members must update issue status and evidence as work progresses.
 - Record blockers openly; do not hide a failed test by moving an item to Done.
+
+
+## Repository phase issues
+
+Use these issues as the detailed implementation and approval records:
+
+| Phase | GitHub issue |
+|---|---|
+| Phase 0 — Project Foundation | [#1](https://github.com/Ganpatsingh05/BhaavBridge/issues/1) |
+| Phase 1 — Database and Application Architecture | [#2](https://github.com/Ganpatsingh05/BhaavBridge/issues/2) |
+| Phase 2 — Authentication and User Management | [#3](https://github.com/Ganpatsingh05/BhaavBridge/issues/3) |
+| Phase 3 — Harvest Marketplace | [#4](https://github.com/Ganpatsingh05/BhaavBridge/issues/4) |
+| Phase 4 — Offer and Price Discovery Engine | [#5](https://github.com/Ganpatsingh05/BhaavBridge/issues/5) |
+| Phase 5 — Orders and Market Intelligence | [#6](https://github.com/Ganpatsingh05/BhaavBridge/issues/6) |
+| Phase 6 — REST API and Postman Testing | [#7](https://github.com/Ganpatsingh05/BhaavBridge/issues/7) |
+| Phase 7 — UI Integration and Optimization | [#8](https://github.com/Ganpatsingh05/BhaavBridge/issues/8) |
+| Phase 8 — Final QA and Submission | [#9](https://github.com/Ganpatsingh05/BhaavBridge/issues/9) |
+
+The issue tracker is the detailed source for each phase's implementation and tests. The GitHub Project board is the team's visual status view; add these nine issues to that board and use the Phase, Status, Gate Approval and date fields there.
