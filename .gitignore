@@ -1,0 +1,46 @@
+## Visual Studio / .NET
+.vs/
+[Bb]in/
+[Oo]bj/
+[Aa]rtifacts/
+TestResults/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.cache
+
+## Rider / IntelliJ
+.idea/
+*.sln.iml
+
+## VS Code workspace (keep shared recommendations if added intentionally)
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+## User-specific settings and local secrets
+appsettings.Development.json
+appsettings.*.local.json
+secrets.json
+*.pfx
+*.p12
+*.key
+
+## Logs and temporary files
+*.log
+*.tmp
+*.temp
+
+## Local databases and generated data
+*.mdf
+*.ldf
+*.db
+*.sqlite
+*.sqlite3
+
+## OS files
+.DS_Store
+Thumbs.db
+desktop.ini
