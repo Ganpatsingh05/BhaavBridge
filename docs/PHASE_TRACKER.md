@@ -25,11 +25,11 @@ A phase can be marked Done only after:
 A failed test keeps the phase open. Do not mark a phase Done merely because the code has been written.
 
 ## Phase 0 — Project Foundation
-**Target:** 3 November 2026  
+**Target:** 9–10 November 2026  
 **Lead:** Ganpat; all members verify local setup.
 
 ### Tasks
-- [ ] Finalize scope, abstract, roles and stack.
+- [x] Finalize scope, abstract, roles and stack.
 - [x] Instructor confirmation received: ASP.NET Core/C# from the INT402 syllabus is accepted for the selected Q1 project (reported by Ganpat, 6 November 2026).
 - [ ] Create private GitHub repository and grant team access.
 - [ ] Create the team Project board and configure fields/views.
@@ -48,7 +48,7 @@ A failed test keeps the phase open. Do not mark a phase Done merely because the 
 All members can reproduce the development setup; project scope and stack approval are documented; starter solution builds.
 
 ## Phase 1 — Database and Architecture
-**Target:** 4 November 2026  
+**Target:** 7–8 November 2026  
 **Lead:** Ganpat; all members review their entity requirements.
 
 ### Tasks
@@ -65,13 +65,13 @@ All members can reproduce the development setup; project scope and stack approva
 - [ ] Relationships and constraints behave as designed.
 - [ ] Sample records can be inserted, queried and updated via EF Core.
 - [ ] Invalid foreign keys and invalid numeric values are rejected.
-- [ ] Team reviews the ER diagram and schema.
+- [ ] Team reviews the ER diagram and schema; Aakash may support screenshots and documentation.
 
 ### Exit criteria
 Database is reproducibly created from migrations, sample ORM operations pass and the team approves the shared schema.
 
 ## Phase 2 — Authentication and User Management
-**Target:** 5 November 2026  
+**Target:** 10–11 November 2026  
 **Owner:** Rahul Bora; Ganpat reviews Identity integration.
 
 ### Tasks
@@ -150,7 +150,7 @@ A farmer can publish and manage a lot; a buyer can discover and inspect it; auth
 Offer, counteroffer, comparison and Net Daam workflows pass functional, authorization and edge-case tests.
 
 ## Phase 5 — Orders and Market Intelligence
-**Target:** 10 November 2026  
+**Target:** 12–13 November 2026  
 **Owners:** Aakash (orders), Ganpat (reference prices and integration).
 
 ### Tasks
@@ -200,7 +200,7 @@ Accepted offers generate trackable orders and administrator-managed reference pr
 Documented endpoints pass Postman tests, including invalid requests and authorization cases.
 
 ## Phase 7 — UI Integration and Optimization
-**Target:** 13 November 2026  
+**Target:** 14 November 2026  
 **Owners:** all members; Ganpat coordinates integration.
 
 ### Tasks
@@ -223,7 +223,7 @@ Documented endpoints pass Postman tests, including invalid requests and authoriz
 All modules appear and behave as one consistent application, with no broken primary workflow.
 
 ## Phase 8 — Final QA and Submission
-**Target:** 14–15 November 2026  
+**Target:** 15 November 2026  
 **Owners:** all members.
 
 ### Tasks
