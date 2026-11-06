@@ -25,7 +25,7 @@ A phase can be marked Done only after:
 A failed test keeps the phase open. Do not mark a phase Done merely because the code has been written.
 
 ## Phase 0 — Project Foundation
-**Target:** 9–10 November 2026  
+**Target:** 6–7 November 2026
 **Lead:** Ganpat; all members verify local setup.
 
 ### Tasks
@@ -48,7 +48,7 @@ A failed test keeps the phase open. Do not mark a phase Done merely because the 
 All members can reproduce the development setup; project scope and stack approval are documented; starter solution builds.
 
 ## Phase 1 — Database and Architecture
-**Target:** 7–8 November 2026  
+**Target:** 7–8 November 2026
 **Lead:** Ganpat; all members review their entity requirements.
 
 ### Tasks
@@ -71,7 +71,7 @@ All members can reproduce the development setup; project scope and stack approva
 Database is reproducibly created from migrations, sample ORM operations pass and the team approves the shared schema.
 
 ## Phase 2 — Authentication and User Management
-**Target:** 10–11 November 2026  
+**Target:** 8–9 November 2026
 **Owner:** Rahul Bora; Ganpat reviews Identity integration.
 
 ### Tasks
@@ -96,7 +96,7 @@ Database is reproducibly created from migrations, sample ORM operations pass and
 Authentication, role assignment, profile CRUD and route protections pass peer testing.
 
 ## Phase 3 — Harvest Marketplace
-**Target:** 6–7 November 2026  
+**Target:** 9–10 November 2026
 **Owner:** Gautam; Ganpat reviews persistence and ownership rules.
 
 ### Tasks
@@ -122,7 +122,7 @@ Authentication, role assignment, profile CRUD and route protections pass peer te
 A farmer can publish and manage a lot; a buyer can discover and inspect it; authorization and validation tests pass.
 
 ## Phase 4 — Offer and Price Discovery Engine
-**Target:** 8–9 November 2026  
+**Target:** 10–11 November 2026
 **Owner:** Aakash Singh; Ganpat reviews transactional data rules.
 
 ### Tasks
@@ -150,7 +150,7 @@ A farmer can publish and manage a lot; a buyer can discover and inspect it; auth
 Offer, counteroffer, comparison and Net Daam workflows pass functional, authorization and edge-case tests.
 
 ## Phase 5 — Orders and Market Intelligence
-**Target:** 12–13 November 2026  
+**Target:** 11–12 November 2026
 **Owners:** Aakash (orders), Ganpat (reference prices and integration).
 
 ### Tasks
@@ -175,7 +175,7 @@ Offer, counteroffer, comparison and Net Daam workflows pass functional, authoriz
 Accepted offers generate trackable orders and administrator-managed reference prices display with clear dates/sources.
 
 ## Phase 6 — REST API and Postman Testing
-**Target:** 11–12 November 2026  
+**Target:** 12–13 November 2026
 **Lead:** Ganpat; feature owners verify API behaviour for their modules.
 
 ### Tasks
@@ -200,7 +200,7 @@ Accepted offers generate trackable orders and administrator-managed reference pr
 Documented endpoints pass Postman tests, including invalid requests and authorization cases.
 
 ## Phase 7 — UI Integration and Optimization
-**Target:** 14 November 2026  
+**Target:** 14 November 2026
 **Owners:** all members; Ganpat coordinates integration.
 
 ### Tasks
