@@ -17,9 +17,9 @@
 A phase can be marked Done only after:
 1. implementation checklist is complete;
 2. owner self-tests normal, invalid and edge-case inputs;
-3. a different team member performs peer testing;
+3. Ganpat performs integration checks; targeted peer testing is used for security, transaction and other high-risk business rules;
 4. defects are fixed and regression tests pass;
-5. code is reviewed and documentation is updated;
+5. Ganpat checks integrated code and documentation is updated;
 6. Ganpat records the integration review and the team approves the phase.
 
 A failed test keeps the phase open. Do not mark a phase Done merely because the code has been written.
@@ -30,7 +30,7 @@ A failed test keeps the phase open. Do not mark a phase Done merely because the 
 
 ### Tasks
 - [ ] Finalize scope, abstract, roles and stack.
-- [ ] Obtain instructor confirmation that ASP.NET Core is accepted despite Django-specific wording in the handout.
+- [x] Instructor confirmation received: ASP.NET Core/C# from the INT402 syllabus is accepted for the selected Q1 project (reported by Ganpat, 6 November 2026).
 - [ ] Create private GitHub repository and grant team access.
 - [ ] Create the team Project board and configure fields/views.
 - [ ] Agree branch, commit, pull-request and review rules.
@@ -41,7 +41,7 @@ A failed test keeps the phase open. Do not mark a phase Done merely because the 
 - [ ] All four members can clone the repository.
 - [ ] All four members can build and run the starter solution.
 - [ ] SQL Server is reachable from the development environment.
-- [ ] Each member can push a branch and open a test PR.
+- [ ] Each member can push a change to their assigned personal branch and update the corresponding task card; Ganpat handles integration.
 - [ ] Repository permissions are verified.
 
 ### Exit criteria
