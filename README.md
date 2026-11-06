@@ -57,9 +57,9 @@ The comparison is an estimate based on recorded offer terms and user-entered cos
 | Ganpat Singh | Project lead, database architecture, EF Core, integration and reference-price module |
 | Rahul Bora | Authentication, authorization and user profiles |
 | Gautam | Crop catalogue, harvest lots and marketplace |
-| Aakash Singh | Offers, negotiation, Net Daam workflow and orders |
+| Aakash Singh | Low-risk UI, documentation, screenshots and manual testing support |
 
-All members share responsibility for integration, testing, documentation and viva preparation.
+All members must be able to run and explain the application. Ganpat handles integration; assigned owners test and push their work.
 
 ## Development method
 
@@ -76,9 +76,9 @@ See:
 ## Repository workflow
 
 - `main` is the shared stable branch.
-- Create a feature branch for each issue.
-- Open a pull request instead of directly merging unreviewed work.
-- Link the relevant issue in each pull request.
+- Work on your assigned personal branch (`team/ganpat`, `team/rahul`, `team/gautam` or `team/aakash`).
+- Push completed tasks to your own branch and update the linked task issue with the commit hash and tests performed.
+- Members do not need to create pull requests; Ganpat handles integration into `main`.
 - Do not commit secrets, connection strings containing credentials, database passwords or personal data.
 - Update documentation and tests together with implementation.
 
@@ -96,7 +96,7 @@ The final project will include:
 
 ## Academic stack confirmation
 
-The INT402 syllabus identifies C# and ASP.NET Core. The separate project handout contains Django/Python-specific implementation and rubric wording. The team is implementing the syllabus stack as instructed by the student, but must obtain instructor confirmation that ASP.NET Core is accepted for the selected Q1 project before substantial implementation.
+The INT402 syllabus identifies C# and ASP.NET Core. The separate project handout contains Django/Python-specific implementation and rubric wording. Ganpat has confirmed that the instructor approved using the INT402 syllabus stack (C# / ASP.NET Core) for the selected Q1 project.
 
 ## Scope exclusions
 
