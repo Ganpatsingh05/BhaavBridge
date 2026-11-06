@@ -63,7 +63,7 @@ All members must be able to run and explain the application. Ganpat handles inte
 
 ## Development method
 
-The team follows nine phase gates. A phase is not complete merely because its code is written. Implementation, self-testing, peer testing, defect fixing, regression testing and approval are required before the next dependent phase is started.
+The team follows nine phase gates. Members complete assigned work on their personal branches, run local checks, push changes and update the task card. Ganpat handles integration into `main` and runs phase-level tests. Targeted peer testing is reserved for security, authorization, transaction and other high-risk features.
 
 See:
 - [Project specification](docs/PROJECT_SPECIFICATION.md)
