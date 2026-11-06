@@ -133,8 +133,8 @@ The first submission excludes online payment processing, AI/ML crop prediction, 
 
 ## 14. Academic stack confirmation
 
-The INT402 syllabus identifies C# and ASP.NET Core, while the separate project question sheet includes Django/Python-specific implementation language. The team is following the student's instruction to use the syllabus stack. Instructor confirmation that ASP.NET Core is accepted for Q1 remains an academic dependency and should be recorded before substantial implementation.
+The INT402 syllabus identifies C# and ASP.NET Core, while the separate project question sheet includes Django/Python-specific implementation language. Ganpat has reported that the instructor confirmed ASP.NET Core/C# from the INT402 syllabus is accepted for the selected Q1 project on 6 November 2026.
 
 ## 15. Definition of done
 
-A feature is done only when implementation is complete, validation and authorization are tested, relevant tests pass, peer review is complete, defects are resolved, and documentation is updated. A phase additionally requires its exit criteria and formal team approval.
+A task is Done when its owner has pushed the work to their assigned branch, run the required local checks and recorded the commit/test result. Ganpat integrates completed work into main and checks the integrated build. A phase is Done only after the integrated application passes its phase-level tests, defects are resolved, documentation is updated and the phase gate is approved. Team members are not required to create or review pull requests.
