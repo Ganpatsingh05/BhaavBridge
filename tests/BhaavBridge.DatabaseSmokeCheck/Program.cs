@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 try
 {
     var configuration = new ConfigurationBuilder()
-        .AddUserSecrets<Program>()
+        .AddUserSecrets("BhaavBridge-Web")
         .Build();
 
     var connectionString = configuration.GetConnectionString("DefaultConnection");
