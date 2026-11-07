@@ -47,7 +47,7 @@ A failed test keeps the phase open. Do not mark a phase Done merely because the 
 - [ ] Confirm all members can access the GitHub Project board.
 
 ### Exit criteria
-The stack is approved, the starter is integrated into `main`, and the project lead plus one additional developer have verified/reviewed the starter. Remaining member onboarding is tracked separately and must be completed before those members begin their assigned feature work.
+The stack is approved, the starter is integrated into `main`, and the project lead plus one additional developer have verified/reviewed the starter. Remaining member onboarding is tracked in [Issue #11](https://github.com/Ganpatsingh05/BhaavBridge/issues/11) and must be completed before those members begin their assigned feature work.
 
 ## Phase 1 — Database and Architecture
 **Target:** 7–8 November 2026
