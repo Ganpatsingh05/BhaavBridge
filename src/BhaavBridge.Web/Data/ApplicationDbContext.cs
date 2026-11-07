@@ -255,7 +255,7 @@ public sealed class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        return SaveChangesAsync(acceptAllChangesOnSuccess: true, cancellationToken);
+        return SaveChangesAsync(acceptAllChangesOnSuccess: true, cancellationToken: cancellationToken);
     }
 
     public override Task<int> SaveChangesAsync(
