@@ -62,11 +62,11 @@ The stack is approved, the starter is integrated into `main`, and the project le
 - [x] Configure relationships, precision, indexes, check constraints and delete behavior.
 - [x] Register ApplicationDbContext with SQL Server in Program.cs.
 - [x] Document local SQL Server/User Secrets and EF Core migration commands in `docs/DATABASE_SETUP.md`.
-- [ ] Configure the local connection string using User Secrets and verify design-time context discovery.
+- [x] Configure the local SQL Server connection using User Secrets; design-time context discovery succeeds.
 - [x] Restore/build succeeded after the model and Identity additions (7 November 2026).
 - [x] Generate and apply `20261107110530_InitialCreate` to `BhaavBridge_Dev` (7 November 2026).
 - [x] Verify Identity and BhaavBridge tables in SSMS; migration log confirms foreign keys, check constraints and indexes.
-- [ ] Commit the generated migration source files to `main`.
+- [ ] Commit the generated migration source files to `main` (generated locally; pending push).
 - [ ] Test representative data operations and invalid values.
 
 ### Tests
