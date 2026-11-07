@@ -63,19 +63,21 @@ The stack is approved, the starter is integrated into `main`, and the project le
 - [x] Register ApplicationDbContext with SQL Server in Program.cs.
 - [x] Document local SQL Server/User Secrets and EF Core migration commands in `docs/DATABASE_SETUP.md`.
 - [ ] Configure the local connection string using User Secrets and verify design-time context discovery.
-- [ ] Restore/build and fix any compile or model errors.
-- [ ] Create and apply the initial migration.
-- [ ] Verify the schema in SSMS and test representative data operations.
+- [x] Restore/build succeeded after the model and Identity additions (7 November 2026).
+- [x] Generate and apply `20261107110530_InitialCreate` to `BhaavBridge_Dev` (7 November 2026).
+- [x] Verify Identity and BhaavBridge tables in SSMS; migration log confirms foreign keys, check constraints and indexes.
+- [ ] Commit the generated migration source files to `main`.
+- [ ] Test representative data operations and invalid values.
 
 ### Tests
 - [x] EF Core and Identity package versions are pinned to 10.0.14.
 - [x] NuGet vulnerability audit on the development machine reports no vulnerable packages after the Pkcs update.
-- [ ] Current solution build succeeds after the model and Identity changes.
-- [ ] EF Core identifies ApplicationDbContext.
-- [ ] Migration creates the expected Identity and BhaavBridge tables, keys, indexes and constraints.
+- [x] Current solution build succeeds after the model and Identity changes.
+- [x] EF Core design-time context discovery identifies ApplicationDbContext and the SQL Server provider.
+- [x] Migration created the expected Identity and BhaavBridge tables, keys, indexes and constraints.
 - [ ] Sample crop, lot, offer and revision can be inserted/read through EF Core.
 - [ ] Invalid quantities and negative prices are rejected.
-- [ ] A second team member can recreate the schema from the committed migration.
+- [ ] A second team member can recreate the schema from the migration committed to `main`.
 
 ### Exit criteria
 The current solution builds, the schema is created reproducibly from migrations, representative ORM tests pass, and the team approves the shared schema.
