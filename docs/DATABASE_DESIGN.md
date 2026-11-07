@@ -152,6 +152,8 @@ Use decimal arithmetic. Copy the values used at acceptance into the order snapsh
 
 ## 6. EF Core implementation conventions
 
+- EF Core SQL Server and Design package versions are pinned to 10.0.14 in the web project.
+- The repository-local `dotnet-ef` CLI tool is pinned to 10.0.14 in `.config/dotnet-tools.json`.
 - Use `ApplicationDbContext : IdentityDbContext<ApplicationUser>`.
 - Configure relationships, precision, indexes and check constraints through Fluent API.
 - Store enum statuses as bounded strings.
