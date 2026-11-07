@@ -70,6 +70,7 @@ See:
 - [Phase tracker and exit criteria](docs/PHASE_TRACKER.md)
 - [Database design](docs/DATABASE_DESIGN.md)
 - [Local database setup](docs/DATABASE_SETUP.md)
+- [Database smoke check](tests/BhaavBridge.DatabaseSmokeCheck/README.md)
 - [API plan](docs/API_DOCUMENTATION.md)
 - [Team responsibilities](docs/TEAM_RESPONSIBILITIES.md)
 - [Contribution workflow](CONTRIBUTING.md)
