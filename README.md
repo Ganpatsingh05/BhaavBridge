@@ -28,7 +28,7 @@ BhaavBridge is a role-based agricultural marketplace that helps farmers publish 
 - Built-in dependency injection and middleware
 - Postman for API testing
 
-The actual .NET SDK, ASP.NET Core, EF Core and SQL Server versions used will be recorded after the development environment is finalized.
+The verified development baseline is .NET SDK 10.0.400, ASP.NET Core runtime 10.0.11, SQL Server 2025 Express and SSMS 22. Entity Framework Core SQL Server/Design and the `dotnet-ef` CLI are pinned to 10.0.14.
 
 ## Core functionality
 
