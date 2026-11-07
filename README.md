@@ -86,15 +86,9 @@ See:
 
 ## Local setup
 
-The exact setup commands will be finalized once the team locks the SDK and SQL Server configuration. At minimum, contributors will need the agreed .NET SDK, SQL Server/SQL Server Express or LocalDB, and an IDE such as Visual Studio or VS Code.
+The development baseline is .NET SDK 10.0.400 and SQL Server Express at `localhost\\SQLEXPRESS`. Configure the local connection with .NET User Secrets and follow [Database Setup](docs/DATABASE_SETUP.md) for restore, build, EF Core context verification and migration commands.
 
-The final project will include:
-- the solution and source code;
-- EF Core migrations;
-- a safe example configuration file;
-- database setup instructions;
-- dependency/version information;
-- test instructions.
+Never commit local connection strings, credentials or user-secret files.
 
 ## Academic stack confirmation
 
