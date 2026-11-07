@@ -77,10 +77,10 @@ The stack is approved, the starter is integrated into `main`, and the project le
 - [x] Migration created the expected Identity and BhaavBridge tables, keys, indexes and constraints.
 - [ ] Sample crop, lot, offer and revision can be inserted/read through EF Core.
 - [ ] Invalid quantities and negative prices are rejected.
-- [ ] A second team member can recreate the schema from the migration committed to `main` on a clean database.
+- [ ] Rahul recreates the schema from the committed migration on a separate clean local database.
 
 ### Exit criteria
-The solution builds, the schema is applied from the committed migration, and the EF Core database smoke check passes. A second-machine recreation and team gate confirmation remain required before Phase 1 is closed.
+The solution builds, the committed migration is applied locally, and the EF Core database smoke check passes without warnings. Rahul must verify migration recreation on a separate clean database, followed by team gate confirmation, before Phase 1 is closed.
 
 ## Phase 2 — Authentication and User Management
 **Target:** 8–9 November 2026
