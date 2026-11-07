@@ -50,28 +50,35 @@ A failed test keeps the phase open. Do not mark a phase Done merely because the 
 The stack is approved, the starter is integrated into `main`, and the project lead plus one additional developer have verified/reviewed the starter. Remaining member onboarding is tracked in [Issue #11](https://github.com/Ganpatsingh05/BhaavBridge/issues/11) and must be completed before those members begin their assigned feature work.
 
 ## Phase 1 — Database and Architecture
-**Target:** 7–8 November 2026
-**Lead:** Ganpat; all members review their entity requirements.
+**Target:** 7–8 November 2026  
+**Lead:** Ganpat; Rahul and Gautam provide module requirements; Aakash supports documentation.
 
 ### Tasks
-- [ ] Finalize the agreed ER diagram, entity definitions and first-release business rules in `docs/DATABASE_DESIGN.md`.
-- [ ] Define PKs, FKs, cardinalities, nullability and constraints.
-- [ ] Add EF Core SQL Server/Design packages and the pinned `dotnet-ef` CLI tool (10.0.14).
-- [ ] Configure SQL Server and EF Core.
-- [ ] Implement ApplicationDbContext and model configurations.
-- [ ] Add and apply initial migrations.
-- [ ] Establish folders, service-registration and controller conventions.
-- [ ] Agree shared ViewModels and naming conventions.
+- [x] Finalize the agreed ER diagram, entity definitions and first-release rules in `docs/DATABASE_DESIGN.md`.
+- [x] Define primary keys, foreign keys, relationships, decimal precision and integrity rules in the design.
+- [x] Add EF Core SQL Server, Design and ASP.NET Core Identity packages (10.0.14).
+- [x] Pin the repository-local `dotnet-ef` tool to 10.0.14.
+- [x] Add the entity classes, ApplicationUser and ApplicationDbContext.
+- [x] Configure relationships, precision, indexes, check constraints and delete behavior.
+- [x] Register ApplicationDbContext with SQL Server in Program.cs.
+- [x] Document local SQL Server/User Secrets and EF Core migration commands in `docs/DATABASE_SETUP.md`.
+- [ ] Configure the local connection string using User Secrets and verify design-time context discovery.
+- [ ] Restore/build and fix any compile or model errors.
+- [ ] Create and apply the initial migration.
+- [ ] Verify the schema in SSMS and test representative data operations.
 
 ### Tests
-- [ ] Migrations create the expected Identity and BhaavBridge schema.
-- [ ] Relationships and constraints behave as designed.
-- [ ] Sample records can be inserted, queried and updated via EF Core.
-- [ ] Invalid foreign keys and invalid numeric values are rejected.
-- [ ] Team reviews the ER diagram and schema; Aakash may support screenshots and documentation.
+- [x] EF Core and Identity package versions are pinned to 10.0.14.
+- [x] NuGet vulnerability audit on the development machine reports no vulnerable packages after the Pkcs update.
+- [ ] Current solution build succeeds after the model and Identity changes.
+- [ ] EF Core identifies ApplicationDbContext.
+- [ ] Migration creates the expected Identity and BhaavBridge tables, keys, indexes and constraints.
+- [ ] Sample crop, lot, offer and revision can be inserted/read through EF Core.
+- [ ] Invalid quantities and negative prices are rejected.
+- [ ] A second team member can recreate the schema from the committed migration.
 
 ### Exit criteria
-Database is reproducibly created from migrations, sample ORM operations pass and the team approves the shared schema.
+The current solution builds, the schema is created reproducibly from migrations, representative ORM tests pass, and the team approves the shared schema.
 
 ## Phase 2 — Authentication and User Management
 **Target:** 8–9 November 2026
