@@ -51,36 +51,30 @@ The stack is approved, the starter is integrated into `main`, and the project le
 
 ## Phase 1 — Database and Architecture
 **Target:** 7–8 November 2026  
-**Lead:** Ganpat; Rahul and Gautam provide module requirements; Aakash supports documentation.
+**Lead:** Ganpat; Rahul performs the independent migration-recreation check.
 
 ### Tasks
-- [x] Finalize the agreed ER diagram, entity definitions and first-release rules in `docs/DATABASE_DESIGN.md`.
-- [x] Define primary keys, foreign keys, relationships, decimal precision and integrity rules in the design.
-- [x] Add EF Core SQL Server, Design and ASP.NET Core Identity packages (10.0.14).
-- [x] Pin the repository-local `dotnet-ef` tool to 10.0.14.
-- [x] Add the entity classes, ApplicationUser and ApplicationDbContext.
-- [x] Configure relationships, precision, indexes, check constraints and delete behavior.
-- [x] Register ApplicationDbContext with SQL Server in Program.cs.
-- [x] Document local SQL Server/User Secrets and EF Core migration commands in `docs/DATABASE_SETUP.md`.
-- [x] Configure the local SQL Server connection using User Secrets; design-time context discovery succeeds.
-- [x] Restore/build succeeded after the model and Identity additions (7 November 2026).
-- [x] Generate and apply `20261107110530_InitialCreate` to `BhaavBridge_Dev` (7 November 2026).
-- [x] Verify Identity and BhaavBridge tables in SSMS; migration log confirms foreign keys, check constraints and indexes.
-- [x] Commit the generated migration source files to `main` (commit `5b716cb`, pushed on 7 November 2026).
-- [x] Database smoke check passed: sample entity insert/read, offer/revision, order, Net Daam arithmetic, negative quantity constraint and rollback.
+- [x] Finalize the ER diagram, entity definitions and first-release rules.
+- [x] Add EF Core SQL Server, Design, Identity and tool references at version 10.0.14.
+- [x] Implement ApplicationUser, all eight entities and ApplicationDbContext.
+- [x] Configure relationships, precision, indexes and check constraints.
+- [x] Configure SQL Server and User Secrets.
+- [x] Generate and apply migration `20261107110530_InitialCreate` to `BhaavBridge_Dev`.
+- [x] Commit all migration files to `main` (commit `5b716cb`).
+- [x] Verify tables in SSMS.
+- [x] Pass the repeatable database smoke check twice without compiler warnings.
+- [ ] Rahul recreates the schema from the committed migration on `BhaavBridge_Rahul_Verification`.
+- [ ] Rahul runs the database smoke check against that separate database.
 
 ### Tests
-- [x] EF Core and Identity package versions are pinned to 10.0.14.
-- [x] NuGet vulnerability audit on the development machine reports no vulnerable packages after the Pkcs update.
-- [x] Current solution build succeeds after the model and Identity changes.
-- [x] EF Core design-time context discovery identifies ApplicationDbContext and the SQL Server provider.
-- [x] Migration created the expected Identity and BhaavBridge tables, keys, indexes and constraints.
-- [ ] Sample crop, lot, offer and revision can be inserted/read through EF Core.
-- [ ] Invalid quantities and negative prices are rejected.
-- [ ] Rahul recreates the schema from the committed migration on a separate clean local database.
+- [x] Solution builds and EF Core discovers ApplicationDbContext.
+- [x] NuGet audit reports no vulnerable packages.
+- [x] InitialCreate is recorded in EF migration history.
+- [x] Entity insert/read checks, Net Daam arithmetic, invalid quantity constraint and rollback pass.
+- [ ] Rahul confirms clean-database migration and smoke-check results.
 
 ### Exit criteria
-The solution builds, the committed migration is applied locally, and the EF Core database smoke check passes without warnings. Rahul must verify migration recreation on a separate clean database, followed by team gate confirmation, before Phase 1 is closed.
+The committed migration can recreate the full schema on another machine, the smoke check passes there, and the project lead/team approve the database gate. Close Phase 1 issue #2 only after these checks.
 
 ## Phase 2 — Authentication and User Management
 **Target:** 8–9 November 2026
