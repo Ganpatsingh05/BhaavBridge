@@ -133,7 +133,7 @@ The first submission excludes online payment processing, AI/ML crop prediction, 
 
 ## 14. Academic stack confirmation
 
-The INT402 syllabus identifies C# and ASP.NET Core, while the separate project question sheet includes Django/Python-specific implementation language. Ganpat has reported that the instructor confirmed ASP.NET Core/C# from the INT402 syllabus is accepted for the selected Q1 project on 6 November 2026.
+The INT402 syllabus identifies C# and ASP.NET Core, while the separate project question sheet includes Django/Python-specific implementation language. Our instructor confirmed on 6 November 2026 that ASP.NET Core/C# from the INT402 syllabus is accepted for the selected Q1 project.
 
 ## 15. Definition of done
 
