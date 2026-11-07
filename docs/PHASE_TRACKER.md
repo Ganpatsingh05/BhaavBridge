@@ -66,7 +66,7 @@ The stack is approved, the starter is integrated into `main`, and the project le
 - [x] Restore/build succeeded after the model and Identity additions (7 November 2026).
 - [x] Generate and apply `20261107110530_InitialCreate` to `BhaavBridge_Dev` (7 November 2026).
 - [x] Verify Identity and BhaavBridge tables in SSMS; migration log confirms foreign keys, check constraints and indexes.
-- [ ] Commit the generated migration source files to `main` (generated locally; pending push).
+- [x] Commit the generated migration source files to `main` (commit `5b716cb`, pushed on 7 November 2026).
 - [ ] Test representative data operations and invalid values.
 
 ### Tests
@@ -77,7 +77,7 @@ The stack is approved, the starter is integrated into `main`, and the project le
 - [x] Migration created the expected Identity and BhaavBridge tables, keys, indexes and constraints.
 - [ ] Sample crop, lot, offer and revision can be inserted/read through EF Core.
 - [ ] Invalid quantities and negative prices are rejected.
-- [ ] A second team member can recreate the schema from the migration committed to `main`.
+- [ ] A second team member can recreate the schema from the migration committed to `main` on a clean database.
 
 ### Exit criteria
 The current solution builds, the schema is created reproducibly from migrations, representative ORM tests pass, and the team approves the shared schema.
