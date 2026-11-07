@@ -59,11 +59,11 @@ The comparison is an estimate based on recorded offer terms and user-entered cos
 | Gautam | Crop catalogue, harvest lots and marketplace |
 | Aakash Singh | Low-risk UI, documentation, screenshots and manual testing support |
 
-All members must be able to run and explain the application. Ganpat handles integration; assigned owners test and push their work.
+All members must be able to run and explain the application. We coordinate changes, test the work and keep the shared `main` branch stable.
 
 ## Development method
 
-The team follows nine phase gates. Members complete assigned work on their personal branches, run local checks, push changes and update the task card. Ganpat handles integration into `main` and runs phase-level tests. Targeted peer testing is reserved for security, authorization, transaction and other high-risk features.
+The team follows nine phase gates. Members complete assigned work, run local checks and push to the shared `main` branch. We coordinate changes to shared files and run phase-level tests before approving each gate.
 
 See:
 - [Project specification](docs/PROJECT_SPECIFICATION.md)
@@ -76,9 +76,10 @@ See:
 ## Repository workflow
 
 - `main` is the shared stable branch.
-- Work on your assigned personal branch (`team/ganpat`, `team/rahul`, `team/gautam` or `team/aakash`).
-- Push completed tasks to your own branch and update the linked task issue with the commit hash and tests performed.
-- Members do not need to create pull requests; Ganpat handles integration into `main`.
+- `main` is the only shared development branch.
+- Pull the latest `main`, edit the files assigned to the task, run checks, commit and push directly to `main`.
+- Routine feature branches and pull requests are not required.
+- Update the task issue with the commit hash and tests performed.
 - Do not commit secrets, connection strings containing credentials, database passwords or personal data.
 - Update documentation and tests together with implementation.
 
@@ -96,7 +97,7 @@ The final project will include:
 
 ## Academic stack confirmation
 
-The INT402 syllabus identifies C# and ASP.NET Core. The separate project handout contains Django/Python-specific implementation and rubric wording. Ganpat has confirmed that the instructor approved using the INT402 syllabus stack (C# / ASP.NET Core) for the selected Q1 project.
+The INT402 syllabus identifies C# and ASP.NET Core. The separate project handout contains Django/Python-specific implementation and rubric wording. Our instructor has approved using the INT402 syllabus stack (C# / ASP.NET Core) for the selected Q1 project.
 
 ## Scope exclusions
 
