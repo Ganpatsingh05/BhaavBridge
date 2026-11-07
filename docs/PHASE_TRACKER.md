@@ -135,17 +135,14 @@ A farmer can publish and manage a lot; a buyer can discover and inspect it; auth
 
 ## Phase 4 — Offer and Price Discovery Engine
 **Target:** 10–11 November 2026
-**Owner:** Aakash Singh; Ganpat reviews transactional data rules.
+**Lead:** Ganpat Singh for offer rules, acceptance integrity and Net Daam; Rahul supports authorization; Aakash may assist with offer comparison presentation only.
 
 ### Tasks
-- [ ] Implement buyer offer submission.
-- [ ] Implement farmer incoming-offer list.
-- [ ] Implement accept/reject actions.
-- [ ] Implement counteroffers and OfferRevision history.
-- [ ] Build side-by-side offer comparison.
-- [ ] Implement Net Daam calculation.
-- [ ] Display estimated net return and per-quintal value.
-- [ ] Prevent competing accepted offers on one lot.
+- [ ] Implement buyer offer submission and farmer incoming-offer workflow.
+- [ ] Implement accept/reject and counteroffer business rules with OfferRevision history.
+- [ ] Build offer comparison and Net Daam calculation.
+- [ ] Display estimated net return and per-quintal value (Aakash may implement the presentation after the business rules are finalized).
+- [ ] Enforce one accepted offer per lot transactionally.
 
 ### Tests
 - [ ] Offers are linked to valid lots and buyers.
@@ -163,16 +160,15 @@ Offer, counteroffer, comparison and Net Daam workflows pass functional, authoriz
 
 ## Phase 5 — Orders and Market Intelligence
 **Target:** 11–12 November 2026
-**Owners:** Aakash (orders), Ganpat (reference prices and integration).
+**Lead:** Ganpat Singh for order creation, transaction integrity and market-reference prices; Aakash may assist with low-risk order-status presentation and documentation.
 
 ### Tasks
-- [ ] Create an order from an accepted offer.
-- [ ] Store agreed quantity, price and buyer/farmer references.
-- [ ] Ensure one order per accepted offer.
-- [ ] Implement permitted order status transitions.
-- [ ] Create dated market-reference price records.
-- [ ] Implement administrator price management.
-- [ ] Display reference price, effective date and source.
+- [ ] Create an order transactionally from an accepted offer.
+- [ ] Store agreed quantity, price and cost snapshots.
+- [ ] Enforce one order per accepted offer.
+- [ ] Implement and validate permitted order status transitions.
+- [ ] Create dated market-reference price records and administrator management.
+- [ ] Display reference price, effective date and source (Aakash may assist with presentation and documentation).
 
 ### Tests
 - [ ] Accepted offer creates exactly one order.
