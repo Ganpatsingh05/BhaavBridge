@@ -16,44 +16,47 @@
 
 A phase can be marked Done only after:
 1. implementation checklist is complete;
-2. owners test their assigned changes on the shared `main` branch;
+2. owners commit their assigned changes to the shared `main` branch and run local checks;
 3. the team runs integrated checks; targeted peer testing is used for security, authorization, transaction and other high-risk business rules;
 4. defects are fixed and regression tests pass;
-5. the project lead checks integrated code and documentation is updated;
-6. Ganpat records the integration review and the team approves the phase.
+5. the project lead checks the integrated code and documentation is updated;
+6. the team records approval of the phase.
 
 A failed test keeps the phase open. Do not mark a phase Done merely because the code has been written.
 
 ## Phase 0 — Project Foundation
-**Target:** 6–7 November 2026
-**Lead:** Ganpat; all members verify local setup.
+**Target:** 6–7 November 2026  
+**Lead:** Ganpat; onboarding continues for all members.
 
 ### Tasks
 - [x] Finalize scope, abstract, roles and stack.
-- [x] Instructor confirmation received: ASP.NET Core/C# from the INT402 syllabus is accepted for the selected Q1 project (reported by Ganpat, 6 November 2026).
-- [ ] Create private GitHub repository and grant team access.
-- [ ] Create the team Project board and configure fields/views.
+- [x] Instructor confirmation received: ASP.NET Core/C# from the INT402 syllabus is accepted for Q1.
+- [x] Create the private GitHub repository and send collaborator invitations.
+- [x] Create the GitHub Project board and add the phase/task issues.
 - [x] Agree a single shared `main` branch workflow; routine feature branches and pull requests are not required.
-- [ ] Install and verify agreed .NET SDK and SQL Server tooling.
-- [ ] Create initial ASP.NET Core MVC solution.
+- [x] Verify .NET 10 SDK, ASP.NET Core MVC template, Git, SQL Server 2025 and SSMS 22 on Ganpat's machine.
+- [x] Create the ASP.NET Core MVC starter solution.
 
 ### Tests
-- [ ] All four members can clone the repository.
-- [ ] All four members can build and run the starter solution.
-- [ ] SQL Server is reachable from the development environment.
-- [ ] Each member can push a change to their assigned personal branch and update the corresponding task card; Ganpat handles integration.
-- [ ] Repository permissions are verified.
+- [x] Ganpat independently restored, built and ran the starter.
+- [x] HTTP-to-HTTPS redirect verified.
+- [x] SQL Server `localhost\\SQLEXPRESS` connected in SSMS and `BhaavBridge_Dev` verified `ONLINE`.
+- [x] Rahul reviewed and approved the starter, confirming the .NET 10 target, MVC structure and successful build.
+- [x] Starter PR #10 merged into `main` on 7 November 2026.
+- [ ] Gautam and Aakash complete their clone/build/run onboarding.
+- [ ] Confirm all members can access the GitHub Project board.
 
 ### Exit criteria
-The starter solution is integrated into `main`, the project stack is approved, and the lead plus one additional member have independently built/reviewed the starter. Remaining member onboarding is tracked separately and must be completed before those members begin their assigned feature work.
+The stack is approved, the starter is integrated into `main`, and the project lead plus one additional developer have verified/reviewed the starter. Remaining member onboarding is tracked separately and must be completed before those members begin their assigned feature work.
 
 ## Phase 1 — Database and Architecture
 **Target:** 7–8 November 2026
 **Lead:** Ganpat; all members review their entity requirements.
 
 ### Tasks
-- [ ] Finalize ER diagram and entity definitions.
+- [ ] Finalize the agreed ER diagram, entity definitions and first-release business rules in `docs/DATABASE_DESIGN.md`.
 - [ ] Define PKs, FKs, cardinalities, nullability and constraints.
+- [ ] Add EF Core SQL Server/Design packages and the pinned `dotnet-ef` CLI tool (10.0.14).
 - [ ] Configure SQL Server and EF Core.
 - [ ] Implement ApplicationDbContext and model configurations.
 - [ ] Add and apply initial migrations.
@@ -61,7 +64,7 @@ The starter solution is integrated into `main`, the project stack is approved, a
 - [ ] Agree shared ViewModels and naming conventions.
 
 ### Tests
-- [ ] Migrations create the expected schema.
+- [ ] Migrations create the expected Identity and BhaavBridge schema.
 - [ ] Relationships and constraints behave as designed.
 - [ ] Sample records can be inserted, queried and updated via EF Core.
 - [ ] Invalid foreign keys and invalid numeric values are rejected.
