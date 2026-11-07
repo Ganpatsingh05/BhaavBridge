@@ -67,7 +67,7 @@ The stack is approved, the starter is integrated into `main`, and the project le
 - [x] Generate and apply `20261107110530_InitialCreate` to `BhaavBridge_Dev` (7 November 2026).
 - [x] Verify Identity and BhaavBridge tables in SSMS; migration log confirms foreign keys, check constraints and indexes.
 - [x] Commit the generated migration source files to `main` (commit `5b716cb`, pushed on 7 November 2026).
-- [ ] Test representative data operations and invalid values.
+- [x] Database smoke check passed: sample entity insert/read, offer/revision, order, Net Daam arithmetic, negative quantity constraint and rollback.
 
 ### Tests
 - [x] EF Core and Identity package versions are pinned to 10.0.14.
@@ -80,7 +80,7 @@ The stack is approved, the starter is integrated into `main`, and the project le
 - [ ] A second team member can recreate the schema from the migration committed to `main` on a clean database.
 
 ### Exit criteria
-The current solution builds, the schema is created reproducibly from migrations, representative ORM tests pass, and the team approves the shared schema.
+The solution builds, the schema is applied from the committed migration, and the EF Core database smoke check passes. A second-machine recreation and team gate confirmation remain required before Phase 1 is closed.
 
 ## Phase 2 — Authentication and User Management
 **Target:** 8–9 November 2026
