@@ -1,90 +1,68 @@
 # Contributing to BhaavBridge
 
-This is a small student team. The workflow is intentionally simple: each developer completes an assigned task, pushes code to their own branch, and updates the GitHub task card. Ganpat coordinates integration into `main`.
+Our team uses one shared working branch: `main`. We keep the workflow simple and coordinate before editing shared files.
 
-## 1. Branch strategy
+## 1. Daily workflow
 
-- `main` is the stable, integrated branch. Team members must not push directly to `main`.
-- Each developer uses one personal working branch: `team/ganpat`, `team/rahul`, `team/gautam`, or `team/aakash`.
-- Ganpat creates or prepares the personal branches after the starter application is merged into `main`.
-- Do not create a new branch for every small task unless Ganpat asks.
-- Do not force-push or rewrite shared branch history.
+1. Open the assigned task in the BhaavBridge Project board.
+2. Move the task to `In Progress`.
+3. Open PowerShell in the repository folder and run `git pull origin main`.
+4. Work only on the files included in the assigned task.
+5. Run `dotnet build` and the relevant tests.
+6. Check `git status`, stage only the files changed for the task, and commit with a descriptive message.
+7. Push to `main` using `git push origin main`.
+8. Add the commit hash and test result to the task issue, then move the task to `Done`.
 
-## 2. Simple task workflow for members
-
-1. Open the assigned item in the BhaavBridge Project board.
-2. Move its status to `In Progress`.
-3. Switch to your assigned personal branch and pull its latest version.
-4. Work only on your assigned files/module.
-5. Run `dotnet build` and any relevant tests.
-6. Commit and push your changes to your personal branch.
-7. Add a short comment to the GitHub task issue with the branch name, commit hash and tests performed.
-8. Move the task card to `Done` only after the change is pushed and local checks pass.
-
-Members are not required to create pull requests or review other members' pull requests. Ganpat handles integration and merging into `main`.
-
-## 3. Commands members use
-
-First-time setup after Ganpat provides the branch:
+Example commands:
 
 ```powershell
-git switch team/<your-name>
-git pull
-```
-
-After completing a task:
-
-```powershell
+git pull origin main
 git status
-git add <your-changed-files>
-git commit -m "feat: describe your change"
-git push
+dotnet build
+git add <changed-files>
+git commit -m "feat: describe the completed change"
+git push origin main
 ```
 
-Use the exact branch name provided by Ganpat. Do not use `git push origin main`.
+## 2. Coordination rules
 
-## 4. Integration and phase approval
+- `main` is the only shared development branch.
+- We do not create personal or feature branches for routine work.
+- Pull requests are not required for routine tasks.
+- Before editing, check that another team member is not changing the same files.
+- Pull the latest `main` before starting and before committing.
+- If `git push` is rejected or a merge conflict appears, stop and coordinate with the project lead. Do not force-push.
+- Do not overwrite another member's unfinished work.
+- Keep commits small and describe the actual change.
 
-- Ganpat fetches and integrates completed member branches into `main`.
-- Ganpat resolves cross-module conflicts and checks the integrated build.
-- A task may be marked Done by its owner after pushing and passing local checks.
-- A phase is not approved until Ganpat's integration checks, phase-level tests, defect fixes and team gate approval are complete.
-- Important security, authorization, database and transaction logic receives additional review by Ganpat.
-- Members should report blockers in the task issue instead of silently changing shared files.
+## 3. File ownership
 
-## 5. File ownership and coordination
+- Shared architecture, database context, entities, migrations and application configuration are coordinated by the project lead.
+- Rahul owns authentication, authorization and profile implementation.
+- Gautam owns crop catalogue, harvest lots and marketplace implementation.
+- Aakash handles assigned low-risk UI, help/about pages, screenshots, user-guide content and manual UI tests.
+- A member must coordinate before changing files owned by another module.
 
-- Ganpat owns shared architecture, `Program.cs`, database context, shared models, migrations and integration.
-- Rahul owns Identity/authentication/profile files.
-- Gautam owns crop catalogue, produce-lot and marketplace files.
-- Aakash owns only explicitly assigned low-risk Razor views, isolated CSS, help/about content, screenshots and documentation/testing support.
-- Do not edit shared files owned by another member without coordinating with Ganpat.
-- Shared entity and relationship changes must be agreed before implementation.
+## 4. Database change policy
 
-## 6. Coding conventions
+- Discuss shared entity and relationship changes before implementation.
+- Keep EF Core migrations in source control.
+- Never edit or delete an already-applied migration to conceal a schema change.
+- Test migrations against the development database.
+- Never commit passwords, access tokens or production credentials.
+
+## 5. Coding conventions
 
 - Use clear, descriptive C# names.
 - Keep controllers focused on request orchestration.
 - Put reusable business rules in services.
 - Use ViewModels for view-specific input/output where appropriate.
 - Validate input on the server; client-side validation is supplementary.
-- Use asynchronous EF Core operations for database I/O where appropriate.
+- Use asynchronous EF Core operations for database I/O.
 - Handle expected failures and return meaningful messages/status codes.
-- Avoid hard-coded application records in controllers or views.
 
-## 7. Phase gates
+## 6. Definition of done
 
-A phase can be approved only after:
-1. implementation checklist is complete;
-2. owners' local tests pass;
-3. Ganpat integrates the branches and verifies the combined build;
-4. phase-level normal, invalid and edge-case tests pass;
-5. defects are fixed and regression tests pass;
-6. documentation is updated;
-7. Ganpat records the approval and the team accepts the gate.
+A task is Done when its code is committed to `main`, its required local checks pass and the task card records the commit and test result.
 
-A task marked Done means the owner's work is pushed and locally tested. A phase marked Done means the integrated system passed the phase gate. These are different statuses.
-
-## 8. Secrets and data
-
-Never commit passwords, tokens, real database credentials, personal information, private keys or API secrets. Use local user secrets or environment variables for development configuration.
+A phase is Done only when the integrated application passes its phase-level tests, defects are fixed, documentation is updated and the team approves the gate. A task being Done does not automatically complete the phase.
