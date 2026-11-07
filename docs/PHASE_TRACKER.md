@@ -16,10 +16,10 @@
 
 A phase can be marked Done only after:
 1. implementation checklist is complete;
-2. owner self-tests normal, invalid and edge-case inputs;
-3. Ganpat performs integration checks; targeted peer testing is used for security, transaction and other high-risk business rules;
+2. owners test their assigned changes on the shared `main` branch;
+3. the team runs integrated checks; targeted peer testing is used for security, authorization, transaction and other high-risk business rules;
 4. defects are fixed and regression tests pass;
-5. Ganpat checks integrated code and documentation is updated;
+5. the project lead checks integrated code and documentation is updated;
 6. Ganpat records the integration review and the team approves the phase.
 
 A failed test keeps the phase open. Do not mark a phase Done merely because the code has been written.
@@ -33,7 +33,7 @@ A failed test keeps the phase open. Do not mark a phase Done merely because the 
 - [x] Instructor confirmation received: ASP.NET Core/C# from the INT402 syllabus is accepted for the selected Q1 project (reported by Ganpat, 6 November 2026).
 - [ ] Create private GitHub repository and grant team access.
 - [ ] Create the team Project board and configure fields/views.
-- [ ] Agree branch, commit, pull-request and review rules.
+- [x] Agree a single shared `main` branch workflow; routine feature branches and pull requests are not required.
 - [ ] Install and verify agreed .NET SDK and SQL Server tooling.
 - [ ] Create initial ASP.NET Core MVC solution.
 
@@ -45,7 +45,7 @@ A failed test keeps the phase open. Do not mark a phase Done merely because the 
 - [ ] Repository permissions are verified.
 
 ### Exit criteria
-All members can reproduce the development setup; project scope and stack approval are documented; starter solution builds.
+The starter solution is integrated into `main`, the project stack is approved, and the lead plus one additional member have independently built/reviewed the starter. Remaining member onboarding is tracked separately and must be completed before those members begin their assigned feature work.
 
 ## Phase 1 — Database and Architecture
 **Target:** 7–8 November 2026
