@@ -193,7 +193,7 @@ public AccountController(
             model.Email.Trim(),
             model.Password,
             model.RememberMe,
-            lockoutOnFailure: false);
+            lockoutOnFailure: true);
 if (result.Succeeded)
 {
     // If the user was trying to access a specific local page,
