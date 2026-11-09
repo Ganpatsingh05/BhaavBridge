@@ -50,6 +50,16 @@ public static class AdminBootstrapSeeder
                     $"Failed to create administrator: {errors}");
             }
 		 } 
+        var existingRoles = await userManager.GetRolesAsync(user);
+        var hasNonAdminRole = existingRoles.Any(
+            role => !string.Equals(role, "Administrator", StringComparison.OrdinalIgnoreCase));
+
+        if (hasNonAdminRole)
+        {
+            throw new InvalidOperationException(
+                "The configured Development administrator email already belongs to a non-administrator role. Use a dedicated administrator account.");
+        }
+
         if (!await userManager.IsInRoleAsync(user, "Administrator"))
         {
             var roleResult =
