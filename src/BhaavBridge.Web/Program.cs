@@ -32,14 +32,16 @@ builder.Services
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
 })
     /////// IndentityRole-->Enables role-base authorization
-    .AddEntityFrameworkStores<ApplicationDbContext>()/////// it stores the information in SQL Server
-    .AddDefaultTokenProviders()
-    .ConfigureApplicationCookie(options =>
-    {
-        options.LoginPath = "/Account/Login";
-        options.AccessDeniedPath = "/Account/AccessDenied";
-        options.SlidingExpiration = true;
-    });
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+// Cookie configuration is registered on IServiceCollection, not IdentityBuilder.
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/AccessDenied";
+    options.SlidingExpiration = true;
+});
 
 builder.Services.AddControllersWithViews();
 
