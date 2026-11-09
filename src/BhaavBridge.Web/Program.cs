@@ -17,10 +17,29 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // 3. Configure ASP.NET Core Identity.
 builder.Services
-    .AddIdentity<ApplicationUser, IdentityRole>() // it register the identity authentication System
+    .AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.User.RequireUniqueEmail = true;
+
+    options.Password.RequiredLength = 8;
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+
+    options.Lockout.AllowedForNewUsers = true;
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+})
     /////// IndentityRole-->Enables role-base authorization
     .AddEntityFrameworkStores<ApplicationDbContext>()/////// it stores the information in SQL Server
-    .AddDefaultTokenProviders(); // enables toekn generation for operations such as password reset
+    .AddDefaultTokenProviders()
+    .ConfigureApplicationCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.SlidingExpiration = true;
+    });
 
 builder.Services.AddControllersWithViews();
 
@@ -31,12 +50,33 @@ using (var scope = app.Services.CreateScope())
 {
     await IdentityRoleSeeder.SeedAsync(scope.ServiceProvider);
 
-    // Create the administrator account only in Development.
+    // A Development administrator is created only when both local secrets exist.
+    // The web application can still run locally without an administrator bootstrap.
     if (app.Environment.IsDevelopment())
     {
-        await AdminBootstrapSeeder.SeedAsync(
-            scope.ServiceProvider,
-            app.Configuration);
+        var adminEmail = app.Configuration["AdminBootstrap:Email"];
+        var adminPassword = app.Configuration["AdminBootstrap:Password"];
+
+        var hasAdminEmail = !string.IsNullOrWhiteSpace(adminEmail);
+        var hasAdminPassword = !string.IsNullOrWhiteSpace(adminPassword);
+
+        if (hasAdminEmail != hasAdminPassword)
+        {
+            throw new InvalidOperationException(
+                "Configure both AdminBootstrap:Email and AdminBootstrap:Password, or leave both unset.");
+        }
+
+        if (hasAdminEmail && hasAdminPassword)
+        {
+            await AdminBootstrapSeeder.SeedAsync(
+                scope.ServiceProvider,
+                app.Configuration);
+        }
+        else
+        {
+            app.Logger.LogInformation(
+                "Development administrator bootstrap skipped because AdminBootstrap secrets are not configured.");
+        }
     }
 }
 // 5. Configure the HTTP request pipeline.
