@@ -88,7 +88,7 @@ The committed migration can recreate the full schema on another machine, the smo
 - [x] Implement role-restricted dashboards and own-profile updates.
 - [x] Add Development-only admin bootstrap using User Secrets and prevent promotion of Farmer/Buyer accounts.
 - [x] Configure unique email, password requirements, lockout and cookie paths.
-- [ ] Verify the final build and complete registration/login/lockout/ownership test matrix.
+- [ ] Rebuild after cookie-registration fix `01e6acd`, then complete registration/login/lockout/ownership test matrix.
 - [ ] Re-run database smoke check and approve the Phase 2 gate.
 
 ### Reported evidence
