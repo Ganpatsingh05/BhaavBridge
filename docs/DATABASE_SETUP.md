@@ -66,3 +66,29 @@ Verify that the database contains:
 - Orders
 
 Check the primary keys, foreign keys, unique indexes and check constraints before marking the database phase complete.
+
+## 6. Optional Development administrator bootstrap
+
+The application always ensures the Farmer, Buyer and Administrator roles exist. It creates a Development administrator account only when both of the following User Secrets are configured. If neither secret is present, normal local startup continues without creating an administrator. Supplying only one secret is treated as a configuration error.
+
+Run from the repository root and replace the example email and password with values intended only for your local development machine:
+
+```powershell
+dotnet user-secrets set "AdminBootstrap:Email" "admin@bhaavbridge.local" --project .\src\BhaavBridge.Web\BhaavBridge.Web.csproj
+
+dotnet user-secrets set "AdminBootstrap:Password" "<your-unique-strong-password>" --project .\src\BhaavBridge.Web\BhaavBridge.Web.csproj
+```
+
+The password must satisfy the configured Identity policy: at least 8 characters and include uppercase, lowercase, a digit and a non-alphanumeric character.
+
+Start the application in the Development environment. The bootstrapper creates the administrator if the email is new, or ensures the Administrator role is assigned if the account already exists. The bootstrapper is never run outside Development.
+
+To disable future local bootstrap attempts, remove both values from User Secrets:
+
+```powershell
+dotnet user-secrets remove "AdminBootstrap:Email" --project .\src\BhaavBridge.Web\BhaavBridge.Web.csproj
+
+dotnet user-secrets remove "AdminBootstrap:Password" --project .\src\BhaavBridge.Web\BhaavBridge.Web.csproj
+```
+
+Never commit administrator credentials or User Secrets to the repository.
