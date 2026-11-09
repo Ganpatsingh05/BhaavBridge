@@ -1,0 +1,20 @@
+
+@{
+    ViewData["Title"] = "Farmer Dashboard";
+}
+
+<div class="container mt-4">
+    <h1>Farmer Dashboard</h1>
+
+    <p>Welcome to your BhaavBridge Farmer Dashboard!</p>
+
+    <div class="alert alert-success">
+        You are successfully logged in as a Farmer.
+    </div>
+
+    <a asp-controller="Profile"
+       asp-action="Farmer"
+       class="btn btn-success mt-3">
+        Manage My Profile
+    </a>
+</div>

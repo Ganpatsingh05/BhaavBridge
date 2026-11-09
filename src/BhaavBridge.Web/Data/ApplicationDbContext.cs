@@ -1,11 +1,16 @@
 using BhaavBridge.Web.Models.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace BhaavBridge.Web.Data;
-
-public sealed class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+public sealed class ApplicationDbContext: IdentityDbContext<ApplicationUser, IdentityRole, string>
 {
+
+    //ApplicationUser — our custom user entity.
+    //IdentityRole — roles such as Farmer, Buyer and Administrator.
+    //string — the data type used for Identity IDs.
+
+
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {

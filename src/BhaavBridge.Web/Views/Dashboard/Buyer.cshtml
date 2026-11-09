@@ -1,0 +1,20 @@
+
+@{
+    ViewData["Title"] = "Buyer Dashboard";
+}
+
+<div class="container mt-4">
+    <h1>Buyer Dashboard</h1>
+
+    <p>Welcome to your BhaavBridge Buyer Dashboard!</p>
+
+    <div class="alert alert-primary">
+        You are successfully logged in as a Buyer.
+    </div>
+
+    <a asp-controller="Profile"
+       asp-action="Buyer"
+       class="btn btn-primary mt-3">
+        Manage My Profile
+    </a>
+</div>
