@@ -77,29 +77,25 @@ The stack is approved, the starter is integrated into `main`, and the project le
 The committed migration can recreate the full schema on another machine, the smoke check passes there, and the project lead/team approve the database gate. Close Phase 1 issue #2 only after these checks.
 
 ## Phase 2 — Authentication and User Management
-**Target:** 8–9 November 2026
-**Owner:** Rahul Bora; Ganpat reviews Identity integration.
+**Target:** 8–9 November 2026  
+**Owner:** Rahul Bora; Ganpat reviews authentication and authorization.
 
 ### Tasks
-- [ ] Configure ASP.NET Core Identity.
-- [ ] Implement farmer and buyer registration.
-- [ ] Implement login and logout.
-- [ ] Configure Farmer, Buyer and Administrator roles.
-- [ ] Implement role-based authorization.
-- [ ] Implement farmer and buyer profiles.
-- [ ] Create role-specific dashboard routes.
+- [x] Configure ASP.NET Core Identity with EF Core stores and authentication middleware.
+- [x] Seed Farmer, Buyer and Administrator roles.
+- [x] Implement farmer/buyer registration and profile persistence.
+- [x] Implement login, logout and role-based redirects.
+- [x] Implement role-restricted dashboards and own-profile updates.
+- [x] Add Development-only admin bootstrap using User Secrets.
+- [x] Configure unique email, password requirements, lockout and cookie paths.
+- [ ] Verify the final build and complete registration/login/lockout/ownership test matrix.
+- [ ] Re-run database smoke check and approve the Phase 2 gate.
 
-### Tests
-- [ ] Valid registration and login work.
-- [ ] Duplicate accounts and invalid credentials are handled.
-- [ ] Farmer cannot access buyer-only/admin-only routes.
-- [ ] Buyer cannot access farmer-only/admin-only routes.
-- [ ] Anonymous users cannot access protected pages.
-- [ ] Logout invalidates the authenticated session/cookie as configured.
-- [ ] Profile updates persist correctly.
+### Reported evidence
+Rahul reports successful build and role-based/cross-role authorization checks in commits `b192277` and `224de22`. Follow-up hardening has been added; final local verification remains open.
 
 ### Exit criteria
-Authentication, role assignment, profile CRUD and route protections pass peer testing.
+Farmer/buyer registration, login/logout, role assignment, profile CRUD, lockout and route protections pass the final integration test matrix. Ganpat and the team approve the gate.
 
 ## Phase 3 — Harvest Marketplace
 **Target:** 9–10 November 2026
