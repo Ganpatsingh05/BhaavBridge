@@ -81,7 +81,7 @@ dotnet user-secrets set "AdminBootstrap:Password" "<your-unique-strong-password>
 
 The password must satisfy the configured Identity policy: at least 8 characters and include uppercase, lowercase, a digit and a non-alphanumeric character.
 
-Start the application in the Development environment. The bootstrapper creates the administrator if the email is new, or ensures the Administrator role is assigned if the account already exists. The bootstrapper is never run outside Development.
+Start the application in the Development environment. The bootstrapper creates the administrator if the email is new, or ensures the Administrator role is assigned if the account already exists without another role. It refuses to promote an account that already has a Farmer or Buyer role; use a dedicated administrator email. The bootstrapper is never run outside Development.
 
 To disable future local bootstrap attempts, remove both values from User Secrets:
 
