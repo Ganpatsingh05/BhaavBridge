@@ -24,8 +24,10 @@ A phase can be marked Done only after:
 
 A failed test keeps the phase open. Do not mark a phase Done merely because the code has been written.
 
+---
+
 ## Phase 0 — Project Foundation
-**Target:** 6–7 November 2026  
+**Target:** 6–7 November 2026 | **Status:** ✅ Done  
 **Lead:** Ganpat; onboarding continues for all members.
 
 ### Tasks
@@ -43,14 +45,17 @@ A failed test keeps the phase open. Do not mark a phase Done merely because the 
 - [x] SQL Server `localhost\\SQLEXPRESS` connected in SSMS and `BhaavBridge_Dev` verified `ONLINE`.
 - [x] Rahul reviewed and approved the starter, confirming the .NET 10 target, MVC structure and successful build.
 - [x] Starter PR #10 merged into `main` on 7 November 2026.
-- [ ] Gautam and Aakash complete their clone/build/run onboarding.
+- [x] Gautam completed clone/build/run onboarding — commit `58a39d7` (11 November 2026).
+- [ ] Aakash completes clone/build/run onboarding.
 - [ ] Confirm all members can access the GitHub Project board.
 
 ### Exit criteria
 The stack is approved, the starter is integrated into `main`, and the project lead plus one additional developer have verified/reviewed the starter. Remaining member onboarding is tracked in [Issue #11](https://github.com/Ganpatsingh05/BhaavBridge/issues/11) and must be completed before those members begin their assigned feature work.
 
+---
+
 ## Phase 1 — Database and Architecture
-**Target:** 7–8 November 2026  
+**Target:** 7–8 November 2026 | **Status:** ⚠️ Implementation Done — Gate Pending Rahul Verification  
 **Lead:** Ganpat; Rahul performs the independent migration-recreation check.
 
 ### Tasks
@@ -76,55 +81,88 @@ The stack is approved, the starter is integrated into `main`, and the project le
 ### Exit criteria
 The committed migration can recreate the full schema on another machine, the smoke check passes there, and the project lead/team approve the database gate. Close Phase 1 issue #2 only after these checks.
 
+---
+
 ## Phase 2 — Authentication and User Management
-**Target:** 8–9 November 2026  
+**Target:** 8–9 November 2026 | **Status:** ⚠️ Implementation Done — Live Test Matrix Pending  
 **Owner:** Rahul Bora; Ganpat reviews authentication and authorization.
 
 ### Tasks
 - [x] Configure ASP.NET Core Identity with EF Core stores and authentication middleware.
 - [x] Seed Farmer, Buyer and Administrator roles.
-- [x] Implement farmer/buyer registration and profile persistence.
-- [x] Implement login, logout and role-based redirects.
+- [x] Implement farmer/buyer registration and profile persistence (transaction-wrapped).
+- [x] Implement login, logout and role-based redirects (Farmer → Farmer dashboard, Buyer → Buyer dashboard, Admin → Admin dashboard).
 - [x] Implement role-restricted dashboards and own-profile updates.
 - [x] Add Development-only admin bootstrap using User Secrets and prevent promotion of Farmer/Buyer accounts.
 - [x] Configure unique email, password requirements, lockout and cookie paths.
-- [ ] Rebuild after cookie-registration fix `01e6acd`, then complete registration/login/lockout/ownership test matrix.
+- [x] Fix: configure Identity application cookie on services (commit `01e6acd`).
+- [x] Fix: lockout error message shown separately from wrong-password error (commit `16e0eb4`).
+- [x] Fix: post-registration redirects to Login page so success message is immediately visible (commit `16e0eb4`).
+- [ ] Run full registration/login/lockout/ownership/profile test matrix against live database.
 - [ ] Re-run database smoke check and approve the Phase 2 gate.
 
 ### Reported evidence
-Rahul reports successful build and role-based/cross-role authorization checks in commits `b192277` and `224de22`. Follow-up hardening has been added; final local verification remains open.
+Rahul — implementation commits `b192277`, `224de22`. Audit fixes by Gautam in `16e0eb4`. Build verified: 0 warnings, 0 errors.
 
 ### Exit criteria
 Farmer/buyer registration, login/logout, role assignment, profile CRUD, lockout and route protections pass the final integration test matrix. Ganpat and the team approve the gate.
 
+---
+
 ## Phase 3 — Harvest Marketplace
-**Target:** 9–10 November 2026
+**Target:** 9–10 November 2026 | **Status:** ⚠️ Implementation Done — Live Test Pending  
 **Owner:** Gautam; Ganpat reviews persistence and ownership rules.
 
 ### Tasks
-- [ ] Implement crop catalogue.
-- [ ] Implement farmer harvest-lot creation.
-- [ ] Implement edit, close and permitted delete operations.
-- [ ] Add listing status and detail pages.
-- [ ] Build buyer marketplace.
-- [ ] Add search by crop.
-- [ ] Add filters for location, quantity and price.
-- [ ] Display only published/available lots to buyers.
+- [x] Implement crop catalogue — Admin-only CropController with Create/Edit/List and duplicate-name guard (commit `95ece85`).
+- [x] Implement farmer harvest-lot creation — ProduceLotController Create, saved as Draft with crop validity check (commit `95ece85`).
+- [x] Implement edit and close operations — only Draft lots editable; any non-Closed lot can be closed; ownership enforced (commit `95ece85`).
+- [x] Add listing status and detail pages — ProduceLot/Index, ProduceLot/Details with Draft/Published/Closed badges (commit `95ece85`).
+- [x] Build buyer marketplace — MarketplaceController Index showing only Published lots (commit `95ece85`).
+- [x] Add search by crop — Crop dropdown filter on Marketplace/Index (commit `95ece85`).
+- [x] Add filters for location, quantity and price — District, State, Min/Max Quantity, Min/Max Price filters (commit `95ece85`).
+- [x] Display only published/available lots to buyers — `Status == Published` enforced in query (commit `95ece85`).
+- [x] Fix: FarmerName populated correctly via eager-loaded User navigation property (commit `16e0eb4`).
+- [x] Fix: Details enforces ownership — farmer sees only their own lots regardless of status (commit `16e0eb4`).
+- [x] Update Farmer/Buyer/Admin dashboards with quick-action cards linking to Phase 3 features (commit `95ece85`).
+- [x] Update `_Layout.cshtml` with role-aware navbar (My Lots / Marketplace / Crops) (commit `95ece85`).
 
 ### Tests
-- [ ] Valid harvest lots save to SQL Server.
-- [ ] Required fields are validated.
-- [ ] Zero/negative quantity and negative prices are rejected.
-- [ ] Farmers can update only their own lots.
-- [ ] Closed lots cannot receive new offers.
-- [ ] Search and filters return correct results.
-- [ ] Listing updates appear after reload.
+- [ ] Valid harvest lots save to SQL Server — **run against live DB**.
+- [ ] Required fields are validated — client + server validation active; needs browser test.
+- [ ] Zero/negative quantity and negative prices are rejected — server-side `[Range]` validation + DB check constraints.
+- [ ] Farmers can update only their own lots — ownership check coded and audit-verified.
+- [ ] Closed lots cannot receive new offers — `Status == Closed` guard coded (Phase 4 will enforce this on offer submission).
+- [ ] Search and filters return correct results — **run against live DB with seed data**.
+- [ ] Listing updates appear after reload — **run against live DB**.
 
 ### Exit criteria
 A farmer can publish and manage a lot; a buyer can discover and inspect it; authorization and validation tests pass.
 
+> **Action required — Gautam:**
+> 1. Open a terminal: `cd d:\BhaavBridge && dotnet run --project src\BhaavBridge.Web --launch-profile https`
+> 2. Run the manual test checklist below.
+> 3. Record results and commit hash `16e0eb4` in [Issue #4](https://github.com/Ganpatsingh05/BhaavBridge/issues/4).
+> 4. Ask Ganpat to approve the gate.
+>
+> **Manual test checklist:**
+> - [ ] Register as Farmer → success message on Login page → login → Farmer dashboard shows.
+> - [ ] Register as Buyer → success message on Login page → login → Buyer dashboard shows.
+> - [ ] Admin creates a Crop (requires AdminBootstrap secrets configured).
+> - [ ] Farmer creates a Draft lot → lot appears in My Lots with Draft badge.
+> - [ ] Farmer edits the Draft lot → changes saved.
+> - [ ] Farmer publishes the lot → status changes to Published.
+> - [ ] Buyer logs in → Marketplace shows the Published lot.
+> - [ ] Buyer filters by crop/district/state → correct results returned.
+> - [ ] Farmer closes the lot → lot disappears from buyer Marketplace.
+> - [ ] Farmer tries to edit a Published lot → error message shown.
+> - [ ] Buyer tries to access `/ProduceLot` directly → redirected to Login.
+> - [ ] Farmer tries to access `/Marketplace` → redirected to Login.
+
+---
+
 ## Phase 4 — Offer and Price Discovery Engine
-**Target:** 10–11 November 2026
+**Target:** 10–11 November 2026 | **Status:** ⬜ Backlog  
 **Lead:** Ganpat Singh for offer rules, acceptance integrity and Net Daam; Rahul supports authorization; Aakash may assist with offer comparison presentation only.
 
 ### Tasks
@@ -148,8 +186,10 @@ A farmer can publish and manage a lot; a buyer can discover and inspect it; auth
 ### Exit criteria
 Offer, counteroffer, comparison and Net Daam workflows pass functional, authorization and edge-case tests.
 
+---
+
 ## Phase 5 — Orders and Market Intelligence
-**Target:** 11–12 November 2026
+**Target:** 11–12 November 2026 | **Status:** ⬜ Backlog  
 **Lead:** Ganpat Singh for order creation, transaction integrity and market-reference prices; Aakash may assist with low-risk order-status presentation and documentation.
 
 ### Tasks
@@ -172,8 +212,10 @@ Offer, counteroffer, comparison and Net Daam workflows pass functional, authoriz
 ### Exit criteria
 Accepted offers generate trackable orders and administrator-managed reference prices display with clear dates/sources.
 
+---
+
 ## Phase 6 — REST API and Postman Testing
-**Target:** 12–13 November 2026
+**Target:** 12–13 November 2026 | **Status:** ⬜ Backlog  
 **Lead:** Ganpat; feature owners verify API behaviour for their modules.
 
 ### Tasks
@@ -197,8 +239,10 @@ Accepted offers generate trackable orders and administrator-managed reference pr
 ### Exit criteria
 Documented endpoints pass Postman tests, including invalid requests and authorization cases.
 
+---
+
 ## Phase 7 — UI Integration and Optimization
-**Target:** 14 November 2026
+**Target:** 14 November 2026 | **Status:** ⬜ Backlog  
 **Owners:** all members; Ganpat coordinates integration.
 
 ### Tasks
@@ -220,8 +264,10 @@ Documented endpoints pass Postman tests, including invalid requests and authoriz
 ### Exit criteria
 All modules appear and behave as one consistent application, with no broken primary workflow.
 
+---
+
 ## Phase 8 — Final QA and Submission
-**Target:** 15 November 2026  
+**Target:** 15 November 2026 | **Status:** ⬜ Backlog  
 **Owners:** all members.
 
 ### Tasks
@@ -252,9 +298,13 @@ All modules appear and behave as one consistent application, with no broken prim
 ### Exit criteria
 Release candidate, documentation, database setup/backup instructions and report are complete and verified.
 
+---
+
 ## Submission — 16 November 2026
 
 No new features on submission day. Submit the tested source, required database material and report in the format confirmed by the instructor.
+
+---
 
 ## Current governance notes
 
@@ -263,6 +313,7 @@ No new features on submission day. Submit the tested source, required database m
 - Team members must update issue status and evidence as work progresses.
 - Record blockers openly; do not hide a failed test by moving an item to Done.
 
+---
 
 ## Repository phase issues
 
