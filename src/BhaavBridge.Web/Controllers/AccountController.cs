@@ -1,4 +1,3 @@
-
 using BhaavBridge.Web.Data;
 using BhaavBridge.Web.Models.Entities;
 using BhaavBridge.Web.Models.ViewModels;
@@ -13,15 +12,16 @@ public class AccountController : Controller
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ApplicationDbContext _context;
     private readonly SignInManager<ApplicationUser> _signInManager;
-public AccountController(
-    UserManager<ApplicationUser> userManager,
-    ApplicationDbContext context,
-    SignInManager<ApplicationUser> signInManager)
-{
-    _userManager = userManager;
-    _context = context;
-    _signInManager = signInManager;
-}
+
+    public AccountController(
+        UserManager<ApplicationUser> userManager,
+        ApplicationDbContext context,
+        SignInManager<ApplicationUser> signInManager)
+    {
+        _userManager = userManager;
+        _context = context;
+        _signInManager = signInManager;
+    }
 
     // GET: /Account/FarmerRegister
     [HttpGet]
@@ -33,8 +33,7 @@ public AccountController(
     // POST: /Account/FarmerRegister
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> FarmerRegister(
-        FarmerRegisterViewModel model)
+    public async Task<IActionResult> FarmerRegister(FarmerRegisterViewModel model)
     {
         if (!ModelState.IsValid)
             return View(model);
@@ -49,29 +48,23 @@ public AccountController(
             Email = model.Email.Trim()
         };
 
-        var createResult = await _userManager.CreateAsync(
-            user, model.Password);
+        var createResult = await _userManager.CreateAsync(user, model.Password);
 
         if (!createResult.Succeeded)
         {
             await transaction.RollbackAsync();
-
             foreach (var error in createResult.Errors)
                 ModelState.AddModelError(string.Empty, error.Description);
-
             return View(model);
         }
 
-        var roleResult = await _userManager.AddToRoleAsync(
-            user, "Farmer");
+        var roleResult = await _userManager.AddToRoleAsync(user, "Farmer");
 
         if (!roleResult.Succeeded)
         {
             await transaction.RollbackAsync();
-
             foreach (var error in roleResult.Errors)
                 ModelState.AddModelError(string.Empty, error.Description);
-
             return View(model);
         }
 
@@ -87,14 +80,11 @@ public AccountController(
         };
 
         _context.FarmerProfiles.Add(farmerProfile);
-
         await _context.SaveChangesAsync();
         await transaction.CommitAsync();
 
-        TempData["SuccessMessage"] =
-            "Farmer registration completed successfully. You can now log in.";
-
-        return RedirectToAction("Index", "Home");
+        TempData["SuccessMessage"] = "Farmer registration successful! You can now log in.";
+        return RedirectToAction("Login", "Account");
     }
 
     // GET: /Account/BuyerRegister
@@ -107,8 +97,7 @@ public AccountController(
     // POST: /Account/BuyerRegister
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> BuyerRegister(
-        BuyerRegisterViewModel model)
+    public async Task<IActionResult> BuyerRegister(BuyerRegisterViewModel model)
     {
         if (!ModelState.IsValid)
             return View(model);
@@ -123,29 +112,23 @@ public AccountController(
             Email = model.Email.Trim()
         };
 
-        var createResult = await _userManager.CreateAsync(
-            user, model.Password);
+        var createResult = await _userManager.CreateAsync(user, model.Password);
 
         if (!createResult.Succeeded)
         {
             await transaction.RollbackAsync();
-
             foreach (var error in createResult.Errors)
                 ModelState.AddModelError(string.Empty, error.Description);
-
             return View(model);
         }
 
-        var roleResult = await _userManager.AddToRoleAsync(
-            user, "Buyer");
+        var roleResult = await _userManager.AddToRoleAsync(user, "Buyer");
 
         if (!roleResult.Succeeded)
         {
             await transaction.RollbackAsync();
-
             foreach (var error in roleResult.Errors)
                 ModelState.AddModelError(string.Empty, error.Description);
-
             return View(model);
         }
 
@@ -160,16 +143,15 @@ public AccountController(
         };
 
         _context.BuyerProfiles.Add(buyerProfile);
-
         await _context.SaveChangesAsync();
         await transaction.CommitAsync();
 
-        TempData["SuccessMessage"] =
-            "Buyer registration completed successfully. You can now log in.";
+        TempData["SuccessMessage"] = "Buyer registration successful! You can now log in.";
+        return RedirectToAction("Login", "Account");
+    }
 
-        return RedirectToAction("Index", "Home");
-	}
-    [HttpGet] // GET: /Account/Login
+    // GET: /Account/Login
+    [HttpGet]
     public IActionResult Login(string? returnUrl = null)
     {
         ViewData["ReturnUrl"] = returnUrl;
@@ -179,9 +161,7 @@ public AccountController(
     // POST: /Account/Login
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Login(
-        LoginViewModel model,
-        string? returnUrl = null)
+    public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
     {
         if (!ModelState.IsValid)
         {
@@ -194,50 +174,43 @@ public AccountController(
             model.Password,
             model.RememberMe,
             lockoutOnFailure: true);
-if (result.Succeeded)
-{
-    // If the user was trying to access a specific local page,
-    // send them there after successful login.
-    if (!string.IsNullOrEmpty(returnUrl) &&
-        Url.IsLocalUrl(returnUrl))
-    {
-        return Redirect(returnUrl);
-    }
 
-    // Find the logged-in user.
-    var user = await _userManager.FindByEmailAsync(
-        model.Email.Trim());
-
-    if (user != null)
-    {
-        // Get all roles assigned to this user.
-        var roles = await _userManager.GetRolesAsync(user);
-
-        // Redirect according to the user's role.
-        if (roles.Contains("Farmer"))
+        if (result.Succeeded)
         {
-            return RedirectToAction("Farmer", "Dashboard");
+            // If the user was trying to access a specific local page, redirect there.
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                return Redirect(returnUrl);
+
+            var user = await _userManager.FindByEmailAsync(model.Email.Trim());
+
+            if (user != null)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+
+                if (roles.Contains("Farmer"))
+                    return RedirectToAction("Farmer", "Dashboard");
+
+                if (roles.Contains("Buyer"))
+                    return RedirectToAction("Buyer", "Dashboard");
+
+                if (roles.Contains("Administrator"))
+                    return RedirectToAction("Admin", "Dashboard");
+            }
+
+            // Fallback if no recognized role is assigned.
+            return RedirectToAction("Index", "Home");
         }
 
-        if (roles.Contains("Buyer"))
+        // Show specific message for account lockout.
+        if (result.IsLockedOut)
         {
-            return RedirectToAction("Buyer", "Dashboard");
+            ModelState.AddModelError(string.Empty,
+                "Your account is locked after too many failed attempts. Please try again in 15 minutes.");
         }
-
-        if (roles.Contains("Administrator"))
+        else
         {
-            return RedirectToAction("Admin", "Dashboard");
+            ModelState.AddModelError(string.Empty, "Invalid email or password.");
         }
-    }
-
-    // Fallback if no recognized role is assigned.
-    return RedirectToAction("Index", "Home");
-}
-
-
-        ModelState.AddModelError(
-            string.Empty,
-            "Invalid email or password.");
 
         ViewData["ReturnUrl"] = returnUrl;
         return View(model);
@@ -249,14 +222,13 @@ if (result.Succeeded)
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();
-
         return RedirectToAction("Index", "Home");
     }
-    // GET: /Account/AccessDenied
-[HttpGet]
-public IActionResult AccessDenied()
-{
-    return View();
-}
 
+    // GET: /Account/AccessDenied
+    [HttpGet]
+    public IActionResult AccessDenied()
+    {
+        return View();
+    }
 }

@@ -34,6 +34,7 @@ public class ProduceLotController : Controller
     {
         var userId = _userManager.GetUserId(User);
         return await _context.FarmerProfiles
+            .Include(p => p.User)
             .FirstOrDefaultAsync(p => p.UserId == userId);
     }
 
@@ -65,6 +66,8 @@ public class ProduceLotController : Controller
         var lots = await _context.ProduceLots
             .Where(l => l.FarmerProfileId == profile.FarmerProfileId)
             .Include(l => l.Crop)
+            .Include(l => l.FarmerProfile)
+                .ThenInclude(fp => fp.User)
             .OrderByDescending(l => l.CreatedAtUtc)
             .Select(l => new ProduceLotSummaryViewModel
             {
@@ -78,7 +81,7 @@ public class ProduceLotController : Controller
                 State = l.State,
                 AskingPricePerQuintal = l.AskingPricePerQuintal,
                 Description = l.Description,
-                FarmerName = profile.User != null ? profile.User.FullName : string.Empty,
+                FarmerName = l.FarmerProfile.User != null ? l.FarmerProfile.User.FullName : string.Empty,
                 Status = l.Status.ToString(),
                 CreatedAtUtc = l.CreatedAtUtc
             })
@@ -308,14 +311,19 @@ public class ProduceLotController : Controller
     // ── Farmer: detail view ───────────────────────────────────────────────────
 
     // GET: /ProduceLot/Details/5
-    [AllowAnonymous]
+    // Farmer can view any of their own lots (Draft, Published or Closed).
     public async Task<IActionResult> Details(int id)
     {
+        var profile = await GetCurrentFarmerProfileAsync();
+        if (profile == null)
+            return RedirectToAction("Farmer", "Profile");
+
         var lot = await _context.ProduceLots
             .Include(l => l.Crop)
             .Include(l => l.FarmerProfile)
                 .ThenInclude(fp => fp.User)
-            .FirstOrDefaultAsync(l => l.ProduceLotId == id);
+            .FirstOrDefaultAsync(l => l.ProduceLotId == id &&
+                                      l.FarmerProfileId == profile.FarmerProfileId);
 
         if (lot == null) return NotFound();
 
