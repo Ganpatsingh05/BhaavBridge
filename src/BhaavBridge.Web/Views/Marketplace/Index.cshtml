@@ -1,0 +1,114 @@
+@model BhaavBridge.Web.Models.ViewModels.MarketplaceFilterViewModel
+@{
+    ViewData["Title"] = "Marketplace";
+}
+
+<div class="container mt-4">
+    <h2>🛒 Marketplace — Available Harvest Lots</h2>
+    <p class="text-muted">Browse produce listed by farmers. Use filters to narrow your search.</p>
+
+    @* ── Filter Form ── *@
+    <div class="card mb-4 border-0 shadow-sm">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <div class="col-md-2">
+                    <label class="form-label fw-semibold">Crop</label>
+                    <select name="CropId" asp-items="Model.CropSelectList" class="form-select form-select-sm">
+                        <option value="">All Crops</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label fw-semibold">District</label>
+                    <input name="District" value="@Model.District"
+                           class="form-control form-control-sm" placeholder="District" />
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label fw-semibold">State</label>
+                    <input name="State" value="@Model.State"
+                           class="form-control form-control-sm" placeholder="State" />
+                </div>
+
+                <div class="col-md-1">
+                    <label class="form-label fw-semibold">Min Qty</label>
+                    <input name="MinQuantity" value="@Model.MinQuantity"
+                           type="number" step="0.001" min="0" class="form-control form-control-sm" placeholder="qtl" />
+                </div>
+
+                <div class="col-md-1">
+                    <label class="form-label fw-semibold">Max Qty</label>
+                    <input name="MaxQuantity" value="@Model.MaxQuantity"
+                           type="number" step="0.001" min="0" class="form-control form-control-sm" placeholder="qtl" />
+                </div>
+
+                <div class="col-md-1">
+                    <label class="form-label fw-semibold">Min ₹</label>
+                    <input name="MinPrice" value="@Model.MinPrice"
+                           type="number" step="0.01" min="0" class="form-control form-control-sm" placeholder="₹" />
+                </div>
+
+                <div class="col-md-1">
+                    <label class="form-label fw-semibold">Max ₹</label>
+                    <input name="MaxPrice" value="@Model.MaxPrice"
+                           type="number" step="0.01" min="0" class="form-control form-control-sm" placeholder="₹" />
+                </div>
+
+                <div class="col-md-2 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">Reset</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @* ── Results ── *@
+    @if (!Model.Lots.Any())
+    {
+        <div class="alert alert-info">
+            No lots found matching your filters. Try broadening your search.
+        </div>
+    }
+    else
+    {
+        <p class="text-muted small">Showing <strong>@Model.Lots.Count</strong> lot(s)</p>
+        <div class="row g-3">
+            @foreach (var lot in Model.Lots)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                            <strong>@lot.CropName</strong>
+                            @if (!string.IsNullOrWhiteSpace(lot.QualityGrade))
+                            { <span class="badge bg-light text-dark">@lot.QualityGrade</span> }
+                        </div>
+                        <div class="card-body">
+                            @if (!string.IsNullOrWhiteSpace(lot.Variety))
+                            { <p class="card-text mb-1"><small class="text-muted">Variety: @lot.Variety</small></p> }
+
+                            <p class="card-text mb-1">
+                                📦 <strong>@lot.QuantityQuintals.ToString("N2") qtl</strong>
+                            </p>
+                            <p class="card-text mb-1">
+                                💰 <strong>₹@lot.AskingPricePerQuintal.ToString("N2")</strong>/qtl
+                            </p>
+                            <p class="card-text mb-1">
+                                📍 @lot.District, @lot.State
+                            </p>
+                            <p class="card-text mb-1">
+                                🌱 Harvested: @lot.HarvestDate.ToString("dd MMM yyyy")
+                            </p>
+                            <p class="card-text mb-1">
+                                👨‍🌾 @lot.FarmerName
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <a asp-action="Details" asp-route-id="@lot.ProduceLotId"
+                               class="btn btn-outline-success btn-sm w-100">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

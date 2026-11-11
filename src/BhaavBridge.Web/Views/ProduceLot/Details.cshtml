@@ -1,0 +1,58 @@
+@model BhaavBridge.Web.Models.ViewModels.ProduceLotSummaryViewModel
+@{
+    ViewData["Title"] = $"Lot — {Model.CropName}";
+    var badgeClass = Model.Status switch
+    {
+        "Draft"     => "bg-secondary",
+        "Published" => "bg-success",
+        "Closed"    => "bg-dark",
+        _           => "bg-secondary"
+    };
+}
+
+<div class="container mt-4" style="max-width:720px;">
+    <div class="d-flex justify-content-between align-items-start mb-2">
+        <h2>🌾 @Model.CropName
+            @if (!string.IsNullOrWhiteSpace(Model.Variety))
+            { <small class="text-muted fs-5">— @Model.Variety</small> }
+        </h2>
+        <span class="badge @badgeClass fs-6">@Model.Status</span>
+    </div>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-4">Quality Grade</dt>
+        <dd class="col-sm-8">@(Model.QualityGrade ?? "—")</dd>
+
+        <dt class="col-sm-4">Quantity</dt>
+        <dd class="col-sm-8">@Model.QuantityQuintals.ToString("N2") quintals</dd>
+
+        <dt class="col-sm-4">Harvest Date</dt>
+        <dd class="col-sm-8">@Model.HarvestDate.ToString("dd MMM yyyy")</dd>
+
+        <dt class="col-sm-4">Location</dt>
+        <dd class="col-sm-8">@Model.District, @Model.State</dd>
+
+        <dt class="col-sm-4">Asking Price</dt>
+        <dd class="col-sm-8"><strong>₹@Model.AskingPricePerQuintal.ToString("N2")</strong> per quintal</dd>
+
+        <dt class="col-sm-4">Gross Value (est.)</dt>
+        <dd class="col-sm-8">₹@((Model.AskingPricePerQuintal * Model.QuantityQuintals).ToString("N2"))</dd>
+
+        <dt class="col-sm-4">Farmer</dt>
+        <dd class="col-sm-8">@Model.FarmerName</dd>
+
+        <dt class="col-sm-4">Listed On</dt>
+        <dd class="col-sm-8">@Model.CreatedAtUtc.ToLocalTime().ToString("dd MMM yyyy, hh:mm tt")</dd>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <dt class="col-sm-4">Description</dt>
+            <dd class="col-sm-8">@Model.Description</dd>
+        }
+    </dl>
+
+    <div class="mt-3">
+        <a asp-action="Index" class="btn btn-secondary">← Back to My Lots</a>
+    </div>
+</div>

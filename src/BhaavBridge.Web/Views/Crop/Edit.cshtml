@@ -1,0 +1,38 @@
+@model BhaavBridge.Web.Models.ViewModels.CropViewModel
+@{
+    ViewData["Title"] = "Edit Crop";
+    var cropId = ViewData["CropId"];
+}
+
+<div class="container mt-4" style="max-width:520px;">
+    <h2>✏️ Edit Crop</h2>
+    <hr />
+
+    <form asp-action="Edit" asp-route-id="@cropId" method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label fw-semibold"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Category" class="form-label fw-semibold"></label>
+            <input asp-for="Category" class="form-control" />
+            <span asp-validation-for="Category" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3 form-check">
+            <input asp-for="IsActive" class="form-check-input" />
+            <label asp-for="IsActive" class="form-check-label">Active</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Crop</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

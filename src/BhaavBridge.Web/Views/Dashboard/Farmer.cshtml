@@ -4,17 +4,36 @@
 }
 
 <div class="container mt-4">
-    <h1>Farmer Dashboard</h1>
-
-    <p>Welcome to your BhaavBridge Farmer Dashboard!</p>
+    <h1>🌾 Farmer Dashboard</h1>
+    <p class="text-muted">Welcome back! Manage your harvest lots and profile from here.</p>
 
     <div class="alert alert-success">
-        You are successfully logged in as a Farmer.
+        You are successfully logged in as a <strong>Farmer</strong>.
     </div>
 
-    <a asp-controller="Profile"
-       asp-action="Farmer"
-       class="btn btn-success mt-3">
-        Manage My Profile
-    </a>
+    <div class="row g-3 mt-2">
+        <div class="col-md-4">
+            <div class="card h-100 border-success shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-1">📦</div>
+                    <h5 class="card-title mt-2">My Harvest Lots</h5>
+                    <p class="card-text text-muted small">Create, publish and manage your produce listings.</p>
+                    <a asp-controller="ProduceLot" asp-action="Index"
+                       class="btn btn-success btn-sm">Go to My Lots →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-secondary shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-1">👤</div>
+                    <h5 class="card-title mt-2">My Profile</h5>
+                    <p class="card-text text-muted small">Update your name, village and farm details.</p>
+                    <a asp-controller="Profile" asp-action="Farmer"
+                       class="btn btn-outline-secondary btn-sm">Manage Profile →</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

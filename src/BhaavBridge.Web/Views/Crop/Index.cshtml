@@ -1,0 +1,64 @@
+@model IEnumerable<BhaavBridge.Web.Models.Entities.Crop>
+@{
+    ViewData["Title"] = "Crop Catalogue";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>🌾 Crop Catalogue</h2>
+        <a asp-action="Create" class="btn btn-success">+ Add New Crop</a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">No crops found. Add the first crop to get started.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var crop in Model)
+                    {
+                        <tr>
+                            <td>@crop.CropId</td>
+                            <td><strong>@crop.Name</strong></td>
+                            <td>@(crop.Category ?? "—")</td>
+                            <td>
+                                @if (crop.IsActive)
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Inactive</span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@crop.CropId"
+                                   class="btn btn-sm btn-outline-primary">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

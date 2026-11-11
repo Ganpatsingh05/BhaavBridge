@@ -1,0 +1,85 @@
+@model BhaavBridge.Web.Models.ViewModels.ProduceLotFormViewModel
+@{
+    ViewData["Title"] = "Create Harvest Lot";
+}
+
+<div class="container mt-4" style="max-width:680px;">
+    <h2>🌾 Create New Harvest Lot</h2>
+    <p class="text-muted">Fill in the details below. The lot will be saved as a <strong>Draft</strong> first.</p>
+    <hr />
+
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="CropId" class="form-label fw-semibold">Crop *</label>
+                <select asp-for="CropId" asp-items="Model.CropSelectList" class="form-select">
+                    <option value="">— Select Crop —</option>
+                </select>
+                <span asp-validation-for="CropId" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Variety" class="form-label fw-semibold">Variety</label>
+                <input asp-for="Variety" class="form-control" placeholder="e.g. Basmati, Durum" />
+                <span asp-validation-for="Variety" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="QualityGrade" class="form-label fw-semibold">Quality Grade</label>
+                <input asp-for="QualityGrade" class="form-control" placeholder="e.g. Grade A, FAQ" />
+                <span asp-validation-for="QualityGrade" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="QuantityQuintals" class="form-label fw-semibold">Quantity (quintals) *</label>
+                <input asp-for="QuantityQuintals" type="number" step="0.001" min="0.001" class="form-control" />
+                <span asp-validation-for="QuantityQuintals" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="HarvestDate" class="form-label fw-semibold">Harvest Date *</label>
+                <input asp-for="HarvestDate" type="date" class="form-control" />
+                <span asp-validation-for="HarvestDate" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="AskingPricePerQuintal" class="form-label fw-semibold">Asking Price (₹ per quintal) *</label>
+                <div class="input-group">
+                    <span class="input-group-text">₹</span>
+                    <input asp-for="AskingPricePerQuintal" type="number" step="0.01" min="0" class="form-control" />
+                </div>
+                <span asp-validation-for="AskingPricePerQuintal" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="District" class="form-label fw-semibold">District *</label>
+                <input asp-for="District" class="form-control" />
+                <span asp-validation-for="District" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="State" class="form-label fw-semibold">State *</label>
+                <input asp-for="State" class="form-control" />
+                <span asp-validation-for="State" class="text-danger small"></span>
+            </div>
+
+            <div class="col-12">
+                <label asp-for="Description" class="form-label fw-semibold">Description</label>
+                <textarea asp-for="Description" class="form-control" rows="3"
+                          placeholder="Optional details about quality, storage, availability, etc."></textarea>
+                <span asp-validation-for="Description" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">Save as Draft</button>
+            <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

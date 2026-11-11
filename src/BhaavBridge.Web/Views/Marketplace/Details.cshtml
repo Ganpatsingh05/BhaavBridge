@@ -1,0 +1,64 @@
+@model BhaavBridge.Web.Models.ViewModels.ProduceLotSummaryViewModel
+@{
+    ViewData["Title"] = $"{Model.CropName} — Lot Details";
+}
+
+<div class="container mt-4" style="max-width:720px;">
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">🌾 @Model.CropName
+                @if (!string.IsNullOrWhiteSpace(Model.Variety))
+                { <small class="text-white-50 fs-6">— @Model.Variety</small> }
+            </h4>
+            <span class="badge bg-light text-dark">Published</span>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">Quality Grade</dt>
+                <dd class="col-sm-8">@(Model.QualityGrade ?? "—")</dd>
+
+                <dt class="col-sm-4">Quantity Available</dt>
+                <dd class="col-sm-8"><strong>@Model.QuantityQuintals.ToString("N2") quintals</strong></dd>
+
+                <dt class="col-sm-4">Harvest Date</dt>
+                <dd class="col-sm-8">@Model.HarvestDate.ToString("dd MMM yyyy")</dd>
+
+                <dt class="col-sm-4">Location</dt>
+                <dd class="col-sm-8">@Model.District, @Model.State</dd>
+
+                <dt class="col-sm-4">Asking Price</dt>
+                <dd class="col-sm-8">
+                    <strong class="fs-5 text-success">₹@Model.AskingPricePerQuintal.ToString("N2")</strong>
+                    <span class="text-muted small">per quintal</span>
+                </dd>
+
+                <dt class="col-sm-4">Gross Value (est.)</dt>
+                <dd class="col-sm-8">
+                    ₹@((Model.AskingPricePerQuintal * Model.QuantityQuintals).ToString("N2"))
+                    <span class="text-muted small">(at asking price)</span>
+                </dd>
+
+                <dt class="col-sm-4">Farmer</dt>
+                <dd class="col-sm-8">@Model.FarmerName</dd>
+
+                <dt class="col-sm-4">Listed On</dt>
+                <dd class="col-sm-8">@Model.CreatedAtUtc.ToLocalTime().ToString("dd MMM yyyy, hh:mm tt")</dd>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Description))
+                {
+                    <dt class="col-sm-4">Description</dt>
+                    <dd class="col-sm-8">@Model.Description</dd>
+                }
+            </dl>
+
+            <div class="alert alert-warning mt-3 mb-0" role="alert">
+                <small>
+                    💡 Interested in this lot? The offer submission feature is coming soon (Phase 4).
+                </small>
+            </div>
+        </div>
+        <div class="card-footer bg-transparent">
+            <a asp-action="Index" class="btn btn-secondary">← Back to Marketplace</a>
+        </div>
+    </div>
+</div>

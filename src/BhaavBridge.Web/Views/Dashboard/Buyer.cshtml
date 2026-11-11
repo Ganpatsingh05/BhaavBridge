@@ -4,17 +4,36 @@
 }
 
 <div class="container mt-4">
-    <h1>Buyer Dashboard</h1>
-
-    <p>Welcome to your BhaavBridge Buyer Dashboard!</p>
+    <h1>🛒 Buyer Dashboard</h1>
+    <p class="text-muted">Welcome back! Browse the marketplace and manage your profile from here.</p>
 
     <div class="alert alert-primary">
-        You are successfully logged in as a Buyer.
+        You are successfully logged in as a <strong>Buyer</strong>.
     </div>
 
-    <a asp-controller="Profile"
-       asp-action="Buyer"
-       class="btn btn-primary mt-3">
-        Manage My Profile
-    </a>
+    <div class="row g-3 mt-2">
+        <div class="col-md-4">
+            <div class="card h-100 border-primary shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-1">🛒</div>
+                    <h5 class="card-title mt-2">Marketplace</h5>
+                    <p class="card-text text-muted small">Browse and filter available harvest lots from farmers.</p>
+                    <a asp-controller="Marketplace" asp-action="Index"
+                       class="btn btn-primary btn-sm">Browse Marketplace →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-secondary shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-1">👤</div>
+                    <h5 class="card-title mt-2">My Profile</h5>
+                    <p class="card-text text-muted small">Update your business and contact details.</p>
+                    <a asp-controller="Profile" asp-action="Buyer"
+                       class="btn btn-outline-secondary btn-sm">Manage Profile →</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
