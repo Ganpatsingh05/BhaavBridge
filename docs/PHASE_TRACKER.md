@@ -84,133 +84,147 @@ The committed migration can recreate the full schema on another machine, the smo
 ---
 
 ## Phase 2 — Authentication and User Management
-**Target:** 8–9 November 2026 | **Status:** ⚠️ Implementation Done — Live Test Matrix Pending  
+**Target:** 8–9 November 2026 | **Status:** Implementation complete — final live checks and approval pending  
 **Owner:** Rahul Bora; Ganpat reviews authentication and authorization.
 
-### Tasks
-- [x] Configure ASP.NET Core Identity with EF Core stores and authentication middleware.
-- [x] Seed Farmer, Buyer and Administrator roles.
-- [x] Implement farmer/buyer registration and profile persistence (transaction-wrapped).
-- [x] Implement login, logout and role-based redirects (Farmer → Farmer dashboard, Buyer → Buyer dashboard, Admin → Admin dashboard).
-- [x] Implement role-restricted dashboards and own-profile updates.
-- [x] Add Development-only admin bootstrap using User Secrets and prevent promotion of Farmer/Buyer accounts.
-- [x] Configure unique email, password requirements, lockout and cookie paths.
-- [x] Fix: configure Identity application cookie on services (commit `01e6acd`).
-- [x] Fix: lockout error message shown separately from wrong-password error (commit `16e0eb4`).
-- [x] Fix: post-registration redirects to Login page so success message is immediately visible (commit `16e0eb4`).
-- [ ] Run full registration/login/lockout/ownership/profile test matrix against live database.
-- [ ] Re-run database smoke check and approve the Phase 2 gate.
+### Implementation
+- [x] ASP.NET Core Identity with EF Core stores and authentication middleware.
+- [x] Farmer, Buyer and Administrator role seeding.
+- [x] Farmer/Buyer registration, role assignment and profile persistence.
+- [x] Login, logout and role-based redirects.
+- [x] Protected dashboards, access-denied page and own-profile updates.
+- [x] Development-only administrator bootstrap with User Secrets and safeguards.
+- [x] Unique email, password, lockout and cookie configuration.
+- [x] Fix registration redirect, lockout feedback and cookie configuration.
 
-### Reported evidence
-Rahul — implementation commits `b192277`, `224de22`. Audit fixes by Gautam in `16e0eb4`. Build verified: 0 warnings, 0 errors.
+### Evidence reported by Rahul — 12 November 2026
+- [x] Account lockout after repeated failed attempts.
+- [x] Anonymous access to Farmer, Buyer and Admin dashboards redirects to Login.
+- [x] Profile ownership protection reviewed.
+- [x] Role seeding is idempotent after application restart.
+- [x] 16 database tables, primary/foreign keys, unique indexes and 12 check constraints inspected.
+- [x] EF Core context connected to SQL Server LocalDB.
+- [x] Final solution build succeeded.
+- [x] Cross-role access restrictions reported verified.
+
+### Remaining integration tests
+- [ ] Ganpat verifies latest `main` builds cleanly.
+- [ ] Test Farmer registration end-to-end: Identity user, Farmer role and FarmerProfile created.
+- [ ] Test Buyer registration end-to-end: Identity user, Buyer role and BuyerProfile created.
+- [ ] Test duplicate email, weak password, mismatched confirmation and invalid credentials.
+- [ ] Confirm successful Farmer/Buyer login, role-based redirects and logout.
+- [ ] Confirm Farmer cannot access Buyer/Admin pages and Buyer cannot access Farmer/Admin pages.
+- [ ] Test real profile updates and cross-account profile tampering.
+- [ ] Configure a dedicated Development admin account and verify Admin dashboard access.
+- [ ] Re-run the database smoke check.
+- [ ] Ganpat records security review and team approval.
 
 ### Exit criteria
-Farmer/buyer registration, login/logout, role assignment, profile CRUD, lockout and route protections pass the final integration test matrix. Ganpat and the team approve the gate.
+All registration/login/profile/lockout/authorization tests pass on the integrated application, the database smoke check passes, and Ganpat/team approve Issue #3.
 
 ---
 
 ## Phase 3 — Harvest Marketplace
-**Target:** 9–10 November 2026 | **Status:** ⚠️ Implementation Done — Live Test Pending  
+**Target:** 13 November 2026 | **Status:** Implementation complete — live tests pending  
 **Owner:** Gautam; Ganpat reviews persistence and ownership rules.
 
-### Tasks
-- [x] Implement crop catalogue — Admin-only CropController with Create/Edit/List and duplicate-name guard (commit `95ece85`).
-- [x] Implement farmer harvest-lot creation — ProduceLotController Create, saved as Draft with crop validity check (commit `95ece85`).
-- [x] Implement edit and close operations — only Draft lots editable; any non-Closed lot can be closed; ownership enforced (commit `95ece85`).
-- [x] Add listing status and detail pages — ProduceLot/Index, ProduceLot/Details with Draft/Published/Closed badges (commit `95ece85`).
-- [x] Build buyer marketplace — MarketplaceController Index showing only Published lots (commit `95ece85`).
-- [x] Add search by crop — Crop dropdown filter on Marketplace/Index (commit `95ece85`).
-- [x] Add filters for location, quantity and price — District, State, Min/Max Quantity, Min/Max Price filters (commit `95ece85`).
-- [x] Display only published/available lots to buyers — `Status == Published` enforced in query (commit `95ece85`).
-- [x] Fix: FarmerName populated correctly via eager-loaded User navigation property (commit `16e0eb4`).
-- [x] Fix: Details enforces ownership — farmer sees only their own lots regardless of status (commit `16e0eb4`).
-- [x] Update Farmer/Buyer/Admin dashboards with quick-action cards linking to Phase 3 features (commit `95ece85`).
-- [x] Update `_Layout.cshtml` with role-aware navbar (My Lots / Marketplace / Crops) (commit `95ece85`).
+### Implementation delivered
+- [x] Admin-only crop catalogue with create/edit/list and duplicate-name guard.
+- [x] Farmer harvest-lot creation saved as Draft.
+- [x] Draft lot editing, publishing and closing with ownership checks.
+- [x] Farmer lot list/details with status.
+- [x] Buyer-only marketplace and Published-only buyer detail pages.
+- [x] Crop, district, state, quantity and price filters.
+- [x] Server-side validation and database constraints.
+- [x] Role-aware navigation and dashboard quick actions.
+- [x] Farmer-name projection and details ownership fixes.
 
-### Tests
-- [ ] Valid harvest lots save to SQL Server — **run against live DB**.
-- [ ] Required fields are validated — client + server validation active; needs browser test.
-- [ ] Zero/negative quantity and negative prices are rejected — server-side `[Range]` validation + DB check constraints.
-- [ ] Farmers can update only their own lots — ownership check coded and audit-verified.
-- [ ] Closed lots cannot receive new offers — `Status == Closed` guard coded (Phase 4 will enforce this on offer submission).
-- [ ] Search and filters return correct results — **run against live DB with seed data**.
-- [ ] Listing updates appear after reload — **run against live DB**.
+Commits: `95ece85` (marketplace implementation), `16e0eb4` (Phase 2/3 audit fixes; commit reports build with zero warnings/errors).
+
+### Live acceptance tests — Gautam to execute
+- [ ] Admin creates/edits/deactivates a crop; duplicate crop name is rejected.
+- [ ] Farmer creates a Draft lot; it appears in My Lots.
+- [ ] Farmer edits own Draft; changes persist after reload.
+- [ ] Farmer publishes the Draft; status changes to Published.
+- [ ] Farmer closes a Published lot; it disappears from buyer marketplace.
+- [ ] Farmer cannot edit Published/Closed lots.
+- [ ] A second farmer cannot view/edit another farmer's lot by changing the URL ID.
+- [ ] Required fields and zero/negative quantity or negative price are rejected.
+- [ ] Buyer sees Published lots only and can open lot details.
+- [ ] Crop/district/state/min-max quantity/min-max asking-price filters return expected rows.
+- [ ] Draft/Closed lots are not shown, including direct buyer detail URL.
+- [ ] Anonymous and wrong-role access is denied/redirected.
+- [ ] Run latest solution build and database smoke check.
+- [ ] Add screenshots and test outcomes to [Issue #4](https://github.com/Ganpatsingh05/BhaavBridge/issues/4).
+
+### Scope note
+Published/commercial lots are closed rather than hard-deleted to preserve history. Offer submission belongs to Phase 4.
 
 ### Exit criteria
-A farmer can publish and manage a lot; a buyer can discover and inspect it; authorization and validation tests pass.
-
-> **Action required — Gautam:**
-> 1. Open a terminal: `cd d:\BhaavBridge && dotnet run --project src\BhaavBridge.Web --launch-profile https`
-> 2. Run the manual test checklist below.
-> 3. Record results and commit hash `16e0eb4` in [Issue #4](https://github.com/Ganpatsingh05/BhaavBridge/issues/4).
-> 4. Ask Ganpat to approve the gate.
->
-> **Manual test checklist:**
-> - [ ] Register as Farmer → success message on Login page → login → Farmer dashboard shows.
-> - [ ] Register as Buyer → success message on Login page → login → Buyer dashboard shows.
-> - [ ] Admin creates a Crop (requires AdminBootstrap secrets configured).
-> - [ ] Farmer creates a Draft lot → lot appears in My Lots with Draft badge.
-> - [ ] Farmer edits the Draft lot → changes saved.
-> - [ ] Farmer publishes the lot → status changes to Published.
-> - [ ] Buyer logs in → Marketplace shows the Published lot.
-> - [ ] Buyer filters by crop/district/state → correct results returned.
-> - [ ] Farmer closes the lot → lot disappears from buyer Marketplace.
-> - [ ] Farmer tries to edit a Published lot → error message shown.
-> - [ ] Buyer tries to access `/ProduceLot` directly → redirected to Login.
-> - [ ] Farmer tries to access `/Marketplace` → redirected to Login.
+Gautam completes the live marketplace matrix, Ganpat reviews ownership and persistence evidence, and the team approves Issue #4.
 
 ---
 
 ## Phase 4 — Offer and Price Discovery Engine
-**Target:** 10–11 November 2026 | **Status:** ⬜ Backlog  
-**Lead:** Ganpat Singh for offer rules, acceptance integrity and Net Daam; Rahul supports authorization; Aakash may assist with offer comparison presentation only.
+**Target:** 13–14 November 2026 | **Status:** Not implemented  
+**Lead:** Ganpat — offer, counteroffer, acceptance integrity and Net Daam. Rahul supports authorization; Gautam supports marketplace integration; Aakash handles optional low-risk presentation/documentation only.
 
-### Tasks
-- [ ] Implement buyer offer submission and farmer incoming-offer workflow.
-- [ ] Implement accept/reject and counteroffer business rules with OfferRevision history.
-- [ ] Build offer comparison and Net Daam calculation.
-- [ ] Display estimated net return and per-quintal value (Aakash may implement the presentation after the business rules are finalized).
-- [ ] Enforce one accepted offer per lot transactionally.
+### Agreed first-release rules
+- One complete lot per accepted offer; no partial offers or partial acceptance.
+- One active offer per buyer per lot.
+- Counteroffers are appended to OfferRevision; Offer stores current terms.
+- Only one offer can be accepted per lot.
+- Accepting an offer closes the lot; order creation follows in Phase 5.
+- Offer and revision history are not hard-deleted.
+
+### Implementation
+- [ ] Buyer submits an offer for a Published lot; quantity equals the full lot quantity.
+- [ ] Farmer sees incoming offers only for their own lots; buyer sees only their own offers.
+- [ ] Farmer accepts, rejects or counteroffers offers on their own lot.
+- [ ] Counteroffer creates OfferRevision and updates current Offer terms.
+- [ ] Build side-by-side offer comparison.
+- [ ] Implement Net Daam using decimal arithmetic: gross = price × quantity; net = gross − farmer-borne costs.
+- [ ] Display estimated net return and per-quintal value.
+- [ ] Accept an offer transactionally, close the lot and prevent competing accepted offers.
+- [ ] Validate all prices, quantities and farmer-borne costs server-side.
 
 ### Tests
-- [ ] Offers are linked to valid lots and buyers.
-- [ ] Closed lots reject new offers.
-- [ ] Buyers can view/manage only their own offers.
-- [ ] Farmers can manage offers only on their own lots.
-- [ ] Counteroffer revisions are preserved.
-- [ ] Acceptance is atomic and only one offer can be accepted per lot.
+- [ ] Closed/Draft lots reject offers; ownership checks prevent cross-user access.
+- [ ] Counteroffer history is preserved.
+- [ ] Net Daam cases match independent calculations.
+- [ ] Duplicate/concurrent acceptance cannot accept multiple offers for one lot.
 - [ ] Invalid prices, quantities and costs are rejected.
-- [ ] Calculator matches independently calculated test cases.
-- [ ] Concurrent accept attempts cannot create multiple accepted offers.
+- [ ] Build and database smoke check pass.
 
 ### Exit criteria
-Offer, counteroffer, comparison and Net Daam workflows pass functional, authorization and edge-case tests.
+Offer/counteroffer, comparison, Net Daam and one-accepted-offer-per-lot integrity pass functional, authorization and edge-case tests; team approves Issue #5.
 
 ---
 
 ## Phase 5 — Orders and Market Intelligence
-**Target:** 11–12 November 2026 | **Status:** ⬜ Backlog  
-**Lead:** Ganpat Singh for order creation, transaction integrity and market-reference prices; Aakash may assist with low-risk order-status presentation and documentation.
+**Target:** 14 November 2026 | **Status:** Not implemented  
+**Lead:** Ganpat — order creation, transaction integrity and dated market-reference prices. Rahul supports authorization; Gautam supports marketplace integration; Aakash handles optional low-risk presentation/documentation only.
 
-### Tasks
-- [ ] Create an order transactionally from an accepted offer.
-- [ ] Store agreed quantity, price and cost snapshots.
-- [ ] Enforce one order per accepted offer.
-- [ ] Implement and validate permitted order status transitions.
-- [ ] Create dated market-reference price records and administrator management.
-- [ ] Display reference price, effective date and source (Aakash may assist with presentation and documentation).
+### Implementation
+- [ ] Accepting an offer creates exactly one Order transactionally.
+- [ ] Store agreed quantity, price, gross value and farmer-cost snapshots on Order.
+- [ ] Enforce one Order per accepted Offer.
+- [ ] Implement permitted order status transitions.
+- [ ] Buyer sees orders associated with their offers; farmer sees orders associated with their lots.
+- [ ] Admin manages dated market-reference prices.
+- [ ] Display crop, market, reference price, effective date and source.
+- [ ] Preserve historical reference-price records and order snapshots.
 
 ### Tests
-- [ ] Accepted offer creates exactly one order.
-- [ ] Repeated requests do not create duplicate orders.
-- [ ] Buyer and farmer see their own relevant orders.
-- [ ] Other users cannot view or update the order.
+- [ ] One accepted offer creates one order; duplicate acceptance does not create another.
+- [ ] Buyer/farmer cannot view or update another user's order.
 - [ ] Invalid status transitions are rejected.
-- [ ] Reference-price crop, market, date and source are displayed correctly.
-- [ ] Historical dated records remain intact.
+- [ ] Snapshots remain unchanged if source offer terms later change.
+- [ ] Market-reference crop, market, date and source display correctly.
+- [ ] Build and database smoke check pass.
 
 ### Exit criteria
-Accepted offers generate trackable orders and administrator-managed reference prices display with clear dates/sources.
+Accepted offers generate trackable orders, authorization passes, and dated reference prices appear with their source; team approves Issue #6.
 
 ---
 
