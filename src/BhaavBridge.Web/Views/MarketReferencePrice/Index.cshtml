@@ -1,0 +1,40 @@
+@model IEnumerable<BhaavBridge.Web.Models.Entities.MarketReferencePrice>
+@{
+    ViewData["Title"] = "Market Reference Prices";
+}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div><h2>Market Reference Prices</h2><p class="text-muted mb-0">Compare recorded mandi reference prices with the offers you receive.</p></div>
+        @if (User.IsInRole("Administrator")) { <a asp-action="Create" class="btn btn-success">Add Reference Price</a> }
+    </div>
+    @if (TempData["SuccessMessage"] != null) { <div class="alert alert-success">@TempData["SuccessMessage"]</div> }
+    <form method="get" class="card card-body mb-3">
+        <div class="row g-2">
+            <div class="col-md-4"><label class="form-label">Crop</label><select name="cropId" asp-items="(SelectList)ViewBag.CropOptions" class="form-select"><option value="">All crops</option></select></div>
+            <div class="col-md-3"><label class="form-label">District</label><input name="district" value="@ViewBag.District" class="form-control" /></div>
+            <div class="col-md-3"><label class="form-label">State</label><input name="state" value="@ViewBag.State" class="form-control" /></div>
+            <div class="col-md-2 d-flex align-items-end"><button class="btn btn-primary w-100">Filter</button></div>
+        </div>
+    </form>
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">No reference prices have been recorded yet.</div>
+    }
+    else
+    {
+        <div class="table-responsive"><table class="table table-striped align-middle">
+            <thead class="table-light"><tr><th>Crop</th><th>Market</th><th>Location</th><th>Effective date</th><th>Min</th><th>Modal</th><th>Max</th><th>Source</th>@if (User.IsInRole("Administrator")) { <th></th> }</tr></thead>
+            <tbody>
+            @foreach (var row in Model)
+            {
+                <tr>
+                    <td>@row.Crop.Name</td><td>@row.MarketName</td><td>@row.District, @row.State</td><td>@row.EffectiveDate.ToString("dd MMM yyyy")</td>
+                    <td>@(row.MinimumPrice.HasValue ? $"₹{row.MinimumPrice.Value:N2}" : "—")</td><td class="fw-semibold">₹@row.ModalPrice.ToString("N2")</td><td>@(row.MaximumPrice.HasValue ? $"₹{row.MaximumPrice.Value:N2}" : "—")</td>
+                    <td>@if (!string.IsNullOrWhiteSpace(row.SourceUrl)) { <a href="@row.SourceUrl" target="_blank" rel="noopener noreferrer">@row.SourceName</a> } else { @row.SourceName }</td>
+                    @if (User.IsInRole("Administrator")) { <td><a asp-action="Edit" asp-route-id="@row.MarketReferencePriceId" class="btn btn-sm btn-outline-primary">Edit</a></td> }
+                </tr>
+            }
+            </tbody>
+        </table></div>
+    }
+</div>
