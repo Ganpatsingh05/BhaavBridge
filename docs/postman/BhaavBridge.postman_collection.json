@@ -1,0 +1,381 @@
+{
+  "info": {
+    "_postman_id": "4c9f41a2-b4a6-46c6-91bc-f5b2b4eab241",
+    "name": "BhaavBridge API",
+    "description": "Authenticated REST API request collection for BhaavBridge. Use a role-specific authCookie in the selected environment. No real credentials are included.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://localhost:7189"
+    },
+    {
+      "key": "authCookie",
+      "value": ""
+    },
+    {
+      "key": "cropId",
+      "value": "1"
+    },
+    {
+      "key": "produceLotId",
+      "value": "1"
+    },
+    {
+      "key": "offerId",
+      "value": "1"
+    },
+    {
+      "key": "orderId",
+      "value": "1"
+    },
+    {
+      "key": "district",
+      "value": "Ludhiana"
+    },
+    {
+      "key": "state",
+      "value": "Punjab"
+    }
+  ],
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('Response is a documented success or expected validation result', function () {",
+          "  pm.expect([200, 201, 400, 403, 404, 409]).to.include(pm.response.code);",
+          "});",
+          "if (pm.response.code === 201) {",
+          "  try { const data = pm.response.json();",
+          "    if (data.cropId) pm.environment.set('cropId', data.cropId);",
+          "    if (data.produceLotId) pm.environment.set('produceLotId', data.produceLotId);",
+          "    if (data.offerId) pm.environment.set('offerId', data.offerId);",
+          "  } catch (e) { }",
+          "}"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Crops",
+      "item": [
+        {
+          "name": "List active crops",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/crops",
+            "description": "Farmer, Buyer or Administrator."
+          }
+        },
+        {
+          "name": "Create crop (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Wheat\",\n  \"category\": \"Cereal\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/crops",
+            "description": "Administrator only. Use a crop name not already present."
+          }
+        },
+        {
+          "name": "Update crop (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Wheat\",\n  \"category\": \"Cereal\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/crops/{{cropId}}",
+            "description": "Administrator only."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Produce Lots",
+      "item": [
+        {
+          "name": "Browse published lots / own lots",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/produce-lots?cropId={{cropId}}&district={{district}}&state={{state}}",
+            "description": "Buyer/Admin receive Published lots; Farmer receives own lots."
+          }
+        },
+        {
+          "name": "Get lot",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/produce-lots/{{produceLotId}}"
+          }
+        },
+        {
+          "name": "Create Draft lot (Farmer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cropId\": \"{{cropId}}\",\n  \"variety\": \"FAQ sample\",\n  \"qualityGrade\": \"A\",\n  \"quantityQuintals\": 20,\n  \"harvestDate\": \"2026-11-14\",\n  \"district\": \"Ludhiana\",\n  \"state\": \"Punjab\",\n  \"askingPricePerQuintal\": 2500,\n  \"description\": \"Postman test lot\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/produce-lots",
+            "description": "Farmer only. Replace IDs/location with suitable test values."
+          }
+        },
+        {
+          "name": "Update Draft lot (Farmer)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cropId\": \"{{cropId}}\",\n  \"variety\": \"FAQ sample updated\",\n  \"qualityGrade\": \"A\",\n  \"quantityQuintals\": 20,\n  \"harvestDate\": \"2026-11-14\",\n  \"district\": \"Ludhiana\",\n  \"state\": \"Punjab\",\n  \"askingPricePerQuintal\": 2550,\n  \"description\": \"Updated Postman test lot\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/produce-lots/{{produceLotId}}"
+          }
+        },
+        {
+          "name": "Publish lot (Farmer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/produce-lots/{{produceLotId}}/publish"
+          }
+        },
+        {
+          "name": "Close lot (Farmer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/produce-lots/{{produceLotId}}/close"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Offers",
+      "item": [
+        {
+          "name": "Create offer (Buyer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"produceLotId\": \"{{produceLotId}}\",\n  \"pricePerQuintal\": 2600,\n  \"transportationCost\": 1800,\n  \"loadingCost\": 600,\n  \"otherFarmerCost\": 200,\n  \"message\": \"Postman test offer\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/offers",
+            "description": "Buyer only. The quantity is read from the published lot."
+          }
+        },
+        {
+          "name": "My offers (Buyer)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/offers/mine"
+          }
+        },
+        {
+          "name": "Incoming offers (Farmer)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/offers/incoming"
+          }
+        },
+        {
+          "name": "Counteroffer (Farmer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pricePerQuintal\": 2700,\n  \"message\": \"Counteroffer via Postman\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/offers/{{offerId}}/counter"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "List permitted orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/orders"
+          }
+        },
+        {
+          "name": "Order details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/orders/{{orderId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Market Reference Prices",
+      "item": [
+        {
+          "name": "List dated reference prices",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/market-reference-prices?cropId={{cropId}}&district={{district}}&state={{state}}"
+          }
+        }
+      ]
+    }
+  ]
+}
