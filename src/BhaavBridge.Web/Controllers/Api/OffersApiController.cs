@@ -152,7 +152,7 @@ public sealed class OffersApiController : ControllerBase
         if (offer == null) return NotFound();
 
         if (offer.ProduceLot.Status != ProduceLotStatus.Published ||
-            (offer.Status != OfferStatus.Pending && offer.Status != OfferStatus.Countered))
+            offer.Status != OfferStatus.Pending)
             return Conflict(new { message = "This offer can no longer be countered." });
 
         var nextRevision = offer.Revisions.Select(r => r.RevisionNumber).DefaultIfEmpty(0).Max() + 1;
