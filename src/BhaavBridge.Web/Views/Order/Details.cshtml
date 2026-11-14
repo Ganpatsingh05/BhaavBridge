@@ -1,0 +1,51 @@
+@model BhaavBridge.Web.Models.ViewModels.OrderSummaryViewModel
+@using BhaavBridge.Web.Models.Entities
+@{
+    ViewData["Title"] = $"Order #{Model.OrderId}";
+}
+<div class="container mt-4" style="max-width:850px;">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Order #@Model.OrderId</h2>
+        <span class="badge bg-primary fs-6">@Model.Status</span>
+    </div>
+    @if (TempData["SuccessMessage"] != null) { <div class="alert alert-success">@TempData["SuccessMessage"]</div> }
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5>@Model.CropName</h5>
+            <p class="text-muted">Lot #@Model.ProduceLotId · Offer #@Model.OfferId</p>
+            <dl class="row">
+                <dt class="col-sm-5">Farmer</dt><dd class="col-sm-7">@Model.FarmerName</dd>
+                <dt class="col-sm-5">Buyer</dt><dd class="col-sm-7">@Model.BuyerBusinessName</dd>
+                <dt class="col-sm-5">Agreed quantity</dt><dd class="col-sm-7">@Model.QuantityQuintals.ToString("N3") quintals</dd>
+                <dt class="col-sm-5">Agreed price</dt><dd class="col-sm-7">₹@Model.AgreedPricePerQuintal.ToString("N2") / quintal</dd>
+                <dt class="col-sm-5">Gross value</dt><dd class="col-sm-7">₹@Model.GrossValue.ToString("N2")</dd>
+                <dt class="col-sm-5">Transportation</dt><dd class="col-sm-7">₹@Model.TransportationCost.ToString("N2")</dd>
+                <dt class="col-sm-5">Loading</dt><dd class="col-sm-7">₹@Model.LoadingCost.ToString("N2")</dd>
+                <dt class="col-sm-5">Other farmer costs</dt><dd class="col-sm-7">₹@Model.OtherFarmerCost.ToString("N2")</dd>
+                <dt class="col-sm-5">Total farmer costs</dt><dd class="col-sm-7">₹@Model.TotalFarmerCosts.ToString("N2")</dd>
+                <dt class="col-sm-5 fw-bold">Estimated Net Daam</dt><dd class="col-sm-7 fw-bold text-success">₹@Model.EstimatedNetReturn.ToString("N2")</dd>
+                <dt class="col-sm-5">Created</dt><dd class="col-sm-7">@Model.CreatedAtUtc.ToLocalTime().ToString("dd MMM yyyy, hh:mm tt")</dd>
+                <dt class="col-sm-5">Last updated</dt><dd class="col-sm-7">@Model.UpdatedAtUtc.ToLocalTime().ToString("dd MMM yyyy, hh:mm tt")</dd>
+            </dl>
+        </div>
+        <div class="card-footer d-flex flex-wrap gap-2">
+            @if (User.IsInRole("Farmer") && Model.Status == OrderStatus.Placed)
+            {
+                <form asp-action="UpdateStatus" method="post">@Html.AntiForgeryToken()<input type="hidden" name="id" value="@Model.OrderId" /><input type="hidden" name="status" value="Confirmed" /><button class="btn btn-success">Confirm Order</button></form>
+            }
+            @if (User.IsInRole("Farmer") && Model.Status == OrderStatus.Confirmed)
+            {
+                <form asp-action="UpdateStatus" method="post">@Html.AntiForgeryToken()<input type="hidden" name="id" value="@Model.OrderId" /><input type="hidden" name="status" value="ReadyForPickup" /><button class="btn btn-primary">Mark Ready for Pickup</button></form>
+            }
+            @if (User.IsInRole("Buyer") && Model.Status == OrderStatus.ReadyForPickup)
+            {
+                <form asp-action="UpdateStatus" method="post">@Html.AntiForgeryToken()<input type="hidden" name="id" value="@Model.OrderId" /><input type="hidden" name="status" value="Completed" /><button class="btn btn-success">Confirm Completion</button></form>
+            }
+            @if (User.IsInRole("Administrator") && Model.Status != OrderStatus.Completed && Model.Status != OrderStatus.Cancelled)
+            {
+                <form asp-action="UpdateStatus" method="post">@Html.AntiForgeryToken()<input type="hidden" name="id" value="@Model.OrderId" /><input type="hidden" name="status" value="Cancelled" /><button class="btn btn-outline-danger">Cancel Order</button></form>
+            }
+            <a asp-action="BuyerOrders" asp-controller="Order" class="btn btn-outline-secondary">Back to Orders</a>
+        </div>
+    </div>
+</div>
