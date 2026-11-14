@@ -43,4 +43,90 @@ public sealed class MarketReferencePricesApiController : ControllerBase
 
         return Ok(rows);
     }
+
+    [Authorize(Roles = "Administrator")]
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] MarketReferencePriceRequest request)
+    {
+        var validation = ValidateRequest(request);
+        if (validation != null) return validation;
+
+        var cropIsActive = await _context.Crops.AnyAsync(c => c.CropId == request.CropId && c.IsActive);
+        if (!cropIsActive) return BadRequest(new { message = "Select an active crop." });
+
+        var row = new MarketReferencePrice
+        {
+            CropId = request.CropId,
+            MarketName = request.MarketName.Trim(),
+            District = request.District.Trim(),
+            State = request.State.Trim(),
+            EffectiveDate = request.EffectiveDate,
+            MinimumPrice = request.MinimumPrice,
+            MaximumPrice = request.MaximumPrice,
+            ModalPrice = request.ModalPrice,
+            SourceName = request.SourceName.Trim(),
+            SourceUrl = string.IsNullOrWhiteSpace(request.SourceUrl) ? null : request.SourceUrl.Trim(),
+            RecordedAtUtc = DateTime.UtcNow
+        };
+
+        _context.MarketReferencePrices.Add(row);
+        await _context.SaveChangesAsync();
+
+        return Created($"/api/market-reference-prices/{row.MarketReferencePriceId}", new
+        {
+            row.MarketReferencePriceId,
+            row.CropId,
+            row.MarketName,
+            row.EffectiveDate,
+            row.ModalPrice,
+            row.SourceName
+        });
+    }
+
+    [Authorize(Roles = "Administrator")]
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> Update(int id, [FromBody] MarketReferencePriceRequest request)
+    {
+        var row = await _context.MarketReferencePrices.FindAsync(id);
+        if (row == null) return NotFound();
+
+        var validation = ValidateRequest(request);
+        if (validation != null) return validation;
+
+        if (!await _context.Crops.AnyAsync(c => c.CropId == request.CropId && c.IsActive))
+            return BadRequest(new { message = "Select an active crop." });
+
+        row.CropId = request.CropId;
+        row.MarketName = request.MarketName.Trim();
+        row.District = request.District.Trim();
+        row.State = request.State.Trim();
+        row.EffectiveDate = request.EffectiveDate;
+        row.MinimumPrice = request.MinimumPrice;
+        row.MaximumPrice = request.MaximumPrice;
+        row.ModalPrice = request.ModalPrice;
+        row.SourceName = request.SourceName.Trim();
+        row.SourceUrl = string.IsNullOrWhiteSpace(request.SourceUrl) ? null : request.SourceUrl.Trim();
+
+        await _context.SaveChangesAsync();
+        return Ok(new { row.MarketReferencePriceId, row.MarketName, row.EffectiveDate, row.ModalPrice });
+    }
+
+    private IActionResult? ValidateRequest(MarketReferencePriceRequest request)
+    {
+        if (request.MinimumPrice.HasValue && request.MaximumPrice.HasValue &&
+            request.MinimumPrice.Value > request.MaximumPrice.Value)
+            return BadRequest(new { message = "Maximum price must be greater than or equal to minimum price." });
+
+        if (request.MinimumPrice.HasValue && request.ModalPrice < request.MinimumPrice.Value)
+            return BadRequest(new { message = "Modal price cannot be below minimum price." });
+
+        if (request.MaximumPrice.HasValue && request.ModalPrice > request.MaximumPrice.Value)
+            return BadRequest(new { message = "Modal price cannot exceed maximum price." });
+
+        if (request.EffectiveDate == default)
+            return BadRequest(new { message = "Effective date is required." });
+
+        return null;
+    }
+
 }
