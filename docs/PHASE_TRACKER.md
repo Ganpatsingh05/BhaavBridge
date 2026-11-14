@@ -154,7 +154,8 @@ Commits: `95ece85` (marketplace implementation), `16e0eb4` (Phase 2/3 audit fixe
 - [ ] Crop/district/state/min-max quantity/min-max asking-price filters return expected rows.
 - [ ] Draft/Closed lots are not shown, including direct buyer detail URL.
 - [ ] Anonymous and wrong-role access is denied/redirected.
-- [ ] Run latest solution build and database smoke check.
+- [x] Latest `dotnet build .\BhaavBridge.sln` succeeded on Ganpat's machine on 14 November 2026 (after commit `c596bfb`).
+- [ ] Run the database smoke check after the latest changes.
 - [ ] Add screenshots and test outcomes to [Issue #4](https://github.com/Ganpatsingh05/BhaavBridge/issues/4).
 
 ### Scope note
@@ -183,7 +184,8 @@ Gautam completes the live marketplace matrix, Ganpat reviews ownership and persi
 - [x] Counteroffer acceptance farmer-profile loading and form redisplay fix (commit `fe2f03c`).
 
 ### Remaining
-- [ ] Build and run live Buyer/Farmer offer workflow.
+- [x] Latest integrated solution build succeeded on 14 November 2026 after commit `c596bfb`.
+- [ ] Run live Buyer/Farmer offer workflow.
 - [ ] Verify OfferRevision history after multiple counteroffers.
 - [ ] Verify direct farmer acceptance and buyer counteroffer acceptance each create one correct Order.
 - [ ] Verify reject paths create no Order.
@@ -211,7 +213,7 @@ Buyer/farmer negotiation, revision history, Net Daam and acceptance/order integr
 - [x] Order/market price views, dashboard cards and role-specific navigation.
 
 ### Remaining
-- [ ] Latest build passes.
+- [x] Latest solution build passed on Ganpat's machine on 14 November 2026 (after commit `c596bfb`).
 - [ ] Test one accepted order through list/details/status.
 - [ ] Admin creates a dated reference price; Farmer/Buyer can view it.
 - [ ] Existing database smoke check passes.
@@ -236,7 +238,7 @@ Build, order flow and reference-price flow pass on the integrated application; G
 - [x] Expected status assertions added to Postman requests.
 
 ### Remaining
-- [ ] Build latest main.
+- [x] Latest solution build passed on Ganpat's machine on 14 November 2026 (after commit `c596bfb`).
 - [ ] Import collection/environment and run with Farmer/Buyer/Admin cookies.
 - [ ] Verify 401, wrong-role and ownership behaviour.
 - [ ] Save Postman evidence without real cookie/token values.
