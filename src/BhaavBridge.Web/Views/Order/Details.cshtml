@@ -45,7 +45,18 @@
             {
                 <form asp-action="UpdateStatus" method="post">@Html.AntiForgeryToken()<input type="hidden" name="id" value="@Model.OrderId" /><input type="hidden" name="status" value="Cancelled" /><button class="btn btn-outline-danger">Cancel Order</button></form>
             }
-            <a asp-action="BuyerOrders" asp-controller="Order" class="btn btn-outline-secondary">Back to Orders</a>
+            @if (User.IsInRole("Farmer"))
+            {
+                <a asp-action="FarmerOrders" asp-controller="Order" class="btn btn-outline-secondary">Back to Orders</a>
+            }
+            else if (User.IsInRole("Buyer"))
+            {
+                <a asp-action="BuyerOrders" asp-controller="Order" class="btn btn-outline-secondary">Back to Orders</a>
+            }
+            else
+            {
+                <a asp-action="All" asp-controller="Order" class="btn btn-outline-secondary">Back to Orders</a>
+            }
         </div>
     </div>
 </div>
