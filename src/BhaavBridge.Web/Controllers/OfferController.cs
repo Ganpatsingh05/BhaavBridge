@@ -512,6 +512,7 @@ public class OfferController : Controller
         {
             var offer = await _context.Offers
                 .Include(o => o.ProduceLot)
+                    .ThenInclude(l => l.FarmerProfile)
                 .Include(o => o.Revisions)
                 .FirstOrDefaultAsync(o =>
                     o.OfferId == id &&
@@ -540,15 +541,8 @@ public class OfferController : Controller
                 .OrderByDescending(r => r.RevisionNumber)
                 .FirstOrDefault();
 
-           if (latestRevision == null ||
-    latestRevision.ProposedByUserId != offer.ProduceLot.FarmerProfile.UserId)
-{
-    TempData["ErrorMessage"] =
-        "A valid farmer counteroffer could not be found.";
-
-    return RedirectToAction(nameof(MyOffers));
-} if (latestRevision == null ||
-                latestRevision.ProposedByUserId == buyer.UserId)
+            if (latestRevision == null ||
+                latestRevision.ProposedByUserId != offer.ProduceLot.FarmerProfile.UserId)
             {
                 TempData["ErrorMessage"] =
                     "A valid farmer counteroffer could not be found.";
@@ -676,15 +670,8 @@ public class OfferController : Controller
             .OrderByDescending(r => r.RevisionNumber)
             .FirstOrDefault();
 
-       if (latestRevision == null ||
-    latestRevision.ProposedByUserId != offer.ProduceLot.FarmerProfile.UserId)
-{
-    TempData["ErrorMessage"] =
-        "A valid farmer counteroffer could not be found.";
-
-    return RedirectToAction(nameof(MyOffers));
-} if (latestRevision == null ||
-            latestRevision.ProposedByUserId == buyer.UserId)
+        if (latestRevision == null ||
+            latestRevision.ProposedByUserId != offer.ProduceLot.FarmerProfile.UserId)
         {
             TempData["ErrorMessage"] =
                 "A valid farmer counteroffer could not be found.";
@@ -756,6 +743,8 @@ public class OfferController : Controller
         }
 
         ViewBag.CropName = offer.ProduceLot.Crop.Name;
+        ViewBag.OfferId = offer.OfferId;
+        ViewBag.LotId = offer.ProduceLotId;
 
         var model = new CounterOfferViewModel
         {
@@ -814,6 +803,8 @@ public class OfferController : Controller
         }
 
         ViewBag.CropName = offer.ProduceLot.Crop.Name;
+        ViewBag.OfferId = offer.OfferId;
+        ViewBag.LotId = offer.ProduceLotId;
 
         if (!ModelState.IsValid)
             return View(model);
