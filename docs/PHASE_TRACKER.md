@@ -55,7 +55,7 @@ The stack is approved, the starter is integrated into `main`, and the project le
 ---
 
 ## Phase 1 — Database and Architecture
-**Target:** 7–8 November 2026 | **Status:** ⚠️ Implementation Done — Gate Pending Rahul Verification  
+**Target:** 7–8 November 2026 | **Status:** Implementation complete — independent clean-database verification pending  
 **Lead:** Ganpat; Rahul performs the independent migration-recreation check.
 
 ### Tasks
@@ -166,67 +166,58 @@ Gautam completes the live marketplace matrix, Ganpat reviews ownership and persi
 ---
 
 ## Phase 4 — Offer and Price Discovery Engine
-**Target:** 13–14 November 2026 | **Status:** Not implemented  
-**Lead:** Ganpat — offer, counteroffer, acceptance integrity and Net Daam. Rahul supports authorization; Gautam supports marketplace integration; Aakash handles optional low-risk presentation/documentation only.
+**Target:** 14 November 2026 | **Status:** Implementation complete — live workflow/transaction tests pending  
+**Lead:** Ganpat; Rahul owns the submitted implementation; Gautam supports marketplace integration.
 
-### Agreed first-release rules
-- One complete lot per accepted offer; no partial offers or partial acceptance.
-- One active offer per buyer per lot.
-- Counteroffers are appended to OfferRevision; Offer stores current terms.
-- Only one offer can be accepted per lot.
-- Accepting an offer closes the lot; order creation follows in Phase 5.
-- Offer and revision history are not hard-deleted.
+### Implementation delivered — Rahul, commit `8e487f5`
+- [x] Buyer offer submission on Published lots with server-controlled full-lot quantity.
+- [x] Initial OfferRevision history record.
+- [x] One active buyer/lot offer guarded by application check and filtered unique index.
+- [x] Buyer My Offers page and negotiation history.
+- [x] Farmer Incoming page and per-lot side-by-side comparison sorted by Net Daam per quintal.
+- [x] Farmer accept/reject/counteroffer actions.
+- [x] Buyer accept/reject counteroffer actions.
+- [x] Net Daam and per-quintal calculations using decimal arithmetic.
+- [x] Acceptance creates an Order snapshot, marks the offer Accepted and closes the lot in a serializable transaction.
+- [x] Role/ownership checks, POST actions and antiforgery validation.
+- [x] Counteroffer acceptance farmer-profile loading and form redisplay fix (commit `fe2f03c`).
 
-### Implementation
-- [ ] Buyer submits an offer for a Published lot; quantity equals the full lot quantity.
-- [ ] Farmer sees incoming offers only for their own lots; buyer sees only their own offers.
-- [ ] Farmer accepts, rejects or counteroffers offers on their own lot.
-- [ ] Counteroffer creates OfferRevision and updates current Offer terms.
-- [ ] Build side-by-side offer comparison.
-- [ ] Implement Net Daam using decimal arithmetic: gross = price × quantity; net = gross − farmer-borne costs.
-- [ ] Display estimated net return and per-quintal value.
-- [ ] Accept an offer transactionally, close the lot and prevent competing accepted offers.
-- [ ] Validate all prices, quantities and farmer-borne costs server-side.
-
-### Tests
-- [ ] Closed/Draft lots reject offers; ownership checks prevent cross-user access.
-- [ ] Counteroffer history is preserved.
-- [ ] Net Daam cases match independent calculations.
-- [ ] Duplicate/concurrent acceptance cannot accept multiple offers for one lot.
-- [ ] Invalid prices, quantities and costs are rejected.
-- [ ] Build and database smoke check pass.
+### Remaining
+- [ ] Build and run live Buyer/Farmer offer workflow.
+- [ ] Verify OfferRevision history after multiple counteroffers.
+- [ ] Verify direct farmer acceptance and buyer counteroffer acceptance each create one correct Order.
+- [ ] Verify reject paths create no Order.
+- [ ] Test Net Daam with independent numeric cases.
+- [ ] Verify one accepted offer per lot, including repeated/concurrent attempts.
+- [ ] Verify cross-user and wrong-role access.
+- [ ] Re-run database smoke check and record screenshots.
+- [ ] Ganpat reviews and team approves Issue #5.
 
 ### Exit criteria
-Offer/counteroffer, comparison, Net Daam and one-accepted-offer-per-lot integrity pass functional, authorization and edge-case tests; team approves Issue #5.
-
----
+Buyer/farmer negotiation, revision history, Net Daam and acceptance/order integrity pass live functional, authorization and transaction tests.
 
 ## Phase 5 — Orders and Market Intelligence
-**Target:** 14 November 2026 | **Status:** Not implemented  
-**Lead:** Ganpat — order creation, transaction integrity and dated market-reference prices. Rahul supports authorization; Gautam supports marketplace integration; Aakash handles optional low-risk presentation/documentation only.
+**Target:** 15 November 2026 | **Status:** Partial — order creation exists in Phase 4; order management and market-price administration pending  
+**Lead:** Ganpat; Rahul supports authorization; Gautam supports marketplace integration.
 
-### Implementation
-- [ ] Accepting an offer creates exactly one Order transactionally.
-- [ ] Store agreed quantity, price, gross value and farmer-cost snapshots on Order.
-- [ ] Enforce one Order per accepted Offer.
-- [ ] Implement permitted order status transitions.
-- [ ] Buyer sees orders associated with their offers; farmer sees orders associated with their lots.
-- [ ] Admin manages dated market-reference prices.
+### Already implemented in Phase 4
+- [x] Order created transactionally when a farmer accepts a buyer offer or a buyer accepts a farmer counteroffer.
+- [x] Order snapshots agreed quantity, price, gross value, individual farmer costs, total costs and estimated net return.
+- [x] Unique OfferId relationship prevents more than one order per offer.
+- [x] Accepted offer closes the lot.
+
+### Remaining
+- [ ] OrderController and buyer/farmer order list/detail pages.
+- [ ] Ownership-filtered order queries.
+- [ ] Validated order status transitions.
+- [ ] Administrator market-reference price create/edit/list management.
 - [ ] Display crop, market, reference price, effective date and source.
-- [ ] Preserve historical reference-price records and order snapshots.
-
-### Tests
-- [ ] One accepted offer creates one order; duplicate acceptance does not create another.
-- [ ] Buyer/farmer cannot view or update another user's order.
-- [ ] Invalid status transitions are rejected.
-- [ ] Snapshots remain unchanged if source offer terms later change.
-- [ ] Market-reference crop, market, date and source display correctly.
-- [ ] Build and database smoke check pass.
+- [ ] Preserve dated price history and order snapshots.
+- [ ] Test duplicate order creation, unauthorized access, snapshot immutability and invalid status transitions.
+- [ ] Ganpat reviews and team approves Issue #6.
 
 ### Exit criteria
-Accepted offers generate trackable orders, authorization passes, and dated reference prices appear with their source; team approves Issue #6.
-
----
+Buyer/farmer order history, lifecycle transitions and dated administrator-managed market-reference prices pass integrated tests.
 
 ## Phase 6 — REST API and Postman Testing
 **Target:** 12–13 November 2026 | **Status:** ⬜ Backlog  
@@ -256,7 +247,7 @@ Documented endpoints pass Postman tests, including invalid requests and authoriz
 ---
 
 ## Phase 7 — UI Integration and Optimization
-**Target:** 14 November 2026 | **Status:** ⬜ Backlog  
+**Target:** 15 November 2026 | **Status:** ⬜ Backlog  
 **Owners:** all members; Ganpat coordinates integration.
 
 ### Tasks
