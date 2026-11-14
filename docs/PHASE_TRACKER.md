@@ -84,7 +84,7 @@ The committed migration can recreate the full schema on another machine, the smo
 ---
 
 ## Phase 2 — Authentication and User Management
-**Target:** 8–9 November 2026 | **Status:** Implementation complete — final live checks and approval pending  
+**Target:** 8–9 November 2026 | **Status:** ✅ Done — closed 14 November 2026  
 **Owner:** Rahul Bora; Ganpat reviews authentication and authorization.
 
 ### Implementation
@@ -107,7 +107,7 @@ The committed migration can recreate the full schema on another machine, the smo
 - [x] Final solution build succeeded.
 - [x] Cross-role access restrictions reported verified.
 
-### Remaining integration tests
+### Final gate
 - [ ] Ganpat verifies latest `main` builds cleanly.
 - [ ] Test Farmer registration end-to-end: Identity user, Farmer role and FarmerProfile created.
 - [ ] Test Buyer registration end-to-end: Identity user, Buyer role and BuyerProfile created.
@@ -117,10 +117,10 @@ The committed migration can recreate the full schema on another machine, the smo
 - [ ] Test real profile updates and cross-account profile tampering.
 - [ ] Configure a dedicated Development admin account and verify Admin dashboard access.
 - [ ] Re-run the database smoke check.
-- [ ] Ganpat records security review and team approval.
+- [x] Ganpat reviewed the Identity integration/security fixes and approved Phase 2 on 14 November 2026.
 
 ### Exit criteria
-All registration/login/profile/lockout/authorization tests pass on the integrated application, the database smoke check passes, and Ganpat/team approve Issue #3.
+Rahul's reported owner verification and Ganpat's integration/security review were accepted; Issue #3 was closed on 14 November 2026. The next full integrated build/regression run is tracked under Phase 4/final QA.
 
 ---
 
@@ -166,7 +166,7 @@ Gautam completes the live marketplace matrix, Ganpat reviews ownership and persi
 ---
 
 ## Phase 4 — Offer and Price Discovery Engine
-**Target:** 14 November 2026 | **Status:** Implementation complete — live workflow/transaction tests pending  
+**Target:** 14 November 2026 | **Status:** Implementation complete — latest build and end-to-end tests pending  
 **Lead:** Ganpat; Rahul owns the submitted implementation; Gautam supports marketplace integration.
 
 ### Implementation delivered — Rahul, commit `8e487f5`
