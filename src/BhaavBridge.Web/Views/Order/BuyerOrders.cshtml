@@ -1,0 +1,42 @@
+@model IEnumerable<BhaavBridge.Web.Models.ViewModels.OrderSummaryViewModel>
+@using BhaavBridge.Web.Models.Entities
+@{
+    ViewData["Title"] = "Buyer Orders";
+}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>My Orders</h2>
+            <p class="text-muted mb-0">Track accepted deals and order progress.</p>
+        </div>
+        <a asp-controller="Marketplace" asp-action="Index" class="btn btn-outline-primary">Marketplace</a>
+    </div>
+    @if (TempData["SuccessMessage"] != null) { <div class="alert alert-success">@TempData["SuccessMessage"]</div> }
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info">No orders are available yet. Orders appear here after an offer is accepted.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-light"><tr><th>Order</th><th>Crop</th><th>Farmer</th><th>Quantity</th><th>Agreed price</th><th>Net Daam</th><th>Status</th><th></th></tr></thead>
+                <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>#@order.OrderId</td>
+                        <td>@order.CropName</td>
+                        <td>@order.FarmerName</td>
+                        <td>@order.QuantityQuintals.ToString("N2") qtl</td>
+                        <td>₹@order.AgreedPricePerQuintal.ToString("N2")/qtl</td>
+                        <td class="fw-semibold text-success">₹@order.EstimatedNetReturn.ToString("N2")</td>
+                        <td><span class="badge bg-secondary">@order.Status</span></td>
+                        <td><a asp-action="Details" asp-route-id="@order.OrderId" class="btn btn-sm btn-outline-primary">Details</a></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
