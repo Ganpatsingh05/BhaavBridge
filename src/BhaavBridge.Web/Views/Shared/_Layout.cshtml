@@ -41,6 +41,12 @@
                    asp-controller="Dashboard"
                    asp-action="Farmer">Dashboard</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Order" asp-action="FarmerOrders">My Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="MarketReferencePrice" asp-action="Index">Market Prices</a>
+            </li>
         }
 
         @* Buyer-specific nav links *@
@@ -56,6 +62,12 @@
                    asp-controller="Dashboard"
                    asp-action="Buyer">Dashboard</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Order" asp-action="BuyerOrders">My Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="MarketReferencePrice" asp-action="Index">Market Prices</a>
+            </li>
         }
 
         @* Admin-specific nav links *@
@@ -70,6 +82,12 @@
                 <a class="nav-link text-dark"
                    asp-controller="Dashboard"
                    asp-action="Admin">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Order" asp-action="All">All Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="MarketReferencePrice" asp-action="Index">Market Prices</a>
             </li>
         }
 
