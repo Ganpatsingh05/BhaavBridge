@@ -70,7 +70,10 @@ builder.Services.ConfigureApplicationCookie(options =>
     };
 });
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.Converters.Add(
+            new System.Text.Json.Serialization.JsonStringEnumConverter()));
 
 var app = builder.Build();
 
