@@ -204,11 +204,11 @@ Buyer/farmer negotiation, revision history, Net Daam and acceptance/order integr
 - [x] Order snapshot is created transactionally when an offer is accepted (Phase 4).
 - [x] Order stores price, quantity, gross, farmer costs and estimated net return snapshots.
 - [x] Unique OfferId relationship enforces one order per accepted offer.
-- [x] Buyer/Farmer/Admin order list actions and role-scoped data.
-- [x] Authorized order details and permitted status transitions.
-- [x] Admin market-reference price create/edit; authenticated price list/filter.
+- [x] Buyer/Farmer/Admin order lists, details and role-scoped queries.
+- [x] Permitted order status transitions through MVC and API PATCH endpoints.
+- [x] Admin market-reference price create/edit and authenticated read/filter views/API.
 - [x] Market price forms validate min/modal/max and record source/date.
-- [x] Order/market price views, dashboard cards and navigation.
+- [x] Order/market price views, dashboard cards and role-specific navigation.
 
 ### Remaining
 - [ ] Latest build passes.
@@ -221,7 +221,7 @@ Build, order flow and reference-price flow pass on the integrated application; G
 
 ---
 ## Phase 6 — REST API and Postman Testing
-**Target:** 15 November 2026 | **Status:** API implementation and Postman collection delivered — local run pending
+**Target:** 15 November 2026 | **Status:** API implementation and Postman collection delivered — local execution pending
 **Lead:** Ganpat; Rahul supports Identity/authorization; Gautam checks listing API.
 
 ### Implemented
@@ -229,8 +229,8 @@ Build, order flow and reference-price flow pass on the integrated application; G
 - [x] Crops GET/POST/PUT.
 - [x] Produce lots GET/list/detail, POST, PUT Draft, publish and close.
 - [x] Offers POST, mine/incoming GET and farmer counteroffer POST.
-- [x] Orders GET list/detail with caller ownership scope.
-- [x] Market-reference prices GET with filters.
+- [x] Orders GET list/detail and PATCH status with caller/role checks.
+- [x] Market-reference prices GET/POST/PUT.
 - [x] Role/ownership checks, DTO validation and API 401/403 cookie responses.
 - [x] API endpoint guide and Postman collection/environment created.
 - [x] Expected status assertions added to Postman requests.
