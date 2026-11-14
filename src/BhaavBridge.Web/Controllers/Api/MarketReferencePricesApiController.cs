@@ -1,4 +1,6 @@
 using BhaavBridge.Web.Data;
+using BhaavBridge.Web.Models.Api;
+using BhaavBridge.Web.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
