@@ -1,0 +1,142 @@
+
+@model CreateOfferViewModel
+
+@{
+    ViewData["Title"] = "Submit Offer";
+    var lot = ViewBag.Lot as ProduceLot;
+}
+
+<div class="container mt-4" style="max-width: 720px;">
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0">Submit Your Offer</h4>
+        </div>
+
+        <div class="card-body">
+
+            @if (lot != null)
+            {
+                <div class="alert alert-light border">
+                    <h5>@lot.Crop?.Name</h5>
+
+                    <p class="mb-1">
+                        <strong>Quantity:</strong>
+                        @lot.QuantityQuintals.ToString("N3") quintals
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Farmer's Asking Price:</strong>
+                        ₹@lot.AskingPricePerQuintal.ToString("N2") per quintal
+                    </p>
+
+                    <p class="mb-0">
+                        <strong>Location:</strong>
+                        @lot.District, @lot.State
+                    </p>
+                </div>
+            }
+
+            <form asp-action="Create" method="post">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3"></div>
+
+                <input asp-for="ProduceLotId" type="hidden" />
+
+                <div class="mb-3">
+                    <label asp-for="PricePerQuintal"
+                           class="form-label"></label>
+
+                    <input asp-for="PricePerQuintal"
+                           class="form-control"
+                           type="number"
+                           step="0.01"
+                           min="0" />
+
+                    <span asp-validation-for="PricePerQuintal"
+                          class="text-danger"></span>
+                </div>
+
+                <hr />
+
+                <h5>Estimated Farmer Costs</h5>
+
+                <div class="mb-3">
+                    <label asp-for="TransportationCost"
+                           class="form-label"></label>
+
+                    <input asp-for="TransportationCost"
+                           class="form-control"
+                           type="number"
+                           step="0.01"
+                           min="0" />
+
+                    <span asp-validation-for="TransportationCost"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="LoadingCost"
+                           class="form-label"></label>
+
+                    <input asp-for="LoadingCost"
+                           class="form-control"
+                           type="number"
+                           step="0.01"
+                           min="0" />
+
+                    <span asp-validation-for="LoadingCost"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="OtherFarmerCost"
+                           class="form-label"></label>
+
+                    <input asp-for="OtherFarmerCost"
+                           class="form-control"
+                           type="number"
+                           step="0.01"
+                           min="0" />
+
+                    <span asp-validation-for="OtherFarmerCost"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Message"
+                           class="form-label"></label>
+
+                    <textarea asp-for="Message"
+                              class="form-control"
+                              rows="3"></textarea>
+
+                    <span asp-validation-for="Message"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="alert alert-info">
+                    The offer will cover the complete quantity of this lot.
+                    The final farmer proceeds depend on the agreed price
+                    and estimated farmer costs.
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    Submit Offer
+                </button>
+
+                <a asp-controller="Marketplace"
+                   asp-action="Details"
+                   asp-route-id="@Model.ProduceLotId"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

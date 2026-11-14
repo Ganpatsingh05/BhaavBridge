@@ -12,28 +12,60 @@
     </div>
 
     <div class="row g-3 mt-2">
+
+        <!-- My Harvest Lots -->
         <div class="col-md-4">
             <div class="card h-100 border-success shadow-sm">
                 <div class="card-body text-center">
                     <div class="fs-1">📦</div>
                     <h5 class="card-title mt-2">My Harvest Lots</h5>
-                    <p class="card-text text-muted small">Create, publish and manage your produce listings.</p>
-                    <a asp-controller="ProduceLot" asp-action="Index"
-                       class="btn btn-success btn-sm">Go to My Lots →</a>
+                    <p class="card-text text-muted small">
+                        Create, publish and manage your produce listings.
+                    </p>
+                    <a asp-controller="ProduceLot"
+                       asp-action="Index"
+                       class="btn btn-success btn-sm">
+                        Go to My Lots →
+                    </a>
                 </div>
             </div>
         </div>
 
+        <!-- Incoming Offers -->
+        <div class="col-md-4">
+            <div class="card h-100 border-primary shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-1">📩</div>
+                    <h5 class="card-title mt-2">Incoming Offers</h5>
+                    <p class="card-text text-muted small">
+                        View buyer offers, compare prices and accept offers from buyers.
+                    </p>
+                    <a asp-controller="Offer"
+                       asp-action="Incoming"
+                       class="btn btn-primary btn-sm">
+                        View Offers →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Profile -->
         <div class="col-md-4">
             <div class="card h-100 border-secondary shadow-sm">
                 <div class="card-body text-center">
                     <div class="fs-1">👤</div>
                     <h5 class="card-title mt-2">My Profile</h5>
-                    <p class="card-text text-muted small">Update your name, village and farm details.</p>
-                    <a asp-controller="Profile" asp-action="Farmer"
-                       class="btn btn-outline-secondary btn-sm">Manage Profile →</a>
+                    <p class="card-text text-muted small">
+                        Update your name, village and farm details.
+                    </p>
+                    <a asp-controller="Profile"
+                       asp-action="Farmer"
+                       class="btn btn-outline-secondary btn-sm">
+                        Manage Profile →
+                    </a>
                 </div>
             </div>
         </div>
+
     </div>
 </div>

@@ -51,11 +51,19 @@
                 }
             </dl>
 
-            <div class="alert alert-warning mt-3 mb-0" role="alert">
-                <small>
-                    💡 Interested in this lot? The offer submission feature is coming soon (Phase 4).
-                </small>
-            </div>
+           <div class="alert alert-success mt-3 mb-0">
+    <h6>Interested in this lot?</h6>
+    <p class="mb-2">
+        Submit your proposed price to the farmer.
+    </p>
+
+    <a asp-controller="Offer"
+       asp-action="Create"
+       asp-route-produceLotId="@Model.ProduceLotId"
+       class="btn btn-success">
+        Make an Offer
+    </a>
+</div>
         </div>
         <div class="card-footer bg-transparent">
             <a asp-action="Index" class="btn btn-secondary">← Back to Marketplace</a>
