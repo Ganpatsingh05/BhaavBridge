@@ -1,41 +1,30 @@
-
 @{
     ViewData["Title"] = "Admin Dashboard";
 }
-
 <div class="container mt-4">
     <h1>⚙️ Admin Dashboard</h1>
     <p class="text-muted">Manage platform data and catalogue records.</p>
-
-    <div class="alert alert-warning">
-        You are logged in as an <strong>Administrator</strong>.
-    </div>
-
+    <div class="alert alert-warning">You are logged in as an <strong>Administrator</strong>.</div>
     <div class="row g-3 mt-2">
         <div class="col-md-4">
-            <div class="card h-100 border-warning shadow-sm">
-                <div class="card-body text-center">
-                    <div class="fs-1">🌱</div>
-                    <h5 class="card-title mt-2">Crop Catalogue</h5>
-                    <p class="card-text text-muted small">Add, edit and activate crops available to farmers.</p>
-                    <a asp-controller="Crop" asp-action="Index"
-                       class="btn btn-warning btn-sm">Manage Crops →</a>
-                </div>
-            </div>
-        </div>
-        <div class="row g-3 mt-2">
-        <div class="col-md-6">
-            <div class="card shadow-sm h-100"><div class="card-body">
-                <h5>Market Reference Prices</h5>
-                <p class="text-muted">Record dated mandi prices and their source.</p>
-                <a asp-controller="MarketReferencePrice" asp-action="Index" class="btn btn-primary">Manage Market Prices</a>
+            <div class="card h-100 border-warning shadow-sm"><div class="card-body text-center">
+                <div class="fs-1">🌱</div><h5 class="card-title mt-2">Crop Catalogue</h5>
+                <p class="card-text text-muted small">Add, edit and activate crops available to farmers.</p>
+                <a asp-controller="Crop" asp-action="Index" class="btn btn-warning btn-sm">Manage Crops →</a>
             </div></div>
         </div>
-        <div class="col-md-6">
-            <div class="card shadow-sm h-100"><div class="card-body">
-                <h5>Orders</h5>
-                <p class="text-muted">Review accepted deals and order progress.</p>
-                <a asp-controller="Order" asp-action="All" class="btn btn-outline-primary">View All Orders</a>
+        <div class="col-md-4">
+            <div class="card h-100 border-primary shadow-sm"><div class="card-body text-center">
+                <div class="fs-1">📊</div><h5 class="card-title mt-2">Market Reference Prices</h5>
+                <p class="card-text text-muted small">Record dated mandi prices and their sources.</p>
+                <a asp-controller="MarketReferencePrice" asp-action="Index" class="btn btn-primary btn-sm">Manage Prices →</a>
+            </div></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-info shadow-sm"><div class="card-body text-center">
+                <div class="fs-1">📦</div><h5 class="card-title mt-2">Orders</h5>
+                <p class="card-text text-muted small">Review accepted deals and order progress.</p>
+                <a asp-controller="Order" asp-action="All" class="btn btn-outline-primary btn-sm">View All Orders →</a>
             </div></div>
         </div>
     </div>
