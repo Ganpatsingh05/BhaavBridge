@@ -102,3 +102,11 @@ The initial submission excludes online payments, AI/ML crop predictions, IoT sen
 ## Submission target
 
 **16 November 2026.** Final release must be built and tested, documented, and packaged according to the instructor's accepted submission instructions.
+
+## REST API and Postman
+
+- [Implemented API endpoints](docs/API_DOCUMENTATION.md)
+- [Postman collection](docs/postman/BhaavBridge.postman_collection.json)
+- [Local Postman environment template](docs/postman/BhaavBridge.local.postman_environment.json)
+
+Never commit real authentication cookies or credentials.
