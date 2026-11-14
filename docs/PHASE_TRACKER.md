@@ -231,6 +231,7 @@ Build, order flow and reference-price flow pass on the integrated application; G
 - [x] Offers POST, mine/incoming GET and farmer counteroffer POST.
 - [x] Orders GET list/detail and PATCH status with caller/role checks.
 - [x] Market-reference prices GET/POST/PUT.
+- [x] Orders GET/POST? No order creation endpoint is needed: acceptance creates an Order transactionally. Orders GET list/detail and PATCH status are implemented.
 - [x] Role/ownership checks, DTO validation and API 401/403 cookie responses.
 - [x] API endpoint guide and Postman collection/environment created.
 - [x] Expected status assertions added to Postman requests.
