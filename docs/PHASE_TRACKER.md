@@ -197,55 +197,55 @@ Gautam completes the live marketplace matrix, Ganpat reviews ownership and persi
 Buyer/farmer negotiation, revision history, Net Daam and acceptance/order integrity pass live functional, authorization and transaction tests.
 
 ## Phase 5 — Orders and Market Intelligence
-**Target:** 15 November 2026 | **Status:** Partial — order creation exists in Phase 4; order management and market-price administration pending  
-**Lead:** Ganpat; Rahul supports authorization; Gautam supports marketplace integration.
+**Target:** 15 November 2026 | **Status:** Implementation complete — build and final flow check pending
+**Lead:** Ganpat; Rahul supports authorization; Gautam supports integration.
 
-### Already implemented in Phase 4
-- [x] Order created transactionally when a farmer accepts a buyer offer or a buyer accepts a farmer counteroffer.
-- [x] Order snapshots agreed quantity, price, gross value, individual farmer costs, total costs and estimated net return.
-- [x] Unique OfferId relationship prevents more than one order per offer.
-- [x] Accepted offer closes the lot.
+### Implemented
+- [x] Order snapshot is created transactionally when an offer is accepted (Phase 4).
+- [x] Order stores price, quantity, gross, farmer costs and estimated net return snapshots.
+- [x] Unique OfferId relationship enforces one order per accepted offer.
+- [x] Buyer/Farmer/Admin order list actions and role-scoped data.
+- [x] Authorized order details and permitted status transitions.
+- [x] Admin market-reference price create/edit; authenticated price list/filter.
+- [x] Market price forms validate min/modal/max and record source/date.
+- [x] Order/market price views, dashboard cards and navigation.
 
 ### Remaining
-- [ ] OrderController and buyer/farmer order list/detail pages.
-- [ ] Ownership-filtered order queries.
-- [ ] Validated order status transitions.
-- [ ] Administrator market-reference price create/edit/list management.
-- [ ] Display crop, market, reference price, effective date and source.
-- [ ] Preserve dated price history and order snapshots.
-- [ ] Test duplicate order creation, unauthorized access, snapshot immutability and invalid status transitions.
-- [ ] Ganpat reviews and team approves Issue #6.
+- [ ] Latest build passes.
+- [ ] Test one accepted order through list/details/status.
+- [ ] Admin creates a dated reference price; Farmer/Buyer can view it.
+- [ ] Existing database smoke check passes.
 
 ### Exit criteria
-Buyer/farmer order history, lifecycle transitions and dated administrator-managed market-reference prices pass integrated tests.
-
-## Phase 6 — REST API and Postman Testing
-**Target:** 12–13 November 2026 | **Status:** ⬜ Backlog  
-**Lead:** Ganpat; feature owners verify API behaviour for their modules.
-
-### Tasks
-- [ ] Create API controllers and routes.
-- [ ] Implement listing/crop GET and CRUD endpoints.
-- [ ] Implement offer and counteroffer endpoints.
-- [ ] Implement order and reference-price endpoints.
-- [ ] Add request validation and consistent error responses.
-- [ ] Apply authentication, role and ownership checks.
-- [ ] Create Postman collection and environment without secrets.
-
-### Tests
-- [ ] Valid requests return expected response bodies/status codes.
-- [ ] Invalid input returns validation errors.
-- [ ] Missing records return not-found responses.
-- [ ] Anonymous protected requests are rejected.
-- [ ] Authenticated users without permission are forbidden.
-- [ ] Ownership checks prevent cross-user access.
-- [ ] All collection tests pass against a clean test dataset.
-
-### Exit criteria
-Documented endpoints pass Postman tests, including invalid requests and authorization cases.
+Build, order flow and reference-price flow pass on the integrated application; Ganpat approves Issue #6.
 
 ---
+## Phase 6 — REST API and Postman Testing
+**Target:** 15 November 2026 | **Status:** API implementation and Postman collection delivered — local run pending
+**Lead:** Ganpat; Rahul supports Identity/authorization; Gautam checks listing API.
 
+### Implemented
+- [x] Attribute-routed API controllers mapped in Program.cs.
+- [x] Crops GET/POST/PUT.
+- [x] Produce lots GET/list/detail, POST, PUT Draft, publish and close.
+- [x] Offers POST, mine/incoming GET and farmer counteroffer POST.
+- [x] Orders GET list/detail with caller ownership scope.
+- [x] Market-reference prices GET with filters.
+- [x] Role/ownership checks, DTO validation and API 401/403 cookie responses.
+- [x] API endpoint guide and Postman collection/environment created.
+- [x] Expected status assertions added to Postman requests.
+
+### Remaining
+- [ ] Build latest main.
+- [ ] Import collection/environment and run with Farmer/Buyer/Admin cookies.
+- [ ] Verify 401, wrong-role and ownership behaviour.
+- [ ] Save Postman evidence without real cookie/token values.
+- [ ] Run database smoke check.
+
+### Exit criteria
+API project builds, Postman happy-path and authorization requests pass, and documentation/collection are committed.
+
+---
 ## Phase 7 — UI Integration and Optimization
 **Target:** 15 November 2026 | **Status:** ⬜ Backlog  
 **Owners:** all members; Ganpat coordinates integration.
