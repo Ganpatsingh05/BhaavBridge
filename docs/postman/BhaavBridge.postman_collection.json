@@ -39,26 +39,6 @@
       "value": "Punjab"
     }
   ],
-  "event": [
-    {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "exec": [
-          "pm.test('Response is a documented success or expected validation result', function () {",
-          "  pm.expect([200, 201, 400, 403, 404, 409]).to.include(pm.response.code);",
-          "});",
-          "if (pm.response.code === 201) {",
-          "  try { const data = pm.response.json();",
-          "    if (data.cropId) pm.environment.set('cropId', data.cropId);",
-          "    if (data.produceLotId) pm.environment.set('produceLotId', data.produceLotId);",
-          "    if (data.offerId) pm.environment.set('offerId', data.offerId);",
-          "  } catch (e) { }",
-          "}"
-        ]
-      }
-    }
-  ],
   "item": [
     {
       "name": "Crops",
@@ -75,7 +55,25 @@
             ],
             "url": "{{baseUrl}}/api/crops",
             "description": "Farmer, Buyer or Administrator."
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200 expected for List active crops\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response uses JSON where a body is present', function () {",
+                  "  if (pm.response.text().length > 0) {",
+                  "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Create crop (Admin)",
@@ -102,7 +100,25 @@
             },
             "url": "{{baseUrl}}/api/crops",
             "description": "Administrator only. Use a crop name not already present."
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201 expected for Create crop (Admin)\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test('Response uses JSON where a body is present', function () {",
+                  "  if (pm.response.text().length > 0) {",
+                  "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Update crop (Admin)",
@@ -129,7 +145,25 @@
             },
             "url": "{{baseUrl}}/api/crops/{{cropId}}",
             "description": "Administrator only."
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200 expected for Update crop (Admin)\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response uses JSON where a body is present', function () {",
+                  "  if (pm.response.text().length > 0) {",
+                  "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -148,7 +182,25 @@
             ],
             "url": "{{baseUrl}}/api/produce-lots?cropId={{cropId}}&district={{district}}&state={{state}}",
             "description": "Buyer/Admin receive Published lots; Farmer receives own lots."
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200 expected for Browse published lots / own lots\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response uses JSON where a body is present', function () {",
+                  "  if (pm.response.text().length > 0) {",
+                  "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Get lot",
@@ -161,7 +213,25 @@
               }
             ],
             "url": "{{baseUrl}}/api/produce-lots/{{produceLotId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200 expected for Get lot\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response uses JSON where a body is present', function () {",
+                  "  if (pm.response.text().length > 0) {",
+                  "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Create Draft lot (Farmer)",
@@ -188,7 +258,25 @@
             },
             "url": "{{baseUrl}}/api/produce-lots",
             "description": "Farmer only. Replace IDs/location with suitable test values."
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201 expected for Create Draft lot (Farmer)\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test('Response uses JSON where a body is present', function () {",
+                  "  if (pm.response.text().length > 0) {",
+                  "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Update Draft lot (Farmer)",
@@ -214,7 +302,25 @@
               }
             },
             "url": "{{baseUrl}}/api/produce-lots/{{produceLotId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200 expected for Update Draft lot (Farmer)\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response uses JSON where a body is present', function () {",
+                  "  if (pm.response.text().length > 0) {",
+                  "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Publish lot (Farmer)",
@@ -227,7 +333,25 @@
               }
             ],
             "url": "{{baseUrl}}/api/produce-lots/{{produceLotId}}/publish"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200 expected for Publish lot (Farmer)\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response uses JSON where a body is present', function () {",
+                  "  if (pm.response.text().length > 0) {",
+                  "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Close lot (Farmer)",
@@ -240,7 +364,25 @@
               }
             ],
             "url": "{{baseUrl}}/api/produce-lots/{{produceLotId}}/close"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200 expected for Close lot (Farmer)\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response uses JSON where a body is present', function () {",
+                  "  if (pm.response.text().length > 0) {",
+                  "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -272,7 +414,25 @@
             },
             "url": "{{baseUrl}}/api/offers",
             "description": "Buyer only. The quantity is read from the published lot."
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201 expected for Create offer (Buyer)\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test('Response uses JSON where a body is present', function () {",
+                  "  if (pm.response.text().length > 0) {",
+                  "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "My offers (Buyer)",
@@ -285,7 +445,25 @@
               }
             ],
             "url": "{{baseUrl}}/api/offers/mine"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200 expected for My offers (Buyer)\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response uses JSON where a body is present', function () {",
+                  "  if (pm.response.text().length > 0) {",
+                  "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Incoming offers (Farmer)",
@@ -298,7 +476,25 @@
               }
             ],
             "url": "{{baseUrl}}/api/offers/incoming"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200 expected for Incoming offers (Farmer)\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response uses JSON where a body is present', function () {",
+                  "  if (pm.response.text().length > 0) {",
+                  "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Counteroffer (Farmer)",
@@ -324,7 +520,25 @@
               }
             },
             "url": "{{baseUrl}}/api/offers/{{offerId}}/counter"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200 expected for Counteroffer (Farmer)\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response uses JSON where a body is present', function () {",
+                  "  if (pm.response.text().length > 0) {",
+                  "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -342,7 +556,25 @@
               }
             ],
             "url": "{{baseUrl}}/api/orders"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200 expected for List permitted orders\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response uses JSON where a body is present', function () {",
+                  "  if (pm.response.text().length > 0) {",
+                  "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Order details",
@@ -355,7 +587,25 @@
               }
             ],
             "url": "{{baseUrl}}/api/orders/{{orderId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200 expected for Order details\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response uses JSON where a body is present', function () {",
+                  "  if (pm.response.text().length > 0) {",
+                  "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -373,7 +623,25 @@
               }
             ],
             "url": "{{baseUrl}}/api/market-reference-prices?cropId={{cropId}}&district={{district}}&state={{state}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200 expected for List dated reference prices\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response uses JSON where a body is present', function () {",
+                  "  if (pm.response.text().length > 0) {",
+                  "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
         }
       ]
     }
