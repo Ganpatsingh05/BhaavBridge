@@ -339,3 +339,7 @@ Use these issues as the detailed implementation and approval records:
 | Phase 8 — Final QA and Submission | [#9](https://github.com/Ganpatsingh05/BhaavBridge/issues/9) |
 
 The issue tracker is the detailed source for each phase's implementation and tests. The GitHub Project board is the team's visual status view; add these nine issues to that board and use the Phase, Status, Gate Approval and date fields there.
+
+
+## Latest database regression evidence — 14 November 2026
+Ganpat ran the database smoke check after the latest Phase 5/6 additions. Result: `DATABASE SMOKE CHECK PASSED.` Verified user/profile, crop/lot, market reference price, offer/revision, accepted offer/order insert/read operations; Net Daam arithmetic (₹61,250 gross − ₹2,250 costs = ₹59,000 net); rejection of negative lot quantity; and transaction rollback with no retained test rows.
