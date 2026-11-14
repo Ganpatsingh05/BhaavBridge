@@ -266,7 +266,7 @@
                         @offer.CreatedAtUtc.ToLocalTime().ToString("dd MMM yyyy, hh:mm tt")
                     </small>
 
-                    @if (offer.Status == "Pending" || offer.Status == "Countered")
+                    @if (offer.Status == "Pending")
                     {
                         <hr />
 
@@ -310,6 +310,12 @@
                                 Counter Offer
                             </a>
 
+                        </div>
+                    }
+                    else if (offer.Status == "Countered")
+                    {
+                        <div class="alert alert-info mt-3 mb-0">
+                            Your counteroffer has been sent. The buyer must accept or reject it before another farmer action is available.
                         </div>
                     }
 
