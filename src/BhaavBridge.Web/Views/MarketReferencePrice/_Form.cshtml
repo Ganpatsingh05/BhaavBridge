@@ -1,0 +1,14 @@
+@model BhaavBridge.Web.Models.ViewModels.MarketReferencePriceFormViewModel
+<div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+<div class="mb-3"><label asp-for="CropId" class="form-label"></label><select asp-for="CropId" asp-items="Model.CropOptions" class="form-select"><option value="">Select crop</option></select><span asp-validation-for="CropId" class="text-danger"></span></div>
+<div class="row">
+<div class="col-md-6 mb-3"><label asp-for="MarketName" class="form-label"></label><input asp-for="MarketName" class="form-control" /><span asp-validation-for="MarketName" class="text-danger"></span></div>
+<div class="col-md-6 mb-3"><label asp-for="EffectiveDate" class="form-label"></label><input asp-for="EffectiveDate" type="date" class="form-control" /><span asp-validation-for="EffectiveDate" class="text-danger"></span></div>
+<div class="col-md-6 mb-3"><label asp-for="District" class="form-label"></label><input asp-for="District" class="form-control" /><span asp-validation-for="District" class="text-danger"></span></div>
+<div class="col-md-6 mb-3"><label asp-for="State" class="form-label"></label><input asp-for="State" class="form-control" /><span asp-validation-for="State" class="text-danger"></span></div>
+<div class="col-md-4 mb-3"><label asp-for="MinimumPrice" class="form-label"></label><input asp-for="MinimumPrice" class="form-control" type="number" step="0.01" /><span asp-validation-for="MinimumPrice" class="text-danger"></span></div>
+<div class="col-md-4 mb-3"><label asp-for="ModalPrice" class="form-label"></label><input asp-for="ModalPrice" class="form-control" type="number" step="0.01" /><span asp-validation-for="ModalPrice" class="text-danger"></span></div>
+<div class="col-md-4 mb-3"><label asp-for="MaximumPrice" class="form-label"></label><input asp-for="MaximumPrice" class="form-control" type="number" step="0.01" /><span asp-validation-for="MaximumPrice" class="text-danger"></span></div>
+<div class="col-md-6 mb-3"><label asp-for="SourceName" class="form-label"></label><input asp-for="SourceName" class="form-control" /><span asp-validation-for="SourceName" class="text-danger"></span></div>
+<div class="col-md-6 mb-3"><label asp-for="SourceUrl" class="form-label"></label><input asp-for="SourceUrl" class="form-control" /><span asp-validation-for="SourceUrl" class="text-danger"></span></div>
+</div>
