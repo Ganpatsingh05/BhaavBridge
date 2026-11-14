@@ -37,6 +37,10 @@
     {
       "key": "state",
       "value": "Punjab"
+    },
+    {
+      "key": "marketPriceId",
+      "value": "1"
     }
   ],
   "item": [
@@ -249,7 +253,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"cropId\": \"{{cropId}}\",\n  \"variety\": \"FAQ sample\",\n  \"qualityGrade\": \"A\",\n  \"quantityQuintals\": 20,\n  \"harvestDate\": \"2026-11-14\",\n  \"district\": \"Ludhiana\",\n  \"state\": \"Punjab\",\n  \"askingPricePerQuintal\": 2500,\n  \"description\": \"Postman test lot\"\n}",
+              "raw": "{\n  \"cropId\": 1,\n  \"variety\": \"FAQ sample\",\n  \"qualityGrade\": \"A\",\n  \"quantityQuintals\": 20,\n  \"harvestDate\": \"2026-11-14\",\n  \"district\": \"Ludhiana\",\n  \"state\": \"Punjab\",\n  \"askingPricePerQuintal\": 2500,\n  \"description\": \"Postman test lot\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -275,6 +279,20 @@
                   "});"
                 ]
               }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "try {",
+                  "  const data = pm.response.json();",
+                  "  if (data.produceLotId) pm.environment.set('produceLotId', data.produceLotId);",
+                  "  if (data.offerId) pm.environment.set('offerId', data.offerId);",
+                  "  if (data.cropId) pm.environment.set('cropId', data.cropId);",
+                  "} catch (e) { }"
+                ]
+              }
             }
           ]
         },
@@ -294,7 +312,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"cropId\": \"{{cropId}}\",\n  \"variety\": \"FAQ sample updated\",\n  \"qualityGrade\": \"A\",\n  \"quantityQuintals\": 20,\n  \"harvestDate\": \"2026-11-14\",\n  \"district\": \"Ludhiana\",\n  \"state\": \"Punjab\",\n  \"askingPricePerQuintal\": 2550,\n  \"description\": \"Updated Postman test lot\"\n}",
+              "raw": "{\n  \"cropId\": 1,\n  \"variety\": \"FAQ sample updated\",\n  \"qualityGrade\": \"A\",\n  \"quantityQuintals\": 20,\n  \"harvestDate\": \"2026-11-14\",\n  \"district\": \"Ludhiana\",\n  \"state\": \"Punjab\",\n  \"askingPricePerQuintal\": 2550,\n  \"description\": \"Updated Postman test lot\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -405,7 +423,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"produceLotId\": \"{{produceLotId}}\",\n  \"pricePerQuintal\": 2600,\n  \"transportationCost\": 1800,\n  \"loadingCost\": 600,\n  \"otherFarmerCost\": 200,\n  \"message\": \"Postman test offer\"\n}",
+              "raw": "{\n  \"produceLotId\": 1,\n  \"pricePerQuintal\": 2600,\n  \"transportationCost\": 1800,\n  \"loadingCost\": 600,\n  \"otherFarmerCost\": 200,\n  \"message\": \"Postman test offer\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -429,6 +447,20 @@
                   "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
                   "  }",
                   "});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "try {",
+                  "  const data = pm.response.json();",
+                  "  if (data.produceLotId) pm.environment.set('produceLotId', data.produceLotId);",
+                  "  if (data.offerId) pm.environment.set('offerId', data.offerId);",
+                  "  if (data.cropId) pm.environment.set('cropId', data.cropId);",
+                  "} catch (e) { }"
                 ]
               }
             }
@@ -606,6 +638,49 @@
               }
             }
           ]
+        },
+        {
+          "name": "Update order status (Farmer/Buyer/Admin)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Confirmed\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/orders/{{orderId}}/status",
+            "description": "Owning Farmer, Buyer or Administrator — Use Confirmed/ReadyForPickup/Completed/Cancelled according to the current role and order state."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200 expected\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('JSON response when body exists', function () {",
+                  "  if (pm.response.text().length > 0) pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "});"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -637,6 +712,92 @@
                   "  if (pm.response.text().length > 0) {",
                   "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
                   "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create market reference price (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cropId\": 1,\n  \"marketName\": \"Ludhiana Mandi\",\n  \"district\": \"Ludhiana\",\n  \"state\": \"Punjab\",\n  \"effectiveDate\": \"2026-11-14\",\n  \"minimumPrice\": 2200,\n  \"maximumPrice\": 2700,\n  \"modalPrice\": 2500,\n  \"sourceName\": \"Official market bulletin\",\n  \"sourceUrl\": \"https://example.gov.in\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/market-reference-prices",
+            "description": "Administrator — Replace cropId, prices and source with verified local data. Do not present invented data as actual market data."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201 expected\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test('JSON response when body exists', function () {",
+                  "  if (pm.response.text().length > 0) pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update market reference price (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "{{authCookie}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cropId\": 1,\n  \"marketName\": \"Ludhiana Mandi\",\n  \"district\": \"Ludhiana\",\n  \"state\": \"Punjab\",\n  \"effectiveDate\": \"2026-11-14\",\n  \"minimumPrice\": 2200,\n  \"maximumPrice\": 2700,\n  \"modalPrice\": 2500,\n  \"sourceName\": \"Official market bulletin\",\n  \"sourceUrl\": \"https://example.gov.in\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/market-reference-prices/{{marketPriceId}}",
+            "description": "Administrator — Update an existing row. Use an accurate, verifiable source."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200 expected\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('JSON response when body exists', function () {",
+                  "  if (pm.response.text().length > 0) pm.expect(pm.response.headers.get('Content-Type') || '').to.include('application/json');",
                   "});"
                 ]
               }
