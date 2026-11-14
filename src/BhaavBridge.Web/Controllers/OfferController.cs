@@ -334,8 +334,7 @@ public class OfferController : Controller
             if (offer == null)
                 return NotFound();
 
-            if (offer.Status != OfferStatus.Pending &&
-                offer.Status != OfferStatus.Countered)
+            if (offer.Status != OfferStatus.Pending)
             {
                 TempData["ErrorMessage"] =
                     "This offer can no longer be accepted.";
@@ -456,8 +455,7 @@ public class OfferController : Controller
         if (offer == null)
             return NotFound();
 
-        if (offer.Status != OfferStatus.Pending &&
-            offer.Status != OfferStatus.Countered)
+        if (offer.Status != OfferStatus.Pending)
         {
             TempData["ErrorMessage"] =
                 "This offer can no longer be rejected.";
