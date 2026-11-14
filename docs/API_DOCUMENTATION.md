@@ -67,8 +67,9 @@ The Razor workflow also supports farmer accept/reject, buyer accept/reject count
 |---|---|---|---|
 | GET | `/api/orders` | Buyer, Farmer, Administrator | Caller-scoped orders; Admin sees all |
 | GET | `/api/orders/{id}` | Order participant, Administrator | Authorized order details |
+| PATCH | `/api/orders/{id}/status` | Owning Farmer/Buyer or Administrator | Apply the allowed order status transition |
 
-Order status transitions are currently available through the Razor `OrderController` workflow:
+Order status transitions are available through the Razor `OrderController` and `PATCH /api/orders/{id}/status` workflows. The JSON API accepts status names:
 - Farmer: Placed → Confirmed → ReadyForPickup
 - Buyer: ReadyForPickup → Completed
 - Administrator: may cancel an order that is not Completed/Cancelled
@@ -78,6 +79,8 @@ Order status transitions are currently available through the Razor `OrderControl
 | Method | Route | Access | Purpose |
 |---|---|---|---|
 | GET | `/api/market-reference-prices` | Farmer, Buyer, Administrator | List dated reference prices with source |
+| POST | `/api/market-reference-prices` | Administrator | Add dated reference price with source |
+| PUT | `/api/market-reference-prices/{id}` | Administrator | Update reference price record |
 
 Optional filters: `cropId`, `district`, `state`.
 
