@@ -6,10 +6,10 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h2>My Orders</h2>
+            <h2>@(User.IsInRole("Administrator") ? "All Orders" : "My Orders")</h2>
             <p class="text-muted mb-0">Track accepted deals and order progress.</p>
         </div>
-        <a asp-controller="Marketplace" asp-action="Index" class="btn btn-outline-primary">Marketplace</a>
+        @if (User.IsInRole("Buyer")) { <a asp-controller="Marketplace" asp-action="Index" class="btn btn-outline-primary">Marketplace</a> }
     </div>
     @if (TempData["SuccessMessage"] != null) { <div class="alert alert-success">@TempData["SuccessMessage"]</div> }
     @if (Model == null || !Model.Any())
