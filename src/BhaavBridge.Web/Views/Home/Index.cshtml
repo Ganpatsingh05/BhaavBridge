@@ -1,30 +1,151 @@
 ﻿
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
 <div class="container mt-4">
 
     @if (TempData["SuccessMessage"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show"
-             role="alert">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Success!</strong> @TempData["SuccessMessage"]
-
-            <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close">
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error:</strong> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
 
-    <div class="text-center">
-        <h1 class="display-4">Welcome to BhaavBridge</h1>
+    <!-- Hero Section -->
+    <div class="p-5 mb-4 bg-light rounded-3 shadow-sm border">
+        <div class="container-fluid py-3 text-center">
+            <h1 class="display-5 fw-bold text-success">🌾 Welcome to BhaavBridge</h1>
+            <p class="lead col-md-10 mx-auto text-muted">
+                Fair-trade agricultural marketplace empowering farmers with direct buyer negotiations, 
+                transparent mandi reference rates, and estimated net realization.
+            </p>
+            <p class="fst-italic text-secondary">
+                "Know the offer. Compare the value. Make the right deal."
+            </p>
+            <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    if (User.IsInRole("Farmer"))
+                    {
+                        <a asp-controller="Dashboard" asp-action="Farmer" class="btn btn-success btn-lg">Farmer Dashboard →</a>
+                        <a asp-controller="ProduceLot" asp-action="Create" class="btn btn-outline-success btn-lg">+ List Harvest Lot</a>
+                    }
+                    else if (User.IsInRole("Buyer"))
+                    {
+                        <a asp-controller="Marketplace" asp-action="Index" class="btn btn-primary btn-lg">Browse Marketplace →</a>
+                        <a asp-controller="Dashboard" asp-action="Buyer" class="btn btn-outline-primary btn-lg">Buyer Dashboard →</a>
+                    }
+                    else if (User.IsInRole("Administrator"))
+                    {
+                        <a asp-controller="Dashboard" asp-action="Admin" class="btn btn-warning btn-lg">Admin Dashboard →</a>
+                        <a asp-controller="Crop" asp-action="Index" class="btn btn-outline-dark btn-lg">Crop Catalogue →</a>
+                    }
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="FarmerRegister" class="btn btn-success btn-lg">Join as Farmer</a>
+                    <a asp-controller="Account" asp-action="BuyerRegister" class="btn btn-primary btn-lg">Join as Buyer</a>
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary btn-lg">Sign In</a>
+                }
+            </div>
+        </div>
+    </div>
 
-        <p>
-            A platform connecting farmers and buyers.
-        </p>
+    <!-- Features Section -->
+    <div class="row g-4 py-3 row-cols-1 row-cols-lg-3">
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 border-top border-4 border-success">
+                <div class="card-body">
+                    <div class="fs-1 text-success mb-2">🚜</div>
+                    <h4 class="card-title fw-bold">For Farmers</h4>
+                    <p class="card-text text-muted">
+                        Publish your harvest lots with variety, grade, quantity, and asking price. 
+                        Receive offers directly from buyers and counter with your terms.
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <span class="badge bg-success-subtle text-success">Zero Middlemen</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 border-top border-4 border-primary">
+                <div class="card-body">
+                    <div class="fs-1 text-primary mb-2">🛒</div>
+                    <h4 class="card-title fw-bold">For Buyers</h4>
+                    <p class="card-text text-muted">
+                        Explore verified published listings across districts and states. 
+                        Submit competitive offers, specify haulage/packaging terms, and negotiate directly.
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <span class="badge bg-primary-subtle text-primary">Direct Discovery</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 border-top border-4 border-warning">
+                <div class="card-body">
+                    <div class="fs-1 text-warning mb-2">⚖️</div>
+                    <h4 class="card-title fw-bold">Net Daam Comparison</h4>
+                    <p class="card-text text-muted">
+                        Compare estimated net realization after farmer-borne expenses (haulage, commission, packaging). 
+                        Evaluate against official APMC reference prices.
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <span class="badge bg-warning-subtle text-dark">Fair Pricing</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workflow Steps -->
+    <div class="card mt-4 border-0 shadow-sm bg-light">
+        <div class="card-body p-4">
+            <h4 class="text-center fw-bold mb-4">How BhaavBridge Works</h4>
+            <div class="row text-center g-3">
+                <div class="col-md-3">
+                    <div class="p-3 bg-white rounded shadow-sm h-100">
+                        <span class="badge bg-success rounded-pill px-3 py-2 fs-6 mb-2">Step 1</span>
+                        <h6 class="fw-bold mt-2">Publish Lot</h6>
+                        <p class="text-muted small mb-0">Farmer creates draft lot and publishes when ready.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-3 bg-white rounded shadow-sm h-100">
+                        <span class="badge bg-primary rounded-pill px-3 py-2 fs-6 mb-2">Step 2</span>
+                        <h6 class="fw-bold mt-2">Submit Offer</h6>
+                        <p class="text-muted small mb-0">Buyer discovers lot and proposes price & cost terms.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-3 bg-white rounded shadow-sm h-100">
+                        <span class="badge bg-warning text-dark rounded-pill px-3 py-2 fs-6 mb-2">Step 3</span>
+                        <h6 class="fw-bold mt-2">Negotiate Terms</h6>
+                        <p class="text-muted small mb-0">Farmer counters or accepts using Net Daam analysis.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-3 bg-white rounded shadow-sm h-100">
+                        <span class="badge bg-dark rounded-pill px-3 py-2 fs-6 mb-2">Step 4</span>
+                        <h6 class="fw-bold mt-2">Fulfill Order</h6>
+                        <p class="text-muted small mb-0">Accepted deal locks into an order for pickup and completion.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

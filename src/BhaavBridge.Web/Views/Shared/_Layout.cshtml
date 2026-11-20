@@ -19,114 +19,109 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-<ul class="navbar-nav flex-grow-1">
-    <li class="nav-item">
-        <a class="nav-link text-dark"
-           asp-controller="Home"
-           asp-action="Index">Home</a>
-    </li>
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
 
-    @if (User.Identity?.IsAuthenticated == true)
-    {
-        @* Farmer-specific nav links *@
-        @if (User.IsInRole("Farmer"))
-        {
-            <li class="nav-item">
-                <a class="nav-link text-dark"
-                   asp-controller="ProduceLot"
-                   asp-action="Index">My Lots</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark"
-                   asp-controller="Dashboard"
-                   asp-action="Farmer">Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="Order" asp-action="FarmerOrders">My Orders</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="MarketReferencePrice" asp-action="Index">Market Prices</a>
-            </li>
-        }
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            @if (User.IsInRole("Farmer"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="ProduceLot" asp-action="Index">My Lots</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Dashboard" asp-action="Farmer">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Offer" asp-action="Incoming">Incoming Offers</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Order" asp-action="FarmerOrders">My Orders</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="MarketReferencePrice" asp-action="Index">Market Prices</a>
+                                </li>
+                            }
 
-        @* Buyer-specific nav links *@
-        @if (User.IsInRole("Buyer"))
-        {
-            <li class="nav-item">
-                <a class="nav-link text-dark"
-                   asp-controller="Marketplace"
-                   asp-action="Index">Marketplace</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark"
-                   asp-controller="Dashboard"
-                   asp-action="Buyer">Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="Order" asp-action="BuyerOrders">My Orders</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="MarketReferencePrice" asp-action="Index">Market Prices</a>
-            </li>
-        }
+                            @if (User.IsInRole("Buyer"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Marketplace" asp-action="Index">Marketplace</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Dashboard" asp-action="Buyer">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Offer" asp-action="MyOffers">My Offers</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Order" asp-action="BuyerOrders">My Orders</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="MarketReferencePrice" asp-action="Index">Market Prices</a>
+                                </li>
+                            }
 
-        @* Admin-specific nav links *@
-        @if (User.IsInRole("Administrator"))
-        {
-            <li class="nav-item">
-                <a class="nav-link text-dark"
-                   asp-controller="Crop"
-                   asp-action="Index">Crops</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark"
-                   asp-controller="Dashboard"
-                   asp-action="Admin">Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="Order" asp-action="All">All Orders</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="MarketReferencePrice" asp-action="Index">Market Prices</a>
-            </li>
-        }
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Crop" asp-action="Index">Crops</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Dashboard" asp-action="Admin">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Order" asp-action="All">All Orders</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="MarketReferencePrice" asp-action="Index">Market Prices</a>
+                                </li>
+                            }
+                        }
+                    </ul>
 
-        <li class="nav-item">
-            <form asp-controller="Account"
-                  asp-action="Logout"
-                  method="post">
-                <button type="submit"
-                        class="nav-link text-dark border-0 bg-transparent">
-                    Logout
-                </button>
-            </form>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark"
-               asp-controller="Account"
-               asp-action="Login">Login</a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-dark"
-               asp-controller="Account"
-               asp-action="FarmerRegister">
-                Farmer Registration
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-dark"
-               asp-controller="Account"
-               asp-action="BuyerRegister">
-                Buyer Registration
-            </a>
-        </li>
-    }
-</ul>
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item me-2">
+                                @if (User.IsInRole("Farmer"))
+                                {
+                                    <span class="badge bg-success">🌾 Farmer: @User.Identity.Name</span>
+                                }
+                                else if (User.IsInRole("Buyer"))
+                                {
+                                    <span class="badge bg-primary">🛒 Buyer: @User.Identity.Name</span>
+                                }
+                                else if (User.IsInRole("Administrator"))
+                                {
+                                    <span class="badge bg-warning text-dark">⚙️ Admin: @User.Identity.Name</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@User.Identity.Name</span>
+                                }
+                            </li>
+                            <li class="nav-item">
+                                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-outline-success btn-sm ms-2" asp-controller="Account" asp-action="FarmerRegister">Farmer Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-outline-primary btn-sm ms-2" asp-controller="Account" asp-action="BuyerRegister">Buyer Register</a>
+                            </li>
+                        }
+                    </ul>
               </div>
             </div>
         </nav>
