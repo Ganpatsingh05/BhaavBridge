@@ -28,7 +28,7 @@ A failed test keeps the phase open. Do not mark a phase Done merely because the 
 
 ## Phase 0 — Project Foundation
 **Target:** 6–7 November 2026 | **Status:** ✅ Done  
-**Lead:** Ganpat; onboarding continues for all members.
+**Lead:** Ganpat; Aakash/Gautam onboarding and Project board access are confirmed in issue #11; basic Git-workflow familiarity remains a team follow-up.
 
 ### Tasks
 - [x] Finalize scope, abstract, roles and stack.
@@ -123,7 +123,7 @@ Rahul's reported owner verification and Ganpat's integration/security review wer
 ---
 
 ## Phase 3 — Harvest Marketplace
-**Target:** 13 November 2026 | **Status:** Implementation complete — live tests pending  
+**Target:** 13 November 2026 | **Status:** 🟡 Testing — implementation integrated; live acceptance tests pending  
 **Owner:** Gautam; Ganpat reviews persistence and ownership rules.
 
 ### Implementation delivered
@@ -221,7 +221,7 @@ Build, order flow and reference-price flow pass on the integrated application; G
 
 ---
 ## Phase 6 — REST API and Postman Testing
-**Target:** 15 November 2026 | **Status:** API implementation and Postman collection delivered — local execution pending
+**Target:** 15 November 2026 | **Status:** 🟡 Testing — API implementation delivered; local Postman execution pending
 **Lead:** Ganpat; Rahul supports Identity/authorization; Gautam checks listing API.
 
 ### Implemented
@@ -247,7 +247,7 @@ API project builds, Postman happy-path and authorization requests pass, and docu
 
 ---
 ## Phase 7 — UI Integration and Optimization
-**Target:** 15 November 2026 | **Status:** 🟡 Implementation integrated — live regression and visual acceptance pending  
+**Target:** 15 November 2026 | **Status:** 🟡 Testing — UI implementation integrated; live regression and visual acceptance pending  
 **Owners:** all members; Ganpat coordinates integration; Gautam implemented UI standardization and landing page.
 
 ### Tasks
@@ -340,7 +340,13 @@ Use these issues as the detailed implementation and approval records:
 The issue tracker is the detailed source for each phase's implementation and tests. The GitHub Project board is the team's visual status view; add these nine issues to that board and use the Phase, Status, Gate Approval and date fields there.
 
 
-## Latest database regression evidence — 14 November 2026
+## Latest integrated verification — 21 November 2026
+
+Ganpat fetched and fast-forwarded local `main` to `33d476f` from `origin/main` (three commits received; working tree was clean before the pull). `dotnet build .\\BhaavBridge.sln` completed successfully. The database smoke-check project connected to the configured SQL Server database and passed farmer/buyer/crop/lot/market-price inserts, offer/revision insert/read, accepted offer/order insert/read, Net Daam arithmetic (₹61,250 gross − ₹2,250 farmer costs = ₹59,000 estimated net), SQL Server rejection of negative lot quantity, and transaction rollback with no smoke-test rows retained. Result: `DATABASE SMOKE CHECK PASSED.`
+
+Ganpat then started `src/BhaavBridge.Web`; the application started and listened on `http://localhost:5070`, and the landing page rendered in the browser. The HTTP launch profile logged a non-fatal warning because the HTTPS redirect middleware could not determine an HTTPS port. Development Administrator bootstrap was skipped because local AdminBootstrap User Secrets are not configured. These two items are tracked in Phase 8 for local acceptance/configuration; neither prevented the public landing page from rendering.
+
+## Earlier database regression evidence — 14 November 2026
 Ganpat ran the database smoke check after the latest Phase 5/6 additions. Result: `DATABASE SMOKE CHECK PASSED.` Verified user/profile, crop/lot, market reference price, offer/revision, accepted offer/order insert/read operations; Net Daam arithmetic (₹61,250 gross − ₹2,250 costs = ₹59,000 net); rejection of negative lot quantity; and transaction rollback with no retained test rows.
 
 ---
