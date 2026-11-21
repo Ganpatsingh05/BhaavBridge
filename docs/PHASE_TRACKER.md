@@ -1,6 +1,6 @@
 # BhaavBridge — Phase Tracker and Exit Criteria
 
-**Target submission:** 16 November 2026  
+**Original target submission:** 16 November 2026 (target date passed; final QA remains open)  
 **Method:** Phase-gated; dependent work does not advance until the current gate is approved.
 
 ## Status definitions
@@ -46,8 +46,8 @@ A failed test keeps the phase open. Do not mark a phase Done merely because the 
 - [x] Rahul reviewed and approved the starter, confirming the .NET 10 target, MVC structure and successful build.
 - [x] Starter PR #10 merged into `main` on 7 November 2026.
 - [x] Gautam completed clone/build/run onboarding — commit `58a39d7` (11 November 2026).
-- [ ] Aakash completes clone/build/run onboarding.
-- [ ] Confirm all members can access the GitHub Project board.
+- [x] Aakash completes clone/build/run onboarding (confirmed in issue #11).
+- [x] Confirm all members can access the GitHub Project board (confirmed in issue #11).
 
 ### Exit criteria
 The stack is approved, the starter is integrated into `main`, and the project lead plus one additional developer have verified/reviewed the starter. Remaining member onboarding is tracked in [Issue #11](https://github.com/Ganpatsingh05/BhaavBridge/issues/11) and must be completed before those members begin their assigned feature work.
@@ -55,7 +55,7 @@ The stack is approved, the starter is integrated into `main`, and the project le
 ---
 
 ## Phase 1 — Database and Architecture
-**Target:** 7–8 November 2026 | **Status:** Implementation complete — independent clean-database verification pending  
+**Target:** 7–8 November 2026 | **Status:** ✅ Done — issue #2 closed; independent duplicate verification waived  
 **Lead:** Ganpat; Rahul performs the independent migration-recreation check.
 
 ### Tasks
@@ -68,18 +68,18 @@ The stack is approved, the starter is integrated into `main`, and the project le
 - [x] Commit all migration files to `main` (commit `5b716cb`).
 - [x] Verify tables in SSMS.
 - [x] Pass the repeatable database smoke check twice without compiler warnings.
-- [ ] Rahul recreates the schema from the committed migration on `BhaavBridge_Rahul_Verification`.
-- [ ] Rahul runs the database smoke check against that separate database.
+- [x] Ganpat completed clean-database migration and database verification; the separate duplicate recreation was waived by team acceptance (issue #2).
+- [x] Rahul independently inspected the schema and reported all 16 expected tables, keys, unique indexes and 12 check constraints.
 
 ### Tests
 - [x] Solution builds and EF Core discovers ApplicationDbContext.
 - [x] NuGet audit reports no vulnerable packages.
 - [x] InitialCreate is recorded in EF migration history.
 - [x] Entity insert/read checks, Net Daam arithmetic, invalid quantity constraint and rollback pass.
-- [ ] Rahul confirms clean-database migration and smoke-check results.
+- [x] Team accepted Ganpat's clean-database migration and smoke-check evidence; Rahul's duplicate run was waived.
 
 ### Exit criteria
-The committed migration can recreate the full schema on another machine, the smoke check passes there, and the project lead/team approve the database gate. Close Phase 1 issue #2 only after these checks.
+Ganpat completed clean-database migration and database verification. The team accepted this evidence, Rahul's duplicate recreation check was waived, and Phase 1 issue #2 is closed.
 
 ---
 
@@ -107,17 +107,15 @@ The committed migration can recreate the full schema on another machine, the smo
 - [x] Final solution build succeeded.
 - [x] Cross-role access restrictions reported verified.
 
-### Final gate
-- [ ] Ganpat verifies latest `main` builds cleanly.
-- [ ] Test Farmer registration end-to-end: Identity user, Farmer role and FarmerProfile created.
-- [ ] Test Buyer registration end-to-end: Identity user, Buyer role and BuyerProfile created.
-- [ ] Test duplicate email, weak password, mismatched confirmation and invalid credentials.
-- [ ] Confirm successful Farmer/Buyer login, role-based redirects and logout.
-- [ ] Confirm Farmer cannot access Buyer/Admin pages and Buyer cannot access Farmer/Admin pages.
-- [ ] Test real profile updates and cross-account profile tampering.
-- [ ] Configure a dedicated Development admin account and verify Admin dashboard access.
-- [ ] Re-run the database smoke check.
-- [x] Ganpat reviewed the Identity integration/security fixes and approved Phase 2 on 14 November 2026.
+### Phase gate evidence
+- [x] Rahul's owner implementation and reported authentication/authorization self-tests complete.
+- [x] Ganpat reviewed Identity integration, cookie configuration and administrator bootstrap safeguards.
+- [x] Phase 2 gate approved and issue #3 closed on 14 November 2026.
+
+### Follow-up regression — tracked under Phase 8
+- [ ] Ganpat repeats Farmer/Buyer registration, login/logout and profile tests on the current integrated build.
+- [ ] Configure a local Development Administrator account and verify the Admin dashboard; the 21 November local run skipped bootstrap because AdminBootstrap secrets were not configured.
+- [ ] Recheck cross-role and profile-ownership cases during final regression.
 
 ### Exit criteria
 Rahul's reported owner verification and Ganpat's integration/security review were accepted; Issue #3 was closed on 14 November 2026. The next full integrated build/regression run is tracked under Phase 4/final QA.
@@ -154,8 +152,8 @@ Commits: `95ece85` (marketplace implementation), `16e0eb4` (Phase 2/3 audit fixe
 - [ ] Crop/district/state/min-max quantity/min-max asking-price filters return expected rows.
 - [ ] Draft/Closed lots are not shown, including direct buyer detail URL.
 - [ ] Anonymous and wrong-role access is denied/redirected.
-- [x] Latest `dotnet build .\BhaavBridge.sln` succeeded on Ganpat's machine on 14 November 2026 (after commit `c596bfb`).
-- [ ] Run the database smoke check after the latest changes.
+- [x] Latest `dotnet build .\BhaavBridge.sln` succeeded on Ganpat's machine on 21 November 2026 after pulling `33d476f`.
+- [x] Database smoke check passed after the latest `main` pull on 21 November 2026.
 - [ ] Add screenshots and test outcomes to [Issue #4](https://github.com/Ganpatsingh05/BhaavBridge/issues/4).
 
 ### Scope note
@@ -167,7 +165,7 @@ Gautam completes the live marketplace matrix, Ganpat reviews ownership and persi
 ---
 
 ## Phase 4 — Offer and Price Discovery Engine
-**Target:** 14 November 2026 | **Status:** Implementation complete — latest build and end-to-end tests pending  
+**Target:** 14 November 2026 | **Status:** ✅ Done — issue #5 closed and gate approved  
 **Lead:** Ganpat; Rahul owns the submitted implementation; Gautam supports marketplace integration.
 
 ### Implementation delivered — Rahul, commit `8e487f5`
@@ -185,21 +183,21 @@ Gautam completes the live marketplace matrix, Ganpat reviews ownership and persi
 
 ### Remaining
 - [x] Latest integrated solution build succeeded on 14 November 2026 after commit `c596bfb`.
-- [ ] Run live Buyer/Farmer offer workflow.
-- [ ] Verify OfferRevision history after multiple counteroffers.
-- [ ] Verify direct farmer acceptance and buyer counteroffer acceptance each create one correct Order.
-- [ ] Verify reject paths create no Order.
-- [ ] Test Net Daam with independent numeric cases.
-- [ ] Verify one accepted offer per lot, including repeated/concurrent attempts.
-- [ ] Verify cross-user and wrong-role access.
-- [ ] Re-run database smoke check and record screenshots.
-- [ ] Ganpat reviews and team approves Issue #5.
+- [x] Run live Buyer/Farmer offer workflow.
+- [x] Verify OfferRevision history after multiple counteroffers.
+- [x] Verify direct farmer acceptance and buyer counteroffer acceptance each create one correct Order.
+- [x] Verify reject paths create no Order.
+- [x] Test Net Daam with independent numeric cases.
+- [x] Verify one accepted offer per lot, including repeated/concurrent attempts.
+- [x] Verify cross-user and wrong-role access.
+- [x] Re-run database smoke check and record screenshots.
+- [x] Ganpat reviews and team approves Issue #5.
 
 ### Exit criteria
 Buyer/farmer negotiation, revision history, Net Daam and acceptance/order integrity pass live functional, authorization and transaction tests.
 
 ## Phase 5 — Orders and Market Intelligence
-**Target:** 15 November 2026 | **Status:** Implementation complete — build and final flow check pending
+**Target:** 15 November 2026 | **Status:** ✅ Done — Rahul's final verification passed 20 November; issue #6 closed
 **Lead:** Ganpat; Rahul supports authorization; Gautam supports integration.
 
 ### Implemented
@@ -213,10 +211,10 @@ Buyer/farmer negotiation, revision history, Net Daam and acceptance/order integr
 - [x] Order/market price views, dashboard cards and role-specific navigation.
 
 ### Remaining
-- [x] Latest solution build passed on Ganpat's machine on 14 November 2026 (after commit `c596bfb`).
-- [ ] Test one accepted order through list/details/status.
-- [ ] Admin creates a dated reference price; Farmer/Buyer can view it.
-- [ ] Existing database smoke check passes.
+- [x] Latest solution build passed on Ganpat's machine on 21 November 2026 after pulling `33d476f`.
+- [x] Test one accepted order through list/details/status.
+- [x] Admin creates a dated reference price; Farmer/Buyer can view it.
+- [x] Existing database smoke check passes.
 
 ### Exit criteria
 Build, order flow and reference-price flow pass on the integrated application; Ganpat approves Issue #6.
@@ -242,14 +240,14 @@ Build, order flow and reference-price flow pass on the integrated application; G
 - [ ] Import collection/environment and run with Farmer/Buyer/Admin cookies.
 - [ ] Verify 401, wrong-role and ownership behaviour.
 - [ ] Save Postman evidence without real cookie/token values.
-- [ ] Run database smoke check.
+- [x] Database smoke check passed on 21 November 2026 after the latest pull.
 
 ### Exit criteria
 API project builds, Postman happy-path and authorization requests pass, and documentation/collection are committed.
 
 ---
 ## Phase 7 — UI Integration and Optimization
-**Target:** 15 November 2026 | **Status:** ✅ Implementation Complete — verification underway  
+**Target:** 15 November 2026 | **Status:** 🟡 Implementation integrated — live regression and visual acceptance pending  
 **Owners:** all members; Ganpat coordinates integration; Gautam implemented UI standardization and landing page.
 
 ### Tasks
@@ -267,6 +265,7 @@ API project builds, Postman happy-path and authorization requests pass, and docu
 - [x] Responsive layouts remain usable across viewports.
 - [x] No broken assets or significant browser/server errors (verified 0 build warnings, 0 errors).
 - [ ] Re-run critical workflow regression tests with live browser session.
+- [ ] Ganpat's visual review/sign-off; the landing page renders but the current UI is considered too basic and has not been accepted.
 
 ### Exit criteria
 All modules appear and behave as one consistent application, with no broken primary workflow.
@@ -274,12 +273,12 @@ All modules appear and behave as one consistent application, with no broken prim
 ---
 
 ## Phase 8 — Final QA and Submission
-**Target:** 16 November 2026 | **Status:** 🔄 In Progress — Release candidate verification underway  
+**Target:** 16 November 2026 | **Status:** 🔄 In Progress — integrated baseline verified; end-to-end QA and submission evidence remain open  
 **Owners:** all members.
 
 ### Tasks
 - [ ] Execute farmer, buyer and administrator end-to-end tests against live database.
-- [ ] Run database integrity and migration tests.
+- [x] Database migration was verified under Phase 1; database integrity smoke check passed on 21 November 2026.
 - [ ] Run authentication and authorization regression tests.
 - [ ] Run API/Postman regression collection (`docs/BhaavBridge API.postman_collection.json`).
 - [ ] Fix critical and major defects (no compiler warnings or errors).
@@ -289,17 +288,17 @@ All modules appear and behave as one consistent application, with no broken prim
 - [x] Record SDK, framework and package versions (.NET SDK 10.0.400, EF Core 10.0.14, SQL Server 2025 Express).
 - [ ] Verify setup on another member's machine.
 - [ ] Prepare each member's viva explanation.
-- [x] Freeze final release candidate build.
+- [ ] Freeze final release candidate after UI acceptance and final QA.
 
 ### Tests
 - [x] Solution builds cleanly (0 Warning(s), 0 Error(s)).
-- [ ] Application starts without runtime errors (`dotnet run`).
+- [x] Application started and landing page rendered at `http://localhost:5070`; HTTP launch logged a non-fatal HTTPS-port redirection warning.
 - [ ] Core CRUD and business workflows pass.
-- [ ] Net Daam calculations pass known test cases.
+- [x] Net Daam calculations pass known test cases (multiple independent cases recorded under Phase 4).
 - [ ] Authorization and ownership tests pass.
 - [ ] Postman collection passes.
 - [x] Fresh database setup works from migrations (`20261107110530_InitialCreate`).
-- [x] No critical unresolved defects.
+- [ ] Confirm no critical unresolved defects after full QA.
 - [ ] All team members can run and explain the application.
 
 ### Exit criteria
@@ -343,3 +342,13 @@ The issue tracker is the detailed source for each phase's implementation and tes
 
 ## Latest database regression evidence — 14 November 2026
 Ganpat ran the database smoke check after the latest Phase 5/6 additions. Result: `DATABASE SMOKE CHECK PASSED.` Verified user/profile, crop/lot, market reference price, offer/revision, accepted offer/order insert/read operations; Net Daam arithmetic (₹61,250 gross − ₹2,250 costs = ₹59,000 net); rejection of negative lot quantity; and transaction rollback with no retained test rows.
+
+---
+
+## Audit summary — 21 November 2026
+
+- **Completed phase gates:** 0, 1, 2, 4 and 5.
+- **Still open:** Phase 3 live marketplace acceptance; Phase 6 local Postman execution; Phase 7 live browser regression and visual acceptance; Phase 8 final QA/submission.
+- **Repository integration:** no open PRs; latest `main` commit is `33d476f`.
+- **Latest local verification:** build succeeded, database smoke check passed, and the web application started at `http://localhost:5070`.
+- **Do not mark Phases 3, 6, 7 or 8 Done yet.** Their outstanding tests/evidence are listed in their sections.
