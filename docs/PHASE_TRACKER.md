@@ -237,7 +237,10 @@ Build, order flow and reference-price flow pass on the integrated application; G
 
 ### Remaining
 - [x] Latest solution build passed on Ganpat's machine on 14 November 2026 (after commit `c596bfb`).
-- [ ] Import collection/environment and run with Farmer/Buyer/Admin cookies.
+- [x] Imported the Postman collection/environment and configured the local authenticated session on 21 November 2026.
+- [ ] Continue the collection with Farmer/Buyer/Admin sessions as required by each endpoint.
+- [x] Crops — GET List active crops returned `200 OK` and five active crops: Cotton (10), Maize (8), Mustard (9), Rice (Paddy) (6), Wheat (7) on 21 November 2026.
+- [ ] Verify Crops Admin POST/PUT, then continue the remaining Produce Lots, Offers, Orders and Market Reference Prices requests.
 - [ ] Verify 401, wrong-role and ownership behaviour.
 - [ ] Save Postman evidence without real cookie/token values.
 - [x] Database smoke check passed on 21 November 2026 after the latest pull.
@@ -354,7 +357,7 @@ Ganpat ran the database smoke check after the latest Phase 5/6 additions. Result
 ## Audit summary — 21 November 2026
 
 - **Completed phase gates:** 0, 1, 2, 4 and 5.
-- **Still open:** Phase 3 live marketplace acceptance; Phase 6 local Postman execution; Phase 7 live browser regression and visual acceptance; Phase 8 final QA/submission.
+- **Still open:** Phase 3 live marketplace acceptance; Phase 6 remaining Postman happy-path and authorization tests (first Crops GET passed on 21 November); Phase 7 live browser regression and visual acceptance; Phase 8 final QA/submission.
 - **Repository integration:** no open PRs; latest `main` commit is `33d476f`.
 - **Latest local verification:** build succeeded, database smoke check passed, and the web application started at `http://localhost:5070`.
 - **Do not mark Phases 3, 6, 7 or 8 Done yet.** Their outstanding tests/evidence are listed in their sections.
